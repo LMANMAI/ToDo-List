@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect, useState } from 'react';
+import React,{ useContext, useState } from 'react';
 import ProyectoContext from '../../context/proyects/proyectoContext';
 
 const NewProyect = () => {
@@ -7,11 +7,8 @@ const NewProyect = () => {
     });
     
     const proyectoContext = useContext(ProyectoContext);
-    const { panel, agregarProyecto } = proyectoContext;
+    const { panel, errorformulario, agregarProyecto, validarFormulario } = proyectoContext;
 
-    useEffect(() => {
-        console.log(panel);
-    }, [panel]);
     const { nombre } = proyect;
   
     const handleChange = e =>{
@@ -25,9 +22,13 @@ const NewProyect = () => {
         e.preventDefault();
 
         if(nombre.trim()===''){
+            validarFormulario();
             return;
         }
         agregarProyecto(proyect);
+        createProyect({
+            nombre:''
+        })
     }
     return ( 
         <div className={panel ?'dashboard_panel active' :'dashboard_panel'}>
@@ -38,12 +39,13 @@ const NewProyect = () => {
                         name = 'nombre'
                         value = {nombre}
                         onChange={handleChange}
+                        className={errorformulario ?'inputForm_active' :null}
                     />
+                    {errorformulario ?<p className="input_errorP">El nombre es necesario!</p> :null}
                     <input 
                         type="submit"
                         value="Guardar"
-                        className="btn btn_primario"
-                       
+                        className="btn btn_primario"                      
                     />
                 </form>            
             </div>

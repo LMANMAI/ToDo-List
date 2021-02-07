@@ -1,20 +1,24 @@
-import React, {useContext}  from 'react'
+import React, {useContext, useEffect}  from 'react';
+import Proyect from './Proyect';
 import ProyectoContext from '../../context/proyects/proyectoContext';
 const ProyectList = () => {
     const proyectoContext = useContext(ProyectoContext);
-    const { proyectos } = proyectoContext;
-    console.log(proyectos)
+    const { panelproyecto, proyectos, obtenerProyectos } = proyectoContext;
+
+    //obtener proyectos cuando carga el componente    
+    useEffect(() => {
+        obtenerProyectos();
+    }, []); 
+
+    if(proyectos.length === 0) return <p className="object_list">Todavia no creaste ningun proyecto!</p>;
     return ( 
-        <div className="list_container">
-           <ul>
-               {proyectos.map(proyecto => (
-                   <li  className="object_list" key={proyecto.id}>
-                       <button className="btn btn_proyect">{proyecto.nombre}</button>
-                   </li>
-               ))}
-               
-           </ul>
-       </div>
+    <div className={panelproyecto ?"dashboard_panel active" :"dashboard_panel"}>
+        <ul>
+        {proyectos.map(proyecto => (
+           <Proyect key={proyecto.id} proyecto={proyecto}/>
+        ))}               
+    </ul>
+    </div>
      );
 }
  

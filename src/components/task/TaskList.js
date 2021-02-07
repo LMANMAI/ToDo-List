@@ -1,31 +1,28 @@
-import React from 'react'
+import React,{useContext, useEffect} from 'react';
 import Task from './Task';
+import TaskContext from '../../context/task/taskContext';
+
 const TaskList = () => {
-    const tareas = [
-        {nombre: 'Elegir Lenguaje', estado: true},
-        {nombre: 'Hacer Diseño en Figma', estado: false},
-        {nombre: 'Comenzar el Proyecto', estado: false},
-        {nombre: 'Elegir Lenguaje', estado: true},
-        {nombre: 'Hacer Diseño en Figma', estado: false},
-        {nombre: 'Comenzar el Proyecto', estado: false},
-        {nombre: 'Elegir Lenguaje', estado: true},
-        {nombre: 'Hacer Diseño en Figma', estado: false},
-        {nombre: 'Comenzar el Proyecto', estado: false},
-        {nombre: 'Elegir Lenguaje', estado: true},
-        {nombre: 'Hacer Diseño en Figma', estado: false},
-        {nombre: 'Comenzar el Proyecto', estado: false}
-    ]
+    const taskContext = useContext(TaskContext);
+    const { tareasproyecto } = taskContext;
+    useEffect(()=>{
+
+    });
     return (  
         <>
         <div className="listado_tareas">
-        <ul >
-            {tareas.length === 0 
-                ?(<li className="ntarea"><p>No hay tareas!</p></li>)
-                :(tareas.map(tarea=> (
-                    <Task tarea={tarea}/>
-                )))
-            }
-        </ul>
+            {tareasproyecto.length === 0 
+            ?(<p className="ntarea">No hay tareas comenza creando una!</p>) 
+            :(
+                 <ul >
+                {tareasproyecto.map(tarea=> (
+                     <Task 
+                        tarea={tarea}
+                        key={tarea.id}/> 
+                     ))}
+                </ul>
+            )}
+       
         </div>
        
         </>
