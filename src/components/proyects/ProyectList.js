@@ -10,14 +10,20 @@ const ProyectList = () => {
         obtenerProyectos();
     }, []); 
 
-    if(proyectos.length === 0) return <p className="object_list">Todavia no creaste ningun proyecto!</p>;
+    
     return ( 
-    <div className={panelproyecto ?"dashboard_panel active" :"dashboard_panel"}>
-        <ul>
-        {proyectos.map(proyecto => (
-           <Proyect key={proyecto.id} proyecto={proyecto}/>
-        ))}               
-    </ul>
+    <div className="list_container">
+        <div className={panelproyecto ?"dashboard_panel active" :"dashboard_panel"}>
+            {proyectos.length === 0 ?<p className="object_list">Todavia no creaste ningun proyecto!</p> 
+            
+            :(<ul>
+                {   proyectos.map(proyecto => (
+                    <Proyect key={proyecto.id} proyecto={proyecto}/>))
+                }               
+            </ul>
+            )}    
+           
+        </div>
     </div>
      );
 }

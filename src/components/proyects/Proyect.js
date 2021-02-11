@@ -13,6 +13,7 @@ const Proyect = ({proyecto}) => {
         proyectoActual(Id);
         obtenerTareas(Id);
     }
+   
     return ( 
         <li  className="object_list" key={proyecto.id}>
             <button onClick={ ()=> handleClick( proyecto.id )} className="btn btn_proyect">{proyecto.nombre}</button>
