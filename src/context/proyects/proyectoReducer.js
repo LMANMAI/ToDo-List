@@ -6,7 +6,9 @@ import {
     AGREGAR_PROYECTO,
     VALIDAR_FORMULARIO,
     PROYECTO_ACTIVO,
-    ELIMINAR_PROYECTO
+    ELIMINAR_PROYECTO,
+    MOSTRAR_TERMINADOS,
+    TERMINAR_PROYECTO
     } from '../../types';
 
 export default (state, action ) =>{
@@ -16,13 +18,22 @@ export default (state, action ) =>{
                 ...state,
                 panel: !state.panel,
                 errorformulario: false,
-                panelproyecto: false
+                panelproyecto: false,
+                panelterminados: false
             }
         case MOSTRAR_PROYECTOS:
             return{
                 ...state,
                 panel: false,
-                panelproyecto: !state.panelproyecto
+                panelproyecto: !state.panelproyecto,
+                panelterminados: false
+            }
+        case MOSTRAR_TERMINADOS:
+            return{
+                ...state,  
+                panel: false,
+                panelproyecto: false,
+                panelterminados: !state.panelterminados               
             }
         case OBTENER_PROYECTOS: 
             return{
@@ -47,7 +58,14 @@ export default (state, action ) =>{
                 proyectoactivo : state.proyectos.filter( proyecto => (proyecto.id === action.payload)),
                 panel: false,
                 panelproyecto: false
-
+            }       
+            
+        case TERMINAR_PROYECTO:
+            return{
+                ...state,
+                proyectos :state.proyectos.filter(proyecto => (proyecto.id !== action.payload.id)),
+                proyectosterminados: [ action.payload, ...state.proyectosterminados],
+                proyectoactivo: null    
             }
         case ELIMINAR_PROYECTO:
             return{

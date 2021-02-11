@@ -10,7 +10,9 @@ import {
         AGREGAR_PROYECTO,
         VALIDAR_FORMULARIO,
         PROYECTO_ACTIVO,
-        ELIMINAR_PROYECTO
+        ELIMINAR_PROYECTO,
+        MOSTRAR_TERMINADOS,
+        TERMINAR_PROYECTO
         } from '../../types';
 
 const ProyectoState = props =>{
@@ -25,7 +27,8 @@ const ProyectoState = props =>{
         proyectos: [],
         errorformulario: false,
         proyectoactivo: null,
-
+        panelterminados: false,
+        proyectosterminados: []
     }
   
     const [ state, dispatch ]= useReducer(ProyectoReducer, InitialState);
@@ -41,6 +44,12 @@ const ProyectoState = props =>{
              type: MOSTRAR_PROYECTOS
          })
      }
+     const mostrarTerminados = ()=> {
+        dispatch({
+        type: MOSTRAR_TERMINADOS
+        })
+
+    }
      //obtener los proyectos
      const obtenerProyectos = () =>{
          dispatch({
@@ -50,7 +59,7 @@ const ProyectoState = props =>{
      }
      //Agrega Proyectos
      const agregarProyecto = proyect =>{
-        console.log('desde agregar proyecto')
+       
         dispatch({
             type: AGREGAR_PROYECTO,
             payload: proyect
@@ -63,21 +72,26 @@ const ProyectoState = props =>{
          })
      }
      //Seleccionar y poner un proyecto como activo
-     const proyectoActual = proyectoId =>{
-        
+     const proyectoActual = proyectoId =>{        
          dispatch({
              type: PROYECTO_ACTIVO,
              payload: proyectoId
-         })
+         });
      }
      //Eliminar las tareas
-     const terminarProyecto = proyectoID => {
-        
-         dispatch({
+    const eliminarProyecto = proyectoID => {
+        dispatch({
             type: ELIMINAR_PROYECTO,
             payload: proyectoID
-         })
-     }
+         });
+     }    
+    const terminarProyecto = proyecto => {
+        dispatch({
+            type: TERMINAR_PROYECTO,
+            payload: proyecto
+        })
+    }
+            
     return(
         <ProyectoContext.Provider
             value={{
@@ -87,12 +101,16 @@ const ProyectoState = props =>{
                 proyectos: state.proyectos,
                 errorformulario: state.errorformulario,
                 proyectoactivo : state.proyectoactivo,
+                panelterminados : state.panelterminados,
+                proyectosterminados: state.proyectosterminados,
                 mostrarPanel,
                 obtenerProyectos,
                 agregarProyecto,
                 showPanel,
                 validarFormulario,
                 proyectoActual,
+                eliminarProyecto,
+                mostrarTerminados,
                 terminarProyecto
             }}
         >
