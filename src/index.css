@@ -8,9 +8,9 @@
 }
 body{
   background: #7F30CB ;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to left, #01DCBA , #7F30CB );  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #01DCBA , #7F30CB ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background: -webkit-linear-gradient(to left, #01DCBA , #7F30CB );  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #01DCBA , #7F30CB ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
 }
 input[type="text"],
 input[type="password"],
@@ -171,16 +171,12 @@ justify-content: space-between;
 .dashboard_panel{
   display: flex;
   justify-content: center;
-  flex-grow: .1;
   position: fixed;
-  z-index: 2;
-  left: 0;
-  top: 0;
+  left: 0px;
+  top: 0px;
   background: rgb(202 202 202 / 19%);
-  /* border: 1px solid #a8a8a8;
-  border-left: none; */
   border-radius: 0 30px 30px 0;
-  transition: 750ms; 
+  transition: 850ms; 
   opacity: 0;
   pointer-events: none;
   height: 100%;
@@ -189,14 +185,13 @@ justify-content: space-between;
 .dashboard_panel.active{
   transition: 350ms;
   display: flex;
-  left: 270px;
-  flex-grow: 2;
-  opacity: 1;
+  transform: translateX(270px);
   flex-grow: .1;
   max-width: 220px;
   pointer-events: all;
   width: 100%;
- 
+  overflow-y: auto;
+  opacity: 1;
 }
 .inputForm_active.inputForm_active{
   border: 1px solid rgb(151, 27, 27);
@@ -324,9 +319,10 @@ justify-content: space-between;
 }
 .contenedor_tareas{
    padding: 5px;
-   margin: 15px 0;
    width: 100%;
-   min-height: 48vh;
+   max-height: 50%;
+   min-height: 50%;
+   overflow-y: auto;
 }
 .listado_tareas{
  display: flex;
@@ -338,18 +334,15 @@ justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
-  justify-content: center;
-  overflow-y: scroll;
-  max-height: 45vh;
+  justify-content: center; 
+  max-height: 100%;
 }
 .object_task{
-  flex-grow: 1;
-  max-width: 50%;
   padding: 10px;
   margin: 10px;
   background: rgba(230, 230, 230, 0.055);
   backdrop-filter: blur(30px);
-  border-radius: 30px;
+  border-radius: 20px;
   backdrop-filter: opacity(20%); 
   box-shadow: 1px 3px 4px #5f5f5f52;
 }
@@ -412,4 +405,32 @@ justify-content: space-between;
 }
 .ntarea{
   overflow: none;
+} 
+.button_wraper{
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.width{
+  min-width: 350px;
+}
+.lista_terminados{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.lista_terminados li{
+  padding: 10px;
+  min-height: 70px;
+  border: 1px solid red;
+  width: 100%;
+  margin: 3px 0;
+}
+p.object_list{
+  text-align: center;
+    align-self: center;
 }
