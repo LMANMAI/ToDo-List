@@ -5,24 +5,31 @@ import ProyectoContext from '../../context/proyects/proyectoContext'
 
 const TaskBody = () => {
     const proyectoContext = useContext(ProyectoContext);
-    const { panel, panelproyecto, proyectoactivo, terminarProyecto } = proyectoContext;
+    const { panel, panelproyecto, panelterminados, proyectoactivo, eliminarProyecto, terminarProyecto } = proyectoContext;
     
-    if(!proyectoactivo) return <div className="inactivo"><h2>Selecciona un Proyecto</h2></div>
+    if(!proyectoactivo) return <div className="inactivo">deade</div>
 
     const [proyectoActual] = proyectoactivo;
     return ( 
-        <main className={panel || panelproyecto ?"dashboard_taskbody active" :"dashboard_taskbody"} >
-            <h2>Proyecto : <span>{proyectoActual.nombre}</span></h2>
+        <main className={panel || panelproyecto || panelterminados ?"dashboard_taskbody active" :"dashboard_taskbody"} >
+            <h2>{proyectoActual.nombre}</h2>
             <FormTask />
 
             <div className="contenedor_tareas">
                 <TaskList/>
              </div>
-             <button
-                type="button"
-                className="btn btn_terminar"
-                onClick={()=> terminarProyecto(proyectoActual.id)}
-             >Terminar Proyecto</button>           
+             <div className="button_wraper">
+                <button
+                    type="button"
+                    className="btn btn_terminar"
+                    onClick={()=> terminarProyecto(proyectoActual)}
+                >Terminar Proyecto</button>
+                <button
+                    type="button"
+                    className="btn btn_terminar"
+                    onClick={()=> eliminarProyecto(proyectoActual.id)}
+                >Eliminar Proyecto</button> 
+            </div>          
         </main>
      );
 }
