@@ -7,10 +7,8 @@
   box-sizing: border-box;
 }
 body{
-  background: #7F30CB ;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #01DCBA , #7F30CB );  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #01DCBA , #7F30CB ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
- 
+  
+  background-image: linear-gradient(to left top, #68c4cc, #5eb5bd, #54a7af, #4b99a0, #418b92, #3a8897, #38849c, #3a809f, #5882b1, #8082bb, #a97fb8, #cc7caa);
 }
 input[type="text"],
 input[type="password"],
@@ -54,21 +52,30 @@ input[type="email"]:focus{
  height: 100vh;
 }
 .form_wraper{
-  flex-grow: 0.9;
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+ 
 }
 
 .form_container{
   width: 50%;
   padding: 15px;
-  background: rgba(60, 60, 60, 0.22);
+  max-width: 450px;
+  /* background: rgba(60, 60, 60, 0.22);
   border: 2px solid rgba(196, 196, 196, 0.24);
   box-sizing: border-box;
   backdrop-filter: blur(40px);
-  border-radius: 50px;
+  border-radius: 50px; */
+  
+  background: rgba( 255, 255, 255, 0.10 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 3.5px );
+-webkit-backdrop-filter: blur( 3.5px );
+border-radius: 50px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 .form_container h2{
   text-transform: uppercase;
@@ -125,9 +132,14 @@ form .input_container{
   color: #cab8a1;
   font-weight: bold;
 }
-.glass{
-  background: rgba(255, 255, 255, 0.1);
-  flex-grow: 1;
+
+.btn_proyect{
+  background: rgb(255 253 253 / 19%);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 10.5px );
+  -webkit-backdrop-filter: blur( 10.5px );
+  border-radius: 25px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 /*Dashboard*/
@@ -142,30 +154,32 @@ form .input_container{
   width: 80%;
   min-height: 80vh;
   max-height: 80vh;
-  background: rgb(255 255 255 / 4%);
-  border: 1px solid rgba(255, 255, 255, 0.25); 
-  backdrop-filter: blur(40px);
-  backdrop-filter: opacity(20%);
-  border-radius: 50px;
-  box-sizing: border-box;
+  
   display: flex;
   justify-content: space-between;
+
+  background: rgba( 255, 255, 255, 0.10 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 3.5px );
+  -webkit-backdrop-filter: blur( 3.5px );
+  border-radius: 50px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .dashboard_sidebar{
 flex-grow: .2;
 min-width: 270px;
 max-width: 270px;
-/* backdrop-filter: blur(30px); */
-background:rgb(255 255 255 / 9%);
 border-radius: 50px 0 0 50px;
 padding: 10px;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
-}
-.dashboard_sidebar.active{
-  box-shadow: 6px 3px 15px #27272752;;
+background: rgba( 255, 255, 255, 0.2 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 3.5px );
+-webkit-backdrop-filter: blur( 3.5px );
+border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .dashboard_panel{
@@ -176,22 +190,25 @@ justify-content: space-between;
   top: 0px;
   background: rgb(202 202 202 / 19%);
   border-radius: 0 30px 30px 0;
-  transition: 850ms; 
+  transition: 650ms; 
   opacity: 0;
   pointer-events: none;
   height: 100%;
   min-width: 220px;
 }
 .dashboard_panel.active{
-  transition: 350ms;
+  transition: 550ms;
   display: flex;
   transform: translateX(270px);
-  flex-grow: .1;
   max-width: 220px;
   pointer-events: all;
   width: 100%;
   overflow-y: auto;
   opacity: 1;
+  backdrop-filter: blur( 18.0px );
+  -webkit-backdrop-filter: blur( 7.0px );
+  border-right: 1px solid rgba( 255, 255, 255, 0.18 );
+  
 }
 .inputForm_active.inputForm_active{
   border: 1px solid rgb(151, 27, 27);
@@ -234,18 +251,27 @@ justify-content: space-between;
   margin: 5px;
   width: 80%;
   border: none;
-  color: #FFF;
-  background-color: #1937406b;
+  color: #e5e5e5;
+  padding: 12px;
+  /* background: rgba( 255, 255, 255, 0.1 ); */
+  background: #347880d0;
+  box-shadow: 0 5px 15px 0 rgba(131, 131, 133, 0.37);
+  backdrop-filter: blur( 6.0px );
+  -webkit-backdrop-filter: blur( 6.0px );
+  border-radius: 20px;
+  /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
 }
 
 .btn_exit{
-  align-self: center;
   display: flex;
-  max-width: 75%;
-  border: 3px solid #193740;
+  min-width: 150px;
+  max-width: 60%;
+  justify-content: center;
+  align-self: center;
+  border: 2px solid #193740;
   background-color: transparent;
   color: #2c5c5f;
-  font-weight: bold;
+  font-weight: 800;
   font-size: 15px;
 }
 .list_container{
@@ -293,9 +319,9 @@ justify-content: space-between;
   justify-content: space-between;
 }
 .dashboard_taskbody.active{
-  filter: blur(4px);
+  filter: blur(6px);
   pointer-events: none;
-  transition: .350ms;
+  transition: 550ms;
 }
 
 .form_task_container{
@@ -340,11 +366,13 @@ justify-content: space-between;
 .object_task{
   padding: 10px;
   margin: 10px;
-  background: rgba(230, 230, 230, 0.055);
-  backdrop-filter: blur(30px);
+  min-height: 120px;
+  background: rgba( 255, 255, 255, 0.15 );
+  /* box-shadow: 0 5px 32px 0 rgba( 31, 38, 135, 0.37 ); */
+  backdrop-filter: blur( 7.0px );
+  -webkit-backdrop-filter: blur( 7.0px );
   border-radius: 20px;
-  backdrop-filter: opacity(20%); 
-  box-shadow: 1px 3px 4px #5f5f5f52;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 .object_task p {
   text-align: center;
@@ -426,9 +454,13 @@ justify-content: space-between;
 .lista_terminados li{
   padding: 10px;
   min-height: 70px;
-  border: 1px solid red;
   width: 100%;
   margin: 3px 0;
+
+  background: rgba( 255, 255, 255, 0.5 );
+  backdrop-filter: blur( 25.0px );
+  -webkit-backdrop-filter: blur( 5.0px );
+  border-radius: 10px;
 }
 p.object_list{
   text-align: center;
