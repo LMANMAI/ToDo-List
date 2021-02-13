@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Singin = () => {
     return (  
         <>
-        <div className="container_auth login"></div>
          <div className="container">
          <div className="form_wraper">           
                 <div className="form_container"> 
@@ -13,12 +12,14 @@ const Singin = () => {
                         <div className="input_container">
                             <input 
                                 type="text"
+                                name="nombre"
                                 placeholder="Nombre"
                             />
                          </div>
                          <div className="input_container">
                              <input 
                                  type="email"
+                                 name="email"
                                  placeholder="Email"
                              />
                          </div> 
@@ -31,6 +32,7 @@ const Singin = () => {
                          <div className="input_container">
                              <input 
                                  type="password" 
+                                 name="password"
                                  placeholder="Repetir Contraseña"
                              />
                          </div>
@@ -47,9 +49,7 @@ const Singin = () => {
                      </div>
                 </div>
              </div>
-             
-             <div className="glass"></div>
-             
+                    
          </div>
         </>
     );

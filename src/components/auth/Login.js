@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Login = () => {
     return ( 
        <>
-       <div className="container_auth login"></div>
+       
         <div className="container">
             <div className="form_wraper">           
                <div className="form_container"> 
@@ -35,7 +35,7 @@ const Login = () => {
                     </div>
                </div>
             </div>
-            <div className="glass"></div>
+           
         </div>
        </>
        
