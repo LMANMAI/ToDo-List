@@ -1,15 +1,16 @@
 import React from 'react'
 import SideBar from '../layout/SideBar';
 import TaskBody from '../task/TaskBody';
+import ProyectList from '../proyects/ProyectList';
 
 const DashboardIndex = () => {
     return ( 
         <>
-         <div className="container_auth login"></div>
-            <div className="dashboard_wraper">
+          <div className="dashboard_wraper">
                 <div className="glass_dashboard">
-                  <SideBar/>       
-                  <TaskBody />
+                    <SideBar/>     
+                    <ProyectList/>  
+                    <TaskBody />
                 </div>
             </div>
         </>

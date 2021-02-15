@@ -14,7 +14,7 @@ const FormTask = () => {
         nombre:''
     });
     const { nombre } = tarea;
-
+    console.log(proyectoActual)
     useEffect(()=>{
         if(tareaactual !== null){
             setTarea(tareaactual);
@@ -55,6 +55,7 @@ const FormTask = () => {
             nombre:''
         })
     }
+    console.log(proyectoActual)
     return (        
         <Fragment> 
             {errortarea ?<p>El nombre para guardar la tarea es necesario</p> :null}
@@ -74,6 +75,7 @@ const FormTask = () => {
 
                         className="btn btn_submit"/> 
                 </form>
+                <div className="description"><p>{proyectoActual.desc}</p></div>
             </div>
         </Fragment>
      );

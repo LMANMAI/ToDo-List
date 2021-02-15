@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import ProyectList from '../proyects/ProyectList';
 import NewProyect from '../proyects/NewProyect';
 import EndProyects from '../proyects/EndProyects';
 import ProyectoContext from '../../context/proyects/proyectoContext';
+import { motion } from 'framer-motion';
 
 const SideBar = () => {
     const proyectoContext = useContext(ProyectoContext);
@@ -29,8 +29,7 @@ const SideBar = () => {
                     onClick={()=>mostrarTerminados()}
                     className="btn btn_crear">Proyectos Terminados</button>           
             </div>
-        <NewProyect />  
-        <ProyectList />
+        <NewProyect />        
         <EndProyects />
          <button 
             className="btn btn_exit"

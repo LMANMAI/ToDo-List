@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 const Login = () => {
     return ( 
-       <>
-       
+       <>       
         <div className="container">
             <div className="form_wraper">           
                <div className="form_container"> 
@@ -25,13 +24,13 @@ const Login = () => {
 
                    </form>
                    <div className="btn_container">
-                            <Link 
-                                className="btn btn_sec"
-                                to="/singin"
-                            >Obtener Cuenta</Link>
-                            <button 
-                                className="btn btn_primario"
-                            >Iniciar Sesion</button>                             
+                        <Link 
+                            className="btn btn_sec"
+                            to="/singin"
+                        >Obtener Cuenta</Link>
+                        <button 
+                            className="btn btn_primario"
+                        >Iniciar Sesion</button>                             
                     </div>
                </div>
             </div>
