@@ -17,9 +17,9 @@ import {
 
 const ProyectoState = props =>{
     const proyectos = [
-        {id: 1,nombre: 'Arq App'},
-        {id: 2,nombre: 'Pokemon APP'},
-        {id: 3,nombre: 'Portfolio'}
+        {id: 1,nombre: 'Arq App', desc: 'sssssssssssssssssss'},
+        {id: 2,nombre: 'Pokemon APP', desc: 'sssssssssssssssssssssssssssssss'},
+        {id: 3,nombre: 'Portfolio', desc: 'dd'}
     ]
     const InitialState = {
         panel: false,
@@ -72,10 +72,10 @@ const ProyectoState = props =>{
          })
      }
      //Seleccionar y poner un proyecto como activo
-     const proyectoActual = proyectoId =>{        
+     const proyectoActual = proyecto =>{        
          dispatch({
              type: PROYECTO_ACTIVO,
-             payload: proyectoId
+             payload: proyecto
          });
      }
      //Eliminar las tareas

@@ -10,7 +10,7 @@ import {
     MOSTRAR_TERMINADOS,
     TERMINAR_PROYECTO
     } from '../../types';
-
+// eslint-disable-next-line
 export default (state, action ) =>{
     switch(action.type){
         case MOSTRAR_FORMULARIO:
@@ -55,7 +55,7 @@ export default (state, action ) =>{
         case PROYECTO_ACTIVO:
             return{
                 ...state, 
-                proyectoactivo : state.proyectos.filter( proyecto => (proyecto.id === action.payload)),
+                proyectoactivo : state.proyectos.filter( proyecto => (proyecto.id === action.payload.id)),
                 panel: false,
                 panelproyecto: false
             }       
