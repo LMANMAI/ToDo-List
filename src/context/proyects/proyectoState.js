@@ -12,15 +12,12 @@ import {
         PROYECTO_ACTIVO,
         ELIMINAR_PROYECTO,
         MOSTRAR_TERMINADOS,
-        TERMINAR_PROYECTO
+        TERMINAR_PROYECTO,
+        PROYECTO_ERROR
         } from '../../types';
+import clienteAxios from '../../config/axios';
 
 const ProyectoState = props =>{
-    const proyectos = [
-        {id: 1,nombre: 'Arq App', desc: 'sssssssssssssssssss'},
-        {id: 2,nombre: 'Pokemon APP', desc: 'sssssssssssssssssssssssssssssss'},
-        {id: 3,nombre: 'Portfolio', desc: 'dd'}
-    ]
     const InitialState = {
         panel: false,
         panelproyecto: false,
@@ -28,7 +25,9 @@ const ProyectoState = props =>{
         errorformulario: false,
         proyectoactivo: null,
         panelterminados: false,
-        proyectosterminados: []
+        proyectosterminados: [],
+        mensaje: null,
+        badge: false
     }
   
     const [ state, dispatch ]= useReducer(ProyectoReducer, InitialState);
@@ -38,7 +37,7 @@ const ProyectoState = props =>{
             type : MOSTRAR_FORMULARIO
         })
      }
-     //mostarar el panel de proyectos
+     //mostarar el componente de proyectos
      const mostrarPanel = () =>{
          dispatch({
              type: MOSTRAR_PROYECTOS
@@ -51,19 +50,44 @@ const ProyectoState = props =>{
 
     }
      //obtener los proyectos
-     const obtenerProyectos = () =>{
-         dispatch({
+     const obtenerProyectos = async() =>{
+      try {
+        const requestP = await clienteAxios.get('/api/proyect');
+        console.log(requestP);
+        dispatch({
             type :OBTENER_PROYECTOS,
-            payload: proyectos
+            payload: requestP.data
          })
+      } catch (error) {
+        const alerta = {
+            msg:  error.response.data.msg,
+            categoria: 'alerta-error'
+        }
+        dispatch({
+            type: PROYECTO_ERROR,
+            payload: alerta
+        })
+      }
      }
      //Agrega Proyectos
-     const agregarProyecto = proyect =>{
-       
-        dispatch({
-            type: AGREGAR_PROYECTO,
-            payload: proyect
-        })
+     const agregarProyecto = async proyect =>{      
+        try {
+            const requestP = await clienteAxios.post('/api/proyect', proyect)
+            console.log(requestP.data.proyect);
+            dispatch({
+                type: AGREGAR_PROYECTO,
+                 payload: requestP.data.proyect
+            })
+        } catch (error) {
+            const alerta = {
+                msg:  error.response.data.msg,
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
      }
      //Valido el formulario
      const validarFormulario = () =>{
@@ -79,11 +103,25 @@ const ProyectoState = props =>{
          });
      }
      //Eliminar las tareas
-    const eliminarProyecto = proyectoID => {
+    const eliminarProyecto = async proyectoID => {
+        console.log(proyectoID)
+       try {
+        await clienteAxios.delete(`/api/proyect/${proyectoID}`);
         dispatch({
             type: ELIMINAR_PROYECTO,
             payload: proyectoID
          });
+       } catch (error) {           
+        //    console.log(error.response.data.msg);
+           const alerta = {
+               msg:  error.response.data.msg,
+               categoria: 'alerta-error dash'
+           }
+           dispatch({
+               type: PROYECTO_ERROR,
+               payload: alerta
+           })
+       }
      }    
     const terminarProyecto = proyecto => {
         dispatch({
@@ -103,6 +141,8 @@ const ProyectoState = props =>{
                 proyectoactivo : state.proyectoactivo,
                 panelterminados : state.panelterminados,
                 proyectosterminados: state.proyectosterminados,
+                mensaje: state.mensaje,
+                badge:state.badge,
                 mostrarPanel,
                 obtenerProyectos,
                 agregarProyecto,

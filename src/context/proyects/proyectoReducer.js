@@ -8,7 +8,8 @@ import {
     PROYECTO_ACTIVO,
     ELIMINAR_PROYECTO,
     MOSTRAR_TERMINADOS,
-    TERMINAR_PROYECTO
+    TERMINAR_PROYECTO,
+    PROYECTO_ERROR
     } from '../../types';
 // eslint-disable-next-line
 export default (state, action ) =>{
@@ -26,7 +27,8 @@ export default (state, action ) =>{
                 ...state,
                 panel: false,
                 panelproyecto: !state.panelproyecto,
-                panelterminados: false
+                panelterminados: false,
+                badge: false
             }
         case MOSTRAR_TERMINADOS:
             return{
@@ -38,14 +40,17 @@ export default (state, action ) =>{
         case OBTENER_PROYECTOS: 
             return{
                 ...state,
-                proyectos: action.payload
+                proyectos: action.payload,
+                mensaje: null
             }
         case AGREGAR_PROYECTO:
             return{
                 ...state,
                 proyectos: [action.payload, ...state.proyectos],
                 panel: false,
-                errorformulario: false
+                errorformulario: false,
+                mensaje: null,
+                badge: true
             }
         case VALIDAR_FORMULARIO:
             return{
@@ -55,7 +60,7 @@ export default (state, action ) =>{
         case PROYECTO_ACTIVO:
             return{
                 ...state, 
-                proyectoactivo : state.proyectos.filter( proyecto => (proyecto.id === action.payload.id)),
+                proyectoactivo : state.proyectos.filter( proyecto => (proyecto._id === action.payload._id)),
                 panel: false,
                 panelproyecto: false
             }       
@@ -65,13 +70,20 @@ export default (state, action ) =>{
                 ...state,
                 proyectos :state.proyectos.filter(proyecto => (proyecto.id !== action.payload.id)),
                 proyectosterminados: [ action.payload, ...state.proyectosterminados],
-                proyectoactivo: null    
+                proyectoactivo: null,
+                mensaje: null
             }
         case ELIMINAR_PROYECTO:
             return{
                 ...state,
                 proyectos :state.proyectos.filter(proyecto => (proyecto.id !== action.payload)),
-                proyectoactivo: null
+                proyectoactivo: null,
+                mensaje: null
+            }
+        case PROYECTO_ERROR:
+            return{
+                ...state,
+                mensaje: action.payload
             }
         default:
             return state;

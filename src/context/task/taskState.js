@@ -1,5 +1,4 @@
-import React, {useReducer} from 'react'
-
+import React, {useReducer} from 'react';
 //import el context y el reducer
 import TaskContext from './taskContext';
 import taskReducer from './taskReducer';
@@ -13,45 +12,43 @@ import {
     TASK_ACTUAL,
     ACTUALIZAR_TASK
 } from '../../types';
+import clienteAxios from '../../config/axios';
+
 const TaskState = props => {
     //state inicial
     const initialState = {
-        tareas:[
-            {id:1 ,proyectoId: 1 ,nombre: 'Elegir Lenguaje', estado: true},
-            {id:2 ,proyectoId: 1,nombre: 'Hacer Diseño en Figma', estado: false},
-            {id:3 ,proyectoId: 3 ,nombre: 'Comenzar el Proyecto', estado: false},
-            {id:4 ,proyectoId: 2,nombre: 'Elegir Lenguaje', estado: true},
-            {id:5 ,proyectoId: 2,nombre: 'Hacer Diseño en Figma', estado: false},
-            {id:6 ,proyectoId: 3,nombre: 'Comenzar el Proyecto', estado: false},
-            {id:7 ,proyectoId: 3,nombre: 'Elegir Lenguaje', estado: true},
-            {id:8 ,proyectoId: 1,nombre: 'Hacer Diseño en Figma', estado: false},
-            {id:9 ,proyectoId: 3,nombre: 'Comenzar el Proyecto', estado: false},
-            {id:10 ,proyectoId: 1,nombre: 'Elegir Lenguaje', estado: true},
-            {id:11 ,proyectoId: 2,nombre: 'Hacer Diseño en Figma', estado: false},
-            {id:12 ,proyectoId: 1,nombre: 'Comenzar el Proyecto', estado: false}
-        ],
-        tareasproyecto: null,
+        tareasproyecto: [],
         errortarea: false,
         tareaactual: null
     }
     const [ state, dispatch ] = useReducer(taskReducer, initialState);
     //Funciones 
     //obtener las tareas relacionadas con el id del proyecto
-    const obtenerTareas = Id => {
-       
+    const obtenerTareas = async proyecto => {
+       try {
+           const peticion = await clienteAxios.get('/api/task', {params: {proyecto}});
+        //    console.log(peticion.data)
         dispatch({
             type: TASK_PROYECTO,
-            payload: Id
-        })
+            payload: peticion.data
+        });
+       } catch (error) {
+           console.log(error);
+       }
+      
     }
-
     //Agregar nueva tarea
-    const agregarTarea = tarea => {
-       
+    const agregarTarea = async tarea => {
+        try {
+        const consulta = await clienteAxios.post('/api/task', tarea);
+        
         dispatch({
             type: AGREGAR_TAREA,
             payload: tarea
-        })
+        });
+       } catch (error) {
+           
+       }        
     }
     //validar la tarea
     const validarTarea = ()=> {
@@ -61,30 +58,35 @@ const TaskState = props => {
     }
 
     //eliminar tarea
-    const eliminarTarea = id => {        
-        dispatch({
-            type: DELETE_TASK,
-            payload: id
-        })
-    }
-    //cambiar estado de la tarea
-    const estadoTarea = tarea => {
-        dispatch({
-            type: TASK_STATE,
-            payload: tarea
-        })
-    }
-    const tareaActual = tarea => {
-      
-        dispatch({
-            type: TASK_ACTUAL,
-            payload: tarea
-        })
+    const eliminarTarea = async (id, proyecto) => {            
+        try {
+            await clienteAxios.delete(`/api/task/${id}`, {params: {proyecto}});
+            
+            dispatch({
+                type: DELETE_TASK,
+                payload: id
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
     //editar la tarea
-    const actualizarTask = tarea => {
+    const actualizarTask = async tarea => {
+        // console.log(tarea)
+        try {
+            const requestcambio = await clienteAxios.put(`/api/task/${tarea._id}`, tarea);
+            console.log(requestcambio.data.tarea)
+            dispatch({
+                type: ACTUALIZAR_TASK,
+                payload: requestcambio.data.tarea
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const tareaActual = tarea => {      
         dispatch({
-            type: ACTUALIZAR_TASK,
+            type: TASK_ACTUAL,
             payload: tarea
         })
     }
@@ -92,7 +94,6 @@ const TaskState = props => {
         <TaskContext.Provider
             value = {{
                 //valores del state
-                tareas: state.tareas,
                 tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,
                 tareaactual: state.tareaactual,
@@ -100,7 +101,6 @@ const TaskState = props => {
                 agregarTarea,
                 validarTarea,
                 eliminarTarea,
-                estadoTarea,
                 tareaActual,
                 actualizarTask
             }}
