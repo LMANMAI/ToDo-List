@@ -1,38 +1,40 @@
 import React, {useContext, useEffect}  from 'react';
 import Proyect from './Proyect';
 import ProyectoContext from '../../context/proyects/proyectoContext';
-import { motion, useCycle } from 'framer-motion';
+import { motion } from 'framer-motion';
+
+const container = {
+  hidden: { opacity: 1, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.1,
+      staggerChildren: 0.1
+    }
+  }
+}
+
 const ProyectList = () => {
     const proyectoContext = useContext(ProyectoContext);
     const { panelproyecto, proyectos, obtenerProyectos } = proyectoContext;
 
     //obtener proyectos cuando carga el componente    
     useEffect(() => {
-        obtenerProyectos();
-        //eslint
+        obtenerProyectos(); 
+        proyectos.map(proyecto => ( proyecto.estado ?console.log(proyecto) :console.log("en curso")))       
     }, []);     
-    const variants = {
-        open: {
-          transition: { staggerChildren: 0.07, delayChildren: 0.1 }
-        },
-        closed: {
-          transition: { staggerChildren: 0.05, delayChildren: 0.1 }
-        }
-      };
 
     return ( 
-    <div className={panelproyecto ?"list_container active" : "list_container"}>
-      {proyectos.length === 0 ?<p className="object_list">Todavia no creaste ningun proyecto!</p> 
-        :(<motion.ul
-            initial={false}
-            animate={panelproyecto ?"open" : "close"}
-            variants={variants}
-            >
-            {   proyectos.map(proyecto => (
-                <Proyect key={proyecto.id} proyecto={proyecto}/>))
-            }               
-            </motion.ul>
-            )}   
+    <div className={panelproyecto ?"list_container" :null}>
+      {proyectos.length === 0 
+      ?<p className="object_list">Todavia no creaste ningun proyecto!</p> 
+      :(<motion.ul
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          >{ proyectos.map(proyecto => (<Proyect key={proyecto._id} proyecto={proyecto}/>))
+          }</motion.ul> )}   
     </div>
      );
 }

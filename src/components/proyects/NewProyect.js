@@ -27,12 +27,13 @@ const NewProyect = () => {
         if(nombre.trim()===''){
             validarFormulario();
             return;
-        }
-        agregarProyecto(proyect);
+        }        
         createProyect({
             nombre:'',
             desc:''
-        })
+        });
+        agregarProyecto(proyect);
+        // console.log(proyect)
     }
     //animacion
     const variants = {
@@ -51,6 +52,7 @@ const NewProyect = () => {
         <motion.div 
             className={panel ?'dashboard_panel active' :'dashboard_panel'}
             variants={variants}
+            initial= 'close'
             animate={panel ?'open' :'close'}           
         >
             <form  onSubmit={handleSubmit} className="form_newProyect">

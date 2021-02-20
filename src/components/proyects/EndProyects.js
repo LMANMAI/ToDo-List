@@ -29,11 +29,9 @@ const EndProyects = () => {
        <ul className="lista_terminados">
           {proyectosterminados.map(proyecto => (
                 <motion.li 
-                  key={proyecto.id}
+                  key={proyecto._id}
                   
-               >
-                  {proyecto.nombre}
-                </motion.li>
+               >{proyecto.nombre}</motion.li>
                 ))}               
             </ul>
       </motion.div>

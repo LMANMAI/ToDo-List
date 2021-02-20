@@ -3,6 +3,13 @@ import ProyectoContext from '../../context/proyects/proyectoContext';
 import TaskContext from '../../context/task/taskContext';
 import { motion } from 'framer-motion';
 
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+}
 const Proyect = ({proyecto}) => {
     const proyectoContext = useContext(ProyectoContext);
     const {proyectoActual } = proyectoContext;
@@ -12,32 +19,14 @@ const Proyect = ({proyecto}) => {
 
     const handleClick = proyecto => {
         proyectoActual(proyecto);
-        obtenerTareas(proyecto.id);
+        obtenerTareas(proyecto._id);
     }
-    const variants ={   
-        open:{
-            y: 0,
-            opacity: 1,
-            transition: {
-            y: { stiffness: 100, velocity: -50 }
-        },
-        scale: 0.9
-        },
-        close: {
-            y: 50,
-            opacity: 0,
-            transition: {
-                y: { stiffness: 100 }
-            }
-        }
-    }
+
     return ( 
         <motion.li  
             className="object_list" 
-            key={proyecto.id} 
-            initial={{y: 280}}
-            variants={variants}
-        >
+            key={proyecto._id}
+            variants={item}        >
             <button onClick={ ()=> handleClick( proyecto )} className="btn btn_proyect">{proyecto.nombre}</button>
          </motion.li>
      );
