@@ -14,7 +14,7 @@ const FormTask = () => {
         nombre:''
     });
     const { nombre } = tarea;
-    console.log(proyectoActual)
+    // console.log(proyectoActual)
     useEffect(()=>{
         if(tareaactual !== null){
             setTarea(tareaactual);
@@ -43,8 +43,8 @@ const FormTask = () => {
         //estoy agregando una nueva tarea
        if(tareaactual === null){
            console.log(tarea)
-        tarea.proyectoId = proyectoActual.id;
-        tarea.estado = false;
+        tarea.proyecto = proyectoActual._id;
+        
         agregarTarea(tarea);
        }else{
         //de lo contrario estoy actualizando la tarea
@@ -55,7 +55,7 @@ const FormTask = () => {
             nombre:''
         })
     }
-    console.log(proyectoActual)
+    // console.log(proyectoActual)
     return (        
         <Fragment> 
             {errortarea ?<p>El nombre para guardar la tarea es necesario</p> :null}

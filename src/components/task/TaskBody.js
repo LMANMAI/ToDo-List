@@ -1,14 +1,20 @@
 import React,{ useContext } from 'react';
 import FormTask from './FormTask';
 import TaskList from './TaskList';
-import ProyectList from '../proyects/ProyectList';
-import ProyectoContext from '../../context/proyects/proyectoContext'
+import ProyectoContext from '../../context/proyects/proyectoContext';
 
 const TaskBody = () => {
     const proyectoContext = useContext(ProyectoContext);
     const { panel, panelproyecto, panelterminados, proyectoactivo, eliminarProyecto, terminarProyecto } = proyectoContext;
     
     if(!proyectoactivo) return <p></p>
+    
+    const handdleProyectState = proyecto => {
+        if(proyecto.estado){
+            proyecto.estado = false
+        }
+        terminarProyecto(proyecto)
+    }
 
     const [proyectoActual] = proyectoactivo;
     return ( 
@@ -29,7 +35,7 @@ const TaskBody = () => {
                     <button
                         type="button"
                         className="btn btn_terminar"
-                        onClick={()=> eliminarProyecto(proyectoActual.id)}
+                        onClick={()=> handdleProyectState(proyectoActual._id)}
                     >Eliminar Proyecto</button> 
                 </div>  
         </main>
