@@ -390,16 +390,21 @@ backdrop-filter: blur( 3.5px );
     width: 50%;
     text-align: center;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
 .form_task_container .input_task{
     margin-bottom: 5px;
 }
 
-.form_task_container .btn_submit{
-  background-color: #193740;
+.btn_submit{
+  background-color: #4b72a8;
   color: white;
-  width: 80%;
+  max-width: 80%;
+  padding: 10px;
+  margin-top: 5px;
 }
 .contenedor_tareas{
     padding: 5px;
@@ -466,7 +471,7 @@ backdrop-filter: blur( 3.5px );
   color: #cab8a1;
 }
 .btn_eliminar{
-  background-color: #C4B096;
+  background-color: #4b72a8;
   color: white;
 }
 .btn_editar{
@@ -476,14 +481,13 @@ backdrop-filter: blur( 3.5px );
 .btn_estado{
   flex-grow: 1;
 } 
+
 .btn_terminar{
   align-self: flex-start;
-}
-.btn_terminar{
-  background-color: #193740;
-  color: white;
-  font-weight: 400;
-  transition: .850ms;
+  background-color: transparent;
+  color: #4b72a8;
+  border: 3px solid #4b72a8;
+  font-weight: bold;
 }
 .inactivo{
   flex-grow: 2;
@@ -498,7 +502,6 @@ backdrop-filter: blur( 3.5px );
   width: 90%;
   justify-content: space-between;
 }
-
 .width{
   min-width: 350px;
 }
@@ -506,10 +509,11 @@ backdrop-filter: blur( 3.5px );
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 15px;
   align-items: center;
   justify-content: center;
   background: #ffffff09;
+  overflow-y: auto;
 }
 .lista_terminados li{
   padding: 10px;
@@ -520,6 +524,12 @@ backdrop-filter: blur( 3.5px );
   backdrop-filter: blur( 25.0px );
   -webkit-backdrop-filter: blur( 5.0px );
   border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.info span{
+  font-size: 13px;
 }
 p.object_list{
   text-align: center;
@@ -538,4 +548,7 @@ p.object_list{
   word-break: break-all;
   padding: 5px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
