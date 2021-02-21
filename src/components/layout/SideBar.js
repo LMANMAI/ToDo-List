@@ -6,12 +6,16 @@ import AuthContext from '../../context/auth/authContext';
 
 const SideBar = () => {
     const proyectoContext = useContext(ProyectoContext);
-    const { panel, panelproyecto, panelterminados, badge, showPanel, mostrarPanel, mostrarTerminados } = proyectoContext;
+    const { panel, panelproyecto, panelterminados, badge, badgeT, showPanel, mostrarPanel, mostrarTerminados } = proyectoContext;
     
     const authContext = useContext(AuthContext);
     const { user, EndSesion } = authContext;
     
-    
+    const Exit = () =>{
+        setTimeout(() => {
+            EndSesion() 
+        }, 1000);
+    }
     return (         
         <div className={panel || panelproyecto || panelterminados ?"dashboard_sidebar active" :"dashboard_sidebar"} >
             <div className="brand_logo">
@@ -36,14 +40,14 @@ const SideBar = () => {
                     <button 
                         data-badge="!"
                         onClick={()=>mostrarTerminados()}
-                        className="btn btn_crear">Proyectos Terminados</button> 
+                        className={badgeT ?"btn btn_crear show" :"btn btn_crear"}>Proyectos Terminados</button> 
                 </div>          
             </div>
         <NewProyect />        
         <EndProyects />
          <button 
             className="btn btn_exit"
-            onClick={()=> EndSesion()}
+            onClick={()=> Exit()}
         >Cerrar Sesión</button>
         </div>
      );
