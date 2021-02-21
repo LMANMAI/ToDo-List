@@ -33,7 +33,7 @@ const NewProyect = () => {
             desc:''
         });
         agregarProyecto(proyect);
-        // console.log(proyect)
+        // //console.log(proyect)
     }
     //animacion
     const variants = {

@@ -17,12 +17,11 @@ const container = {
 
 const ProyectList = () => {
     const proyectoContext = useContext(ProyectoContext);
-    const { panelproyecto, proyectos, obtenerProyectos } = proyectoContext;
+    const { panelproyecto, proyectos, proyectosterminados, obtenerProyectos, terminarProyecto } = proyectoContext;
 
     //obtener proyectos cuando carga el componente    
     useEffect(() => {
-        obtenerProyectos(); 
-        proyectos.map(proyecto => ( proyecto.estado ?console.log(proyecto) :console.log("en curso")))       
+        obtenerProyectos();              
     }, []);     
 
     return ( 
