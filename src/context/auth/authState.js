@@ -62,11 +62,16 @@ const AuthState = props =>{
                 type: OBTENER_USUARIO,
                 payload: respuesta.data.user
             })
-        } catch (error) {
-            // //console.log(error.response);
+        }catch (error) {
+            //console.log(error.response);
+            const mensaje = {
+                msg: error.response.data.msg,
+                categoria: 'alerta-error'
+            }
             dispatch({
-                type: LOGIN_ERROR
-            });
+                type: LOGIN_ERROR,
+                payload: mensaje
+            })
         }
     }
      //login de usuario
