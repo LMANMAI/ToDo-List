@@ -27,13 +27,13 @@ const TaskState = props => {
     const obtenerTareas = async proyecto => {
        try {
            const peticion = await clienteAxios.get('/api/task', {params: {proyecto}});
-        //    console.log(peticion.data)
+        //    //console.log(peticion.data)
         dispatch({
             type: TASK_PROYECTO,
             payload: peticion.data
         });
        } catch (error) {
-           console.log(error);
+           //console.log(error);
        }
       
     }
@@ -56,32 +56,30 @@ const TaskState = props => {
             type: VALIDAR_TAREA
         })
     }
-
     //eliminar tarea
     const eliminarTarea = async (id, proyecto) => {            
         try {
-            await clienteAxios.delete(`/api/task/${id}`, {params: {proyecto}});
-            
+            await clienteAxios.delete(`/api/task/${id}`, {params: {proyecto}});            
             dispatch({
                 type: DELETE_TASK,
                 payload: id
             });
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
     //editar la tarea
     const actualizarTask = async tarea => {
-        // console.log(tarea)
+        // //console.log(tarea)
         try {
             const requestcambio = await clienteAxios.put(`/api/task/${tarea._id}`, tarea);
-            console.log(requestcambio.data.tarea)
+            //console.log(requestcambio.data.tarea)
             dispatch({
                 type: ACTUALIZAR_TASK,
                 payload: requestcambio.data.tarea
             });
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     }
     const tareaActual = tarea => {      
@@ -97,6 +95,7 @@ const TaskState = props => {
                 tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,
                 tareaactual: state.tareaactual,
+                counttask: state.counttask,
                 obtenerTareas,
                 agregarTarea,
                 validarTarea,

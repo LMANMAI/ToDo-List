@@ -11,7 +11,6 @@ import AuthState from './context/auth/authState';
 import tokenAuth from './config/tokenAuth';
 //Protego el componente
 import PrivateRoute from './routes/PrivateRoute';
-
 function App() {
   //reviso que haya un token
   const token = localStorage.getItem('token');
