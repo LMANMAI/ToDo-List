@@ -27,7 +27,8 @@ const ProyectoState = props =>{
         panelterminados: false,
         proyectosterminados: [],
         mensaje: null,
-        badge: false
+        badge: false,
+        badgeT: false
     }
   
     const [ state, dispatch ]= useReducer(ProyectoReducer, InitialState);
@@ -53,11 +54,12 @@ const ProyectoState = props =>{
      const obtenerProyectos = async() =>{
       try {
         const requestP = await clienteAxios.get('/api/proyect');
-        console.log(requestP);
+        // //console.log(requestP.data);
         dispatch({
             type :OBTENER_PROYECTOS,
             payload: requestP.data
-         })
+         });
+
       } catch (error) {
         const alerta = {
             msg:  error.response.data.msg,
@@ -73,7 +75,7 @@ const ProyectoState = props =>{
      const agregarProyecto = async proyect =>{      
         try {
             const requestP = await clienteAxios.post('/api/proyect', proyect)
-            console.log(requestP.data.proyect);
+            // //console.log(requestP.data.proyect);
             dispatch({
                 type: AGREGAR_PROYECTO,
                  payload: requestP.data.proyect
@@ -104,7 +106,7 @@ const ProyectoState = props =>{
      }
      //Eliminar las tareas
     const eliminarProyecto = async proyectoID => {
-        console.log(proyectoID)
+    //    //console.log (proyectoID)
        try {
         await clienteAxios.delete(`/api/proyect/${proyectoID}`);
         dispatch({
@@ -112,7 +114,7 @@ const ProyectoState = props =>{
             payload: proyectoID
          });
        } catch (error) {           
-        //    console.log(error.response.data.msg);
+        //    //console.log(error.response.data.msg);
            const alerta = {
                msg:  error.response.data.msg,
                categoria: 'alerta-error dash'
@@ -123,11 +125,19 @@ const ProyectoState = props =>{
            })
        }
      }    
-    const terminarProyecto = proyecto => {
+    const terminarProyecto = async proyecto => {
+        //console.log(proyecto)
+       try {
+        const consulta = await clienteAxios.put(`/api/proyect/${proyecto._id}`, proyecto);
+        //console.log(consulta)
         dispatch({
             type: TERMINAR_PROYECTO,
             payload: proyecto
-        })
+        });
+       } catch (error) {
+           //console.log(error.response);
+       }
+        
     }
             
     return(
@@ -143,6 +153,7 @@ const ProyectoState = props =>{
                 proyectosterminados: state.proyectosterminados,
                 mensaje: state.mensaje,
                 badge:state.badge,
+                badgeT:state.badgeT,
                 mostrarPanel,
                 obtenerProyectos,
                 agregarProyecto,

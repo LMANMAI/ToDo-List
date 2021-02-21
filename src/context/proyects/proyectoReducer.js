@@ -35,12 +35,15 @@ export default (state, action ) =>{
                 ...state,  
                 panel: false,
                 panelproyecto: false,
-                panelterminados: !state.panelterminados               
+                panelterminados: !state.panelterminados ,
+                badgeT: false              
             }
         case OBTENER_PROYECTOS: 
             return{
                 ...state,
-                proyectos: action.payload,
+                // proyectos: action.payload,
+                proyectos: action.payload.filter(proyecto => ( proyecto.estado ?null :action.payload)),
+                proyectosterminados: action.payload.filter(proyecto => ( proyecto.estado ?action.payload :null)),
                 mensaje: null
             }
         case AGREGAR_PROYECTO:
@@ -63,20 +66,21 @@ export default (state, action ) =>{
                 proyectoactivo : state.proyectos.filter( proyecto => (proyecto._id === action.payload._id)),
                 panel: false,
                 panelproyecto: false
-            }       
-            
+            }                   
         case TERMINAR_PROYECTO:
             return{
                 ...state,
-                proyectos :state.proyectos.filter(proyecto => (proyecto.id !== action.payload.id)),
-                proyectosterminados: [ action.payload, ...state.proyectosterminados],
+                proyectos :state.proyectos.filter(proyecto => (proyecto._id !== action.payload._id)),
+                proyectosterminados: [ ...state.proyectosterminados,  action.payload],
                 proyectoactivo: null,
-                mensaje: null
+                mensaje: null,
+                badgeT: true
             }
         case ELIMINAR_PROYECTO:
             return{
                 ...state,
-                proyectos :state.proyectos.filter(proyecto => (proyecto.id !== action.payload)),
+                proyectos :state.proyectos.filter(proyecto => (proyecto._id !== action.payload)),
+                proyectosterminados: state.proyectosterminados.filter(proyecto => (proyecto._id !== action.payload)),
                 proyectoactivo: null,
                 mensaje: null
             }
