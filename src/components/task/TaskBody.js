@@ -8,10 +8,10 @@ const TaskBody = () => {
     const { panel, panelproyecto, panelterminados, proyectoactivo, eliminarProyecto, terminarProyecto } = proyectoContext;
     
     if(!proyectoactivo) return <p></p>
-    
+
     const handdleProyectState = proyecto => {
-        if(proyecto.estado){
-            proyecto.estado = false
+        if(!proyecto.estado){
+            proyecto.estado = true;
         }
         terminarProyecto(proyecto)
     }
@@ -30,12 +30,12 @@ const TaskBody = () => {
                     <button
                         type="button"
                         className="btn btn_terminar"
-                        onClick={()=> terminarProyecto(proyectoActual)}
+                        onClick={()=> handdleProyectState(proyectoActual)}
                     >Terminar Proyecto</button>
                     <button
                         type="button"
-                        className="btn btn_terminar"
-                        onClick={()=> handdleProyectState(proyectoActual._id)}
+                        className="btn btn_eliminar"
+                        onClick={()=> eliminarProyecto(proyectoActual._id)}
                     >Eliminar Proyecto</button> 
                 </div>  
         </main>

@@ -7,8 +7,8 @@ const TaskList = () => {
     const { tareasproyecto } = taskContext; 
 
     useEffect(()=>{
-       
-    },[]);  
+      //  //console.log(tareasproyecto.length)
+    },[tareasproyecto]);  
     
     const container = {
         hidden: { opacity: 1, scale: 0 },
