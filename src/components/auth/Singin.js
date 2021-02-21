@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AlertaContext from '../../context/alertas/alertaContext';
 import AuthContext from '../../context/auth/authContext';
+import SpinKit from '../layout/SpinKit';
 
 const Singin = (props) => {
     //contexts
@@ -9,11 +10,13 @@ const Singin = (props) => {
     const {alerta, mostrarAlerta} = alertaContext;
 
     const authContext = useContext(AuthContext);
-    const { mensaje, autenticado, registerUser } = authContext;
+    const { mensaje, autenticado, cargandoSpin, registerUser } = authContext;
 
     useEffect(()=>{
         if(autenticado){
+           setTimeout(() => {
             props.history.push('/dashboard');
+           }, 2000);
         }
         if(mensaje){
             mostrarAlerta( mensaje.msg, mensaje.categoria);
@@ -62,7 +65,8 @@ const Singin = (props) => {
     return (  
         <div className="container">
             <div className="form_wraper">     
-            {alerta ?(<div className={alerta.categoria}>{alerta.msg}</div>) :null}      
+            {alerta ?(<div className={alerta.categoria}>{alerta.msg}</div>) :null}  
+            {cargandoSpin ?<SpinKit /> :(
                 <div className="form_container"> 
                 <h2>Obtener una Cuenta</h2>                  
                     <form onSubmit={handleSubmit}>
@@ -110,11 +114,13 @@ const Singin = (props) => {
                             <input 
                                 type="submit"
                                 className="btn btn_primario btn_auth"
-                                value="Iniciar Sesion"
+                                value="Obtener Cuenta"
                             />                                           
                         </div>
                     </form>
                 </div>
+            )}    
+                
              </div>                   
          </div>
         
