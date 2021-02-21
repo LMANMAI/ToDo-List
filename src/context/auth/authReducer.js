@@ -17,7 +17,8 @@ export default (state, action)=>{
                 ...state,
                 autenticado: true,
                 mensaje: null,
-                cargando: false
+                cargando: false,
+                cargandoSpin: true
         }
         case OBTENER_USUARIO:
             return{
@@ -36,7 +37,8 @@ export default (state, action)=>{
                 user: null,
                 autenticado: null,
                 mensaje: action.payload,
-                cargando: false
+                cargando: false,
+                cargandoSpin: false
         }
         default:
            return state;

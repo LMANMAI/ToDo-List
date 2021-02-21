@@ -20,14 +20,16 @@ const AuthState = props =>{
         autenticado: null,
         user: null,
         mensaje: null,
-        cargando: true
+        cargando: true,
+        cargandoSpin: false
     }
     const [ state, dispatch ] = useReducer(AuthReducer, initialState);
     //Funciones
+    //registro usuario
     const registerUser = async user =>{
         try {
             const respuesta = await clienteAxios.post('/api/users', user);
-            console.log(respuesta)
+            // //console.log(respuesta)
             dispatch({
                 type: REGISTRO_EXITOSO,
                 payload: respuesta.data
@@ -35,7 +37,7 @@ const AuthState = props =>{
             //obtenfo el usuario
             userAuth();
         } catch (error) {
-            // console.log(error.response.data.msg);
+            // //console.log(error.response.data.msg);
             const alerta = {
                 msg: error.response,
                 categoria: 'alerta-error'
@@ -55,13 +57,13 @@ const AuthState = props =>{
         }
         try {
             const respuesta = await clienteAxios.get('/api/auth');
-            console.log(respuesta);
+            // //console.log(respuesta);
             dispatch({
                 type: OBTENER_USUARIO,
                 payload: respuesta.data.user
             })
         } catch (error) {
-            console.log(error.response);
+            // //console.log(error.response);
             dispatch({
                 type: LOGIN_ERROR
             });
@@ -69,10 +71,10 @@ const AuthState = props =>{
     }
      //login de usuario
      const loginUser = async user =>{
-        //  console.log(user)
+          //  //console.log(user)
         try {
             const consulta = await clienteAxios.post('/api/auth', user);
-            // console.log(consulta);
+            // //console.log(consulta);
             dispatch({
                 type: LOGIN_EXITOSO,
                 payload: consulta.data
@@ -80,7 +82,7 @@ const AuthState = props =>{
             userAuth();
 
         } catch (error) {
-            console.log(error.response);
+            //console.log(error.response);
             const mensaje = {
                 msg: error.response.data.msg,
                 categoria: 'alerta-error'
@@ -107,6 +109,7 @@ const AuthState = props =>{
                 user: state.user,
                 mensaje : state.mensaje,
                 cargando: state.cargando,
+                cargandoSpin: state.cargandoSpin,
                 registerUser,
                 userAuth, 
                 loginUser,
