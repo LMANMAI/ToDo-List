@@ -11,7 +11,7 @@ body{
   
   background-image: linear-gradient(to left top, #68c4cc, #5eb5bd, #54a7af, #4b99a0, #418b92, #3a8897, #38849c, #3a809f, #5882b1, #8082bb, #a97fb8, #cc7caa);
 }
-input[type="text"],
+/* input[type="text"],
 input[type="password"],
 input[type="number"],
 input[type="email"]{
@@ -35,7 +35,7 @@ input[type="number"]:focus,
 input[type="email"]:focus{
   outline: none;
   border-bottom: 5px solid #f02d7b;
-}
+} */
 .textArea{
   width: 120%;
   height: 120px;
