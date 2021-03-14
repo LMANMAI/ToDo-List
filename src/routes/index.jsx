@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //importo los componentes
-import Login from "../components/auth/Login";
-import Singin from "../components/auth/Singin";
+
 import DashboardIndex from "../components/dashboard/DashboardIndex";
 import { AuthPage } from '../pages'
 //importo los context
@@ -25,8 +24,7 @@ function Routes() {
           <AuthState>
             <Router>
               <Switch>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/singin" component={Singin} />
+                <Route exact path="/" component={AuthPage} />
                 <Route exact path="/pruebas" component={AuthPage} />
                 <PrivateRoute
                   exact

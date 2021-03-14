@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import AlertaContext from '../../context/alertas/alertaContext';
-import AuthContext from '../../context/auth/authContext';
-import SpinKit from '../layout/SpinKit';
+import AlertaContext from '../../../context/alertas/alertaContext';
+import AuthContext from '../../../context/auth/authContext';
+import SpinKit from '../../../components/layout/SpinKit';
 
-const Singin = (props) => {
+const SignIn = (props) => {
     //contexts
     const alertaContext = useContext(AlertaContext);
     const {alerta, mostrarAlerta} = alertaContext;
@@ -127,4 +127,4 @@ const Singin = (props) => {
     );
 }
  
-export default Singin;
+export default SignIn;
