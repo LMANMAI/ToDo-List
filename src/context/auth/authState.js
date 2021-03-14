@@ -76,7 +76,7 @@ const AuthState = props =>{
     }
      //login de usuario
      const loginUser = async user =>{
-          //  //console.log(user)
+          console.log(user)
         try {
             const consulta = await clienteAxios.post('/api/auth', user);
             // //console.log(consulta);

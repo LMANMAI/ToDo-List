@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
@@ -28,21 +29,19 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     //valido que no tenga campos vacios
-    if (email.trim() === "" || password.trim() === "") {
+    if (email.trim() === "" || password.trim()   === "") {
       mostrarAlerta("Todos los campos son necesarios", "alerta-error");
       return;
     }
     loginUser(user);
   };
-
-  useEffect(() => {
+  let history = useHistory();
+  useEffect(() => {    
     if (autenticado) {
-      setTimeout(() => {
-        props.history.push("/dashboard");
+        history.push('/dashboard');
         if (mensaje) {
-          mostrarAlerta(mensaje.msg, mensaje.categoria);
-        }
-      }, 1000);
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+          }     
     }
   }, [mensaje, autenticado, props.history]);
 
@@ -53,10 +52,10 @@ const Login = (props) => {
         <SpinKit />
       ) : (
         <>
-          <form onSubmit={handleSubmit} className="SignIn">
-            <h2 className="SignIn_tittle">Iniciar Sesion</h2>
+          <form onSubmit={handleSubmit} className="sing_in_form">
+            <h2 className="titulo">Iniciar Sesion</h2>
 
-            <div className="SignIn_inputfield">
+            <div className="input_field">
               <FaUserAlt />
               <input
                 type="email"
@@ -67,7 +66,7 @@ const Login = (props) => {
               />
             </div>
 
-            <div className="SignIn_inputfield">
+            <div className="input_field">
               <FaLock />
               <input
                 type="password"
@@ -77,17 +76,11 @@ const Login = (props) => {
                 placeholder="Contraseña"
               />
             </div>
-
-            <div className="SignIn_btn_container">
-              <Link className="SignIn_btn" to="/singin">
-                Obtener Cuenta
-              </Link>
-              <input
-                type="submit"
-                className="SignIn_btn-ingreso"
-                value="Entrar"
-              />
-            </div>
+            <input
+              type="submit"
+              className="SignIn_ContainerBtn-btn primary"
+              value="Entrar"
+            />
           </form>
         </>
       )}

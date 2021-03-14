@@ -1,29 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Login from "./Login";
 import SignIn from "./Signin";
+import AnimationContext from "../../context/animations/AnimationContext";
+
 import "./index.scss";
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #fff;
-  overflow: hidden;
-  ::before {
-    content: "";
-    position: absolute;
-    width: 2000px;
-    height: 2000px;
-    /* border-radius: 50%; */
-    right: 48%;
-    top: -10%;
-    background-color: #4d70a5;
-    transform: translateY(-10%) rotate(45deg) translateX(-27%);
-    z-index: 6;
-    transition: 1.8s all ease-in-out;
-  }
-`;
 const FormContainer = styled.div`
   position: absolute;
   width: 100%;
@@ -51,19 +33,51 @@ const PanelContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 `;
+
 function AuthPage() {
+  const animaContext = useContext(AnimationContext);
+  const { panel, movePanelAuth } = animaContext;
   return (
-    <Container>
-      <FormContainer>
-        <SignInSignUpContainer>
+    <>
+      <div className={panel ? "container sign_up_mode" : "container"}>
+        <div className="form_container">
+          <div className="singin_singup_container">
             <Login />
-            
-        </SignInSignUpContainer>
-      </FormContainer>
-      <PanelContainer className="panel panel-left">
-            PANEL
-          </PanelContainer>
-    </Container>
+            <SignIn />
+          </div>
+        </div>
+
+        <div className="panel_container">
+          <div className="panel panel-left">
+            <div className="content">
+              <h3>¿Nuevo aqui?</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+              <button
+                className="btn transparent"
+                onClick={() => movePanelAuth()}
+                id="sing-up-btn"
+              >
+                Registrarse
+              </button>
+            </div>
+          </div>
+
+          <div className="panel right-panel">
+            <div className="content">
+              <h3>¿Ya tenes una cuenta?</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+              <button
+                className="btn transparent"
+                onClick={() => movePanelAuth()}
+                id="sing-in-btn"
+              >
+                Inicia Sesion
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
