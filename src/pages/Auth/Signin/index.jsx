@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { FaUserAlt, FaLock } from "react-icons/fa";
+import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
@@ -13,7 +13,7 @@ const SignIn = (props) => {
 
   const authContext = useContext(AuthContext);
   const { mensaje, autenticado, cargandoSpin, registerUser } = authContext;
-let history = useHistory();
+  let history = useHistory();
   useEffect(() => {
     if (autenticado) {
       setTimeout(() => {
@@ -73,63 +73,59 @@ let history = useHistory();
 
   return (
     <>
-      {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
-      {cargandoSpin ? (
-        <SpinKit />
-      ) : (
-        <form className="sing_up_form" onSubmit={handleSubmit}>
-          <h2 className="titulo">Obtener una Cuenta</h2>
-          <div className="input_field">
-            <FaUserAlt />
-            <input
-              type="text"
-              name="nombre"
-              value={nombre}
-              onChange={handleChange}
-              placeholder="Nombre de usuario"
-            />
-          </div>
-
-          <div className="input_field">
-            <FaUserAlt />
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              placeholder="Nombre de usuario o Email"
-            />
-          </div>
-
-          <div className="input_field">
-            <FaLock />
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              placeholder="Contraseña"
-            />
-          </div>
-
-          <div className="input_field">
-            <FaLock />
-            <input
-              type="password"
-              name="confirmar"
-              value={confirmar}
-              onChange={handleChange}
-              placeholder="Repetir Contraseña"
-            />
-          </div>
-
+      <form className="sing_up_form" onSubmit={handleSubmit}>
+        {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
+        <h2 className="titulo">Obtener una Cuenta</h2>
+        <div className="input_field">
+          <FaUserAlt />
           <input
-            type="submit"
-            className="SignIn_ContainerBtn-btn primary"
-            value="Continuar"
+            type="text"
+            name="nombre"
+            value={nombre}
+            onChange={handleChange}
+            placeholder="Nombre de usuario"
           />
-        </form>
-      )}
+        </div>
+
+        <div className="input_field">
+          <FaEnvelope  />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+        </div>
+
+        <div className="input_field">
+          <FaLock />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            placeholder="Contraseña"
+          />
+        </div>
+
+        <div className="input_field">
+          <FaLock />
+          <input
+            type="password"
+            name="confirmar"
+            value={confirmar}
+            onChange={handleChange}
+            placeholder="Repetir Contraseña"
+          />
+        </div>
+
+        <input
+          type="submit"
+          className="btn primario"
+          value="Continuar"
+        />
+      </form>
     </>
   );
 };
