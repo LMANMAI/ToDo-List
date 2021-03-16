@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //importo los componentes
-import Login from "../components/auth/Login";
-import Singin from "../components/auth/Singin";
-import DashboardIndex from "../components/dashboard/DashboardIndex";
-import { AuthPage } from '../pages'
+import { AuthPage, DashboardPage } from "../pages";
 //importo los context
-import ProyectoState from "../context/proyects/proyectoState";
-import TaskState from "../context/task/taskState";
-import AlertaState from "../context/alertas/alertaState";
-import AuthState from "../context/auth/authState";
+import {
+  ProyectoState,
+  TaskState,
+  AlertaState,
+  AuthState,
+  AnimationState,
+} from "../context";
+
 import tokenAuth from "../config/tokenAuth";
 //Protego el componente
 import PrivateRoute from "./PrivateRoute";
@@ -23,18 +24,18 @@ function Routes() {
       <TaskState>
         <AlertaState>
           <AuthState>
-            <Router>
-              <Switch>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/singin" component={Singin} />
-                <Route exact path="/pruebas" component={AuthPage} />
-                <PrivateRoute
-                  exact
-                  path="/dashboard"
-                  component={DashboardIndex}
-                />
-              </Switch>
-            </Router>
+            <AnimationState>
+              <Router>
+                <Switch>
+                  <Route exact path="/" component={AuthPage} />
+                  <PrivateRoute
+                    exact
+                    path="/Dashboard"
+                    component={DashboardPage}
+                  />
+                </Switch>
+              </Router>
+            </AnimationState>
           </AuthState>
         </AlertaState>
       </TaskState>

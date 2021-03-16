@@ -1,13 +1,22 @@
 import React,{ useContext } from 'react';
 import FormTask from './FormTask';
 import TaskList from './TaskList';
-import ProyectoContext from '../../context/proyects/proyectoContext';
+import ProyectList from "../proyects/ProyectList";
+
+import ProyectoContext from '../../../../context/proyects/proyectoContext';
+import NewProyect from '../proyects/NewProyect';
+import EndProyects from '../proyects/EndProyects';
 
 const TaskBody = () => {
     const proyectoContext = useContext(ProyectoContext);
     const { panel, panelproyecto, panelterminados, proyectoactivo, eliminarProyecto, terminarProyecto } = proyectoContext;
     
-    if(!proyectoactivo) return <p></p>
+    if(!proyectoactivo) return <div className="TaskBody_inactive">
+        <p>Todavia no hay un proyecto activo</p>
+        <NewProyect />
+        {/* <ProyectList />
+        <EndProyects /> */}
+    </div>
 
     const handdleProyectState = proyecto => {
         if(!proyecto.estado){
@@ -20,6 +29,7 @@ const TaskBody = () => {
     return ( 
         <>
         <main className={panel || panelproyecto || panelterminados ?"dashboard_taskbody active" :"dashboard_taskbody"} >
+        {panelproyecto && <ProyectList />}
            <h2>{proyectoActual.nombre}</h2>
                 <FormTask />
                 <div className="contenedor_tareas">

@@ -9,7 +9,6 @@ export const ELIMINAR_PROYECTO = 'ELIMINAR_PROYECTO';
 export const MOSTRAR_TERMINADOS = 'MOSTRAR_TERMINADOS';
 export const TERMINAR_PROYECTO = 'TERMINAR_PROYECTO';
 export const PROYECTO_ERROR = 'PROYECTO_ERROR';
-
 //tareas
 export const TASK_PROYECTO = 'TASK_PROYECTO';
 export const AGREGAR_TAREA = 'AGREGAR_TAREA';
@@ -28,6 +27,9 @@ export const OBTENER_USUARIO = 'OBTENER_USUARIO';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_EXITOSO = 'LOGIN_EXITOSO';
 export const CERRAR_SESION = 'CERRAR_SESION';
+//Animaciones
+export const PANELAUTH = 'PANELAUTH';
+
 
 
 
