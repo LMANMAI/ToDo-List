@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //importo los componentes
-import DashboardIndex from "../components/dashboard/DashboardIndex";
-import { AuthPage } from "../pages";
+import { AuthPage, DashboardPage } from "../pages";
 //importo los context
 import {
   ProyectoState,
@@ -31,8 +30,8 @@ function Routes() {
                   <Route exact path="/" component={AuthPage} />
                   <PrivateRoute
                     exact
-                    path="/dashboard"
-                    component={DashboardIndex}
+                    path="/Dashboard"
+                    component={DashboardPage}
                   />
                 </Switch>
               </Router>

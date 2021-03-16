@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import TaskContext from '../../context/task/taskContext';
-import ProyectoContext from '../../context/proyects/proyectoContext';
+import TaskContext from '../../../../context/task/taskContext';
+import ProyectoContext from '../../../../context/proyects/proyectoContext';
 
 const FormTask = () => {
     const taskContext = useContext(TaskContext);

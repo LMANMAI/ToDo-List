@@ -1,6 +1,6 @@
 import React,{ useContext, useEffect } from 'react';
 import Task from './Task';
-import TaskContext from '../../context/task/taskContext';
+import TaskContext from '../../../../context/task/taskContext';
 import { motion } from 'framer-motion';
 const TaskList = () => {
     const taskContext = useContext(TaskContext);

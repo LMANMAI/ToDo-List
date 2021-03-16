@@ -4,7 +4,6 @@ import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
-import SpinKit from "../../../components/layout/SpinKit";
 
 const SignIn = (props) => {
   //contexts
