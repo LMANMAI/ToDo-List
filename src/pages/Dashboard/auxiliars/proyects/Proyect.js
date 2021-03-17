@@ -15,9 +15,11 @@ const Proyect = ({ proyecto }) => {
   };
 
   return (
-    <li className="object_list">
-      <button onClick={() => handleClick(proyecto)} className="btn btn_proyect">
-        {proyecto.nombre}
+    <li className="Proyect">
+      <button onClick={() => handleClick(proyecto)} className="Proyect_Btn">
+        <p className="Proyect_Name">{proyecto.nombre}</p>
+        <span className="Proyect_Task">Cantidad de tareas: 15</span>
+        <span className="Proyect_Date">Creado el dia: 01/01/21</span>
       </button>
     </li>
   );
