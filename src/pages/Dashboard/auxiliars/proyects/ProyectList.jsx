@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
+import { VscChromeClose } from 'react-icons/vsc'
 import Proyect from "./Proyect";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
-import './index.scss';
+import "./index.scss";
 const ProyectList = () => {
   const proyectoContext = useContext(ProyectoContext);
   const { proyectos, obtenerProyectos } = proyectoContext;
@@ -12,8 +13,8 @@ const ProyectList = () => {
   }, []);
 
   return (
-    <div>
-       <button>X</button>
+    <div className="ProyectList_Container">
+      <button className="ProyectList_Close"><VscChromeClose/></button>
       {proyectos.length === 0 ? (
         <p className="object_list">Todavia no creaste ningun proyecto!</p>
       ) : (
@@ -23,7 +24,6 @@ const ProyectList = () => {
           ))}
         </ul>
       )}
-     
     </div>
   );
 };

@@ -22,7 +22,7 @@
     }
     &_btn {
       background-color: transparent;
-      border: 2px solid white;
+      border: 2px solid #f02d7b;
       outline: none;
       padding: 0.5rem;
       border-radius: 35px;
@@ -60,9 +60,9 @@
   }
   @media (min-width: 768px) {
     & {
-      border-radius: 35px;
+      border-radius: 35px 0  0 35px;
       height: 100%;
-      border: 1px solid red;
+      // border: 1px solid red;
       position: relative;
       z-index: 3;
       &_datos {
