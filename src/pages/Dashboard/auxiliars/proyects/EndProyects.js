@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
-import TaskContext from "../../../../context/task/taskContext";
-import { motion } from "framer-motion";
-
+import './index.scss'
 const EndProyects = () => {
   const proyectoContext = useContext(ProyectoContext);
   const {
@@ -10,18 +8,17 @@ const EndProyects = () => {
     proyectosterminados,
     eliminarProyecto,
   } = proyectoContext;
-  const taskContext = useContext(TaskContext);
-  const { counttask } = taskContext;
 
   return (
-    <div
-      className={
-        panelterminados ? "dashboard_panel active width" : "dashboard_panel"
-      }
-    >
-      <ul className="lista_terminados">
+    <div className="EndProyects">
+      <ul className="EndProyects_List">
+        <li className="EndProyects_List_Item">
+          <p className="EndProyects_List_Item-Name">Proyecto de simulacion</p>
+          <p className="EndProyects_List_Item-Task">Tareas en este proyecto</p>
+          <span>Terminado el dia 01/01/21</span>
+        </li>
         {proyectosterminados.length === 0 ? (
-          <li>Todavia no terminaste ningun proyecto</li>
+          <li className="Default">Todavia no terminaste ningun proyecto</li>
         ) : null}
         {proyectosterminados.map((proyecto) => (
           <li key={proyecto._id} className="proyecto_terminado">
@@ -34,7 +31,7 @@ const EndProyects = () => {
               Eliminar
             </button>
           </li>
-        ))}{" "}
+        ))}
       </ul>
     </div>
   );

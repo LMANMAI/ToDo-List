@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
-import { motion } from "framer-motion";
+
 
 const NewProyect = () => {
   const [proyect, createProyect] = useState({
@@ -42,28 +42,29 @@ const NewProyect = () => {
 
   return (
     // <div className={panel ? "dashboard_panel active" : "dashboard_panel"}>
-    <div className="NewProyect_container">
-      <form onSubmit={handleSubmit} className="form_newProyect">
+    <div className="NewProyect">
+      <form onSubmit={handleSubmit} className="NewProyect_Form">
         <input
           type="text"
           placeholder="Nombre del proyecto"
           name="nombre"
           value={nombre}
           onChange={handleChange}
-          className={errorformulario ? "inputForm_active" : null}
+          className="NewProyect_Form_input"
         />
         <textarea
           type="text"
+          maxLength= '120'
           placeholder="Descripcion breve"
           name="desc"
           value={desc}
           onChange={handleChange}
-          className="textArea"
+          className="NewProyect_Form_TextArea"
         />
         {errorformulario ? (
           <p className="input_errorP">El nombre es necesario!</p>
         ) : null}
-        <input type="submit" value="Guardar" className="btn btn_primario" />
+        <input type="submit" value="Guardar" className="NewProyect_Btn" />
       </form>
     </div>
   );
