@@ -29,6 +29,9 @@ export const LOGIN_EXITOSO = 'LOGIN_EXITOSO';
 export const CERRAR_SESION = 'CERRAR_SESION';
 //Animaciones
 export const PANELAUTH = 'PANELAUTH';
+export const PANELNUEVO = 'PANELNUEVO';
+export const PANELPROYECTOS = 'PANELPROYECTOS';
+export const PANELTERMIANDOS = 'PANELTERMIANDOS';
 
 
 

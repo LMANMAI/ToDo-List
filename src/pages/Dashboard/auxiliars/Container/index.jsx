@@ -1,18 +1,20 @@
-import React from 'react'
-import NewProyect from '../proyects/NewProyect';
-import ProyectList from '../proyects/ProyectList';
-import EndProyects from '../proyects/EndProyects';
-
-import './index.scss';
+import React, { useContext } from "react";
+import NewProyect from "../proyects/NewProyect";
+import ProyectList from "../proyects/ProyectList";
+import EndProyects from "../proyects/EndProyects";
+import AnimationContext from '../../../../context/animations/AnimationContext';
+import "./index.scss";
 
 function Container() {
-    return (
-        <div className="Container">
-            {/* <NewProyect/> */}
-        {/* <ProyectList/> */}
-        <EndProyects />
-        </div>
-    )
+    const animaContext = useContext(AnimationContext);
+    const { panelnuevoproyecto } = animaContext;
+  return (
+    <div className="Container">
+      {panelnuevoproyecto && <NewProyect/>}
+      <ProyectList/>
+      <EndProyects />
+    </div>
+  );
 }
 
-export default Container
+export default Container;
