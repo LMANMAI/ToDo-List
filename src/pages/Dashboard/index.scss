@@ -2,32 +2,16 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  padding: 0.5rem;
-  background-color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &_box {
-    margin: 0 auto;
-    width: 96%;
-    height: 85vh;
-    min-height: 600px;
-    display: grid;
-    grid-template-rows: 150px 1fr;
-    overflow: hidden;
-    position: absolute;
-  }
-  @media(min-width: 768px){
-      &{
-
-      }
-      &_box{
-        //   border: 1px solid red;
-          grid-template-columns:  250px 1fr;
-          grid-template-rows: initial;
-          .TaskBody_inactive{
-            border: 1px solid red;
-          }
-      }
+  background-color: #d13131;
+  display: grid;
+  grid-template-rows: 200px 1fr;
+  @media (min-width: 768px) {
+    & {
+      //   border: 1px solid red;
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: initial;
+     
+      
+    }
   }
 }

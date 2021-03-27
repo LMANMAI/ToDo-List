@@ -54,7 +54,7 @@ const FormTask = () => {
             nombre:''
         })
     }
-    // //console.log(proyectoActual)
+    //console.log(proyectoActual)
     return (        
         <Fragment> 
             {errortarea ?<p>El nombre para guardar la tarea es necesario</p> :null}
