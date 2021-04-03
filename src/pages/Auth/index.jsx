@@ -1,29 +1,55 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import Login from "./Login";
 import SignIn from "./Signin";
 import AnimationContext from "../../context/animations/AnimationContext";
 
-import "./index.scss";
-
+//import "./index.scss";
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: #fefefe;
+`;
+const PanelContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+`;
+const RightPanel = styled.div`
+  grid: 1 / 2;
+  border: 1px solid red;
+`;
+const LeftPanel = styled.div`
+  border: 1px solid blue;
+`;
 
 function AuthPage() {
-  const animaContext = useContext(AnimationContext);
-  const { panel, movePanelAuth } = animaContext;
+  // const animaContext = useContext(AnimationContext);
+  // const { panel, movePanelAuth } = animaContext;
   return (
     <>
-      <div className={panel ? "container sign_up_mode" : "container"}>
-        <div className="form_container">
-          <div className="singin_singup_container">
+      <Container>
+        <PanelContainer>
+          <RightPanel>
             <Login />
-            <SignIn />
-          </div>
-        </div>
+          </RightPanel>
 
+          <LeftPanel>
+            <SignIn />
+          </LeftPanel>
+        </PanelContainer>
+      </Container>
+      
+      {/* <div className={panel ? "container sign_up_mode" : "container"}>
+      
+          <div className="form_container"></div>
+
+        <Login />
+          <SignIn />
         <div className="panel_container">
           <div className="panel panel-left">
             <div className="content">
-
               <h3>¿Nuevo aqui?</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
               <button
@@ -33,7 +59,6 @@ function AuthPage() {
               >
                 Registrarse
               </button>
-                            
             </div>
           </div>
 
@@ -51,7 +76,7 @@ function AuthPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
