@@ -5,8 +5,10 @@ import EndProyects from "../proyects/EndProyects";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import AuthContext from "../../../../context/auth/authContext";
 import "./index.scss";
-
+import AnimationContext from '../../../../context/animations/AnimationContext';
 const SideBar = () => {
+  const animationContext = useContext(AnimationContext);
+  const { movePanelNuevoProyecto, movePanelProyectos, movePanelProyectosTermiandos} = animationContext;
   const proyectoContext = useContext(ProyectoContext);
   const {
     panel,
@@ -41,14 +43,12 @@ const SideBar = () => {
             </p>
           ) : null}
         </div>
-        <button className="DashboardSideBar_datos_btn" onClick={() => Exit()}>
-          Cerrar Sesión
-        </button>
+       
       </div>
 
       <div className="DashboardSideBar_botones">
         <button
-          onClick={() => showPanel()}
+          onClick={() => movePanelNuevoProyecto()}
           className="DashboardSideBar_botones_btn"
         >
           <BsFolderPlus />
@@ -56,7 +56,7 @@ const SideBar = () => {
         </button>
 
         <button
-          onClick={() => mostrarPanel()}
+          onClick={() => movePanelProyectos()}
           className="DashboardSideBar_botones_btn"
         >
           <BsFolder />
@@ -64,13 +64,16 @@ const SideBar = () => {
         </button>
 
         <button
-          onClick={() => mostrarTerminados()}
+          onClick={() => movePanelProyectosTermiandos()}
           className="DashboardSideBar_botones_btn"
         >
           <BsFolderCheck />
           <p>Proyectos Terminados</p>
         </button>
       </div>
+      <button className="DashboardSideBar_datos_btn" onClick={() => Exit()}>
+          Cerrar Sesión
+        </button>
     </div>
   );
 };

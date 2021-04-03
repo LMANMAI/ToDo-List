@@ -2,10 +2,10 @@
   background-color: #4b72a8;
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  border-radius: 35px 35px 0 0;
+  grid-template-rows: 70px 70px;
   padding: 1rem;
   color: white;
+
   &_datos {
     display: flex;
     align-items: center;
@@ -60,11 +60,11 @@
   }
   @media (min-width: 768px) {
     & {
-      border-radius: 35px 0  0 35px;
-      height: 100%;
+      //height: 100%;
       // border: 1px solid red;
-      position: relative;
-      z-index: 3;
+      // position: relative;
+      // z-index: 3;
+      grid-template-rows: 175px 2fr 50px;
       &_datos {
         flex-direction: column;
         &_btn {
