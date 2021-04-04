@@ -14,13 +14,16 @@ const PanelContainer = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
 `;
-const RightPanel = styled.div`
+const TopPanel = styled.div`
   grid: 1 / 2;
   border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-const LeftPanel = styled.div`
+const BottomPanel = styled.div`
   border: 1px solid blue;
 `;
 
@@ -31,16 +34,39 @@ function AuthPage() {
     <>
       <Container>
         <PanelContainer>
-          <RightPanel>
+          <TopPanel>
             <Login />
-          </RightPanel>
-
-          <LeftPanel>
             <SignIn />
-          </LeftPanel>
+          </TopPanel>
+
+          <BottomPanel>
+            <div className="content">
+              <h3>¿Nuevo aqui?</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+              <button
+                className="btn transparent"
+                // onClick={() => movePanelAuth()}
+                id="sing-up-btn"
+              >
+                Registrarse
+              </button>
+            </div>
+
+            <div className="content">
+              <h3>¿Ya tenes una cuenta?</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+              <button
+                className="btn transparent"
+                // onClick={() => movePanelAuth()}
+                id="sing-in-btn"
+              >
+                Inicia Sesion
+              </button>
+            </div>
+          </BottomPanel>
         </PanelContainer>
       </Container>
-      
+
       {/* <div className={panel ? "container sign_up_mode" : "container"}>
       
           <div className="form_container"></div>
@@ -49,31 +75,11 @@ function AuthPage() {
           <SignIn />
         <div className="panel_container">
           <div className="panel panel-left">
-            <div className="content">
-              <h3>¿Nuevo aqui?</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-              <button
-                className="btn transparent"
-                onClick={() => movePanelAuth()}
-                id="sing-up-btn"
-              >
-                Registrarse
-              </button>
-            </div>
+            
           </div>
 
           <div className="panel right-panel">
-            <div className="content">
-              <h3>¿Ya tenes una cuenta?</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-              <button
-                className="btn transparent"
-                onClick={() => movePanelAuth()}
-                id="sing-in-btn"
-              >
-                Inicia Sesion
-              </button>
-            </div>
+            
           </div>
         </div>
       </div> */}

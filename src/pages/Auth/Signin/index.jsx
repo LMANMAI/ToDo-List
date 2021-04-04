@@ -1,9 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
-
+import styled from "@emotion/styled";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
+
+const FormularioContainer = styled.form`
+  //border: 1px solid blue;
+  width: 90vw;
+  height: 40vh;
+  border-radius: 50px;
+  margin-right: 1rem;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  padding: 1rem;
+  // display: none;
+`;
 
 const SignIn = (props) => {
   //contexts
@@ -23,7 +34,6 @@ const SignIn = (props) => {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
     }
   }, [autenticado, mensaje, props.history]);
-
   const [usern, setUserN] = useState({
     nombre: "",
     email: "",
@@ -31,7 +41,6 @@ const SignIn = (props) => {
     confirmar: "",
   });
   const { nombre, email, password, confirmar } = usern;
-
   const handleChange = (e) => {
     setUserN({
       ...usern,
@@ -71,61 +80,55 @@ const SignIn = (props) => {
   };
 
   return (
-    <>
-      <form className="sing_up_form" onSubmit={handleSubmit}>
-        {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
-        <h2 className="titulo">Obtener una Cuenta</h2>
-        <div className="input_field">
-          <FaUserAlt />
-          <input
-            type="text"
-            name="nombre"
-            value={nombre}
-            onChange={handleChange}
-            placeholder="Nombre de usuario"
-          />
-        </div>
-
-        <div className="input_field">
-          <FaEnvelope  />
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Email"
-          />
-        </div>
-
-        <div className="input_field">
-          <FaLock />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            placeholder="Contraseña"
-          />
-        </div>
-
-        <div className="input_field">
-          <FaLock />
-          <input
-            type="password"
-            name="confirmar"
-            value={confirmar}
-            onChange={handleChange}
-            placeholder="Repetir Contraseña"
-          />
-        </div>
-
+    <FormularioContainer className="sing_up_form" onSubmit={handleSubmit}>
+      {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
+      <h2 className="titulo">Obtener una Cuenta</h2>
+      <div className="input_field">
+        <FaUserAlt />
         <input
-          type="submit"
-          className="btn primario"
-          value="Continuar"
+          type="text"
+          name="nombre"
+          value={nombre}
+          onChange={handleChange}
+          placeholder="Nombre de usuario"
         />
-      </form>
-    </>
+      </div>
+
+      <div className="input_field">
+        <FaEnvelope />
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+      </div>
+
+      <div className="input_field">
+        <FaLock />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Contraseña"
+        />
+      </div>
+
+      <div className="input_field">
+        <FaLock />
+        <input
+          type="password"
+          name="confirmar"
+          value={confirmar}
+          onChange={handleChange}
+          placeholder="Repetir Contraseña"
+        />
+      </div>
+
+      <input type="submit" className="btn primario" value="Continuar" />
+    </FormularioContainer>
   );
 };
 
