@@ -13,57 +13,77 @@ const Container = styled.div`
 const PanelContainer = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-rows: 2fr 1fr;
 `;
-const TopPanel = styled.div`
-  grid: 1 / 2;
-  border: 1px solid red;
+const FormularioContainer = styled.div`
+  /* position: relative;
+  bottom: 20px; */
+  z-index: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
 `;
-const BottomPanel = styled.div`
-  border: 1px solid blue;
+const ButtonContainer = styled.div`
+  z-index: 2;
 `;
-
+const Button = styled.div``;
+const ContentRight = styled.div`
+  border: 1px solid red;
+  position: absolute;
+  transition: .3s ease-in-out;
+  transform: ${(props) => props.position};
+`;
+const ContentLeft = styled.div`
+border: 1px solid green;
+position: absolute;
+transition: .3s ease-in-out;
+  transform: ${(props) => props.position};
+`;
 function AuthPage() {
-  // const animaContext = useContext(AnimationContext);
-  // const { panel, movePanelAuth } = animaContext;
+  const animaContext = useContext(AnimationContext);
+  const { panel, movePanelAuth } = animaContext;
   return (
     <>
       <Container>
         <PanelContainer>
-          <TopPanel>
+          <FormularioContainer>
             <Login />
             <SignIn />
-          </TopPanel>
+          </FormularioContainer>
 
-          <BottomPanel>
-            <div className="content">
+          <ButtonContainer>
+            {/* <Button onClick={() => movePanelAuth()}>Boton</Button> */}
+
+            <ContentRight position={panel ? "translateX(150%)" : "translateX(0px)"}>
               <h3>¿Nuevo aqui?</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
               <button
                 className="btn transparent"
-                // onClick={() => movePanelAuth()}
+                onClick={() => movePanelAuth()}
                 id="sing-up-btn"
               >
                 Registrarse
               </button>
-            </div>
+            </ContentRight>
 
-            <div className="content">
-              <h3>¿Ya tenes una cuenta?</h3>
+            <ContentLeft position={!panel ? "translateX(-150%)" : "translateX(0px)"}>
+              <h3>¿Ya tienes una cuenta?</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
               <button
                 className="btn transparent"
-                // onClick={() => movePanelAuth()}
-                id="sing-in-btn"
+                onClick={() => movePanelAuth()}
+                id="sing-up-btn"
               >
-                Inicia Sesion
+                Registrarse
               </button>
-            </div>
-          </BottomPanel>
+            </ContentLeft>
+          </ButtonContainer>
         </PanelContainer>
       </Container>
 
@@ -75,7 +95,17 @@ function AuthPage() {
           <SignIn />
         <div className="panel_container">
           <div className="panel panel-left">
-            
+             <div className="content">
+              <h3>¿Nuevo aqui?</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+              <button
+                className="btn transparent"
+                // onClick={() => movePanelAuth()}
+                id="sing-up-btn"
+              >
+                Registrarse
+              </button>
+            </div>
           </div>
 
           <div className="panel right-panel">
