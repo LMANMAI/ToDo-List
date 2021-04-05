@@ -4,19 +4,28 @@ import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 import styled from "@emotion/styled";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
+import AnimationContext from "../../../context/animations/AnimationContext";
 
 const FormularioContainer = styled.form`
   //border: 1px solid blue;
-  width: 90vw;
+  width: 95%;
   height: 40vh;
   border-radius: 50px;
   margin-right: 1rem;
   box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
   padding: 1rem;
+  position: absolute;
+  background-color: #ffffff;
+  top: 70px;  
+  left: 12px;
+  transition: .3s ease-in-out;
+  transform: ${(props) => props.position};
   // display: none;
 `;
 
 const SignIn = (props) => {
+  const animaContext = useContext(AnimationContext);
+  const { panel } = animaContext;
   //contexts
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
@@ -80,7 +89,10 @@ const SignIn = (props) => {
   };
 
   return (
-    <FormularioContainer className="sing_up_form" onSubmit={handleSubmit}>
+    <FormularioContainer
+      onSubmit={handleSubmit}
+      position={!panel ? "translateX(-150%)" : "translateX(0px)"}
+    >
       {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
       <h2 className="titulo">Obtener una Cuenta</h2>
       <div className="input_field">
@@ -126,7 +138,6 @@ const SignIn = (props) => {
           placeholder="Repetir Contraseña"
         />
       </div>
-
       <input type="submit" className="btn primario" value="Continuar" />
     </FormularioContainer>
   );

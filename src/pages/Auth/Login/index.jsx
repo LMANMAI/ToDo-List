@@ -4,21 +4,33 @@ import styled from "@emotion/styled";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
+import AnimationContext from "../../../context/animations/AnimationContext";
 
 const FormularioContainer = styled.form`
   //border: 1px solid blue;
-  width: 90vw;
+  width: 95%;
   height: 40vh;
   border-radius: 50px;
- //background: #e0e0e0;
+  background-color: #fff;
   box-shadow: -20px 20px 60px #bebebe, 20px -20px 60px #ffffff;
   padding: 1rem;
-  margin-right: 4rem;
-  margin-left: 1rem;
+  position: absolute;
+  z-index: 1;
+  top: 70px;
+  transition: .3s ease-in-out;
+  transform: ${(props) => props.position};
+  
+  @media( min-width: 768px){
+
+  }
 `;
 const Login = (props) => {
+  const animaContext = useContext(AnimationContext);
+  const { panel } = animaContext;
+
   const authContext = useContext(AuthContext);
   const { mensaje, autenticado, cargandoSpin, loginUser } = authContext;
+
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
   const [user, setUser] = useState({
@@ -52,7 +64,10 @@ const Login = (props) => {
   }, [mensaje, autenticado, props.history]);
 
   return (
-    <FormularioContainer onSubmit={handleSubmit} className="sing_in_form">
+    <FormularioContainer
+      onSubmit={handleSubmit}
+      position={panel ? "translateX(150%)" : "translateX(0px)"}
+    >
       <h2 className="titulo">Iniciar Sesion</h2>
       {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
       <div className="input_field">
