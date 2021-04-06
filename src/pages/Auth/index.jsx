@@ -15,105 +15,67 @@ const PanelContainer = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
-  display: grid;
-  grid-template-rows: 2fr 1fr;
-`;
-const FormularioContainer = styled.div`
-  /* position: relative;
-  bottom: 20px; */
-  z-index: 0;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  width: 100vw;
 `;
+
 const ButtonContainer = styled.div`
   z-index: 2;
+  /* display: grid;
+  grid-template-rows: 2fr 1fr; */
+  margin: 0 auto;
 `;
-const Button = styled.div``;
 const ContentRight = styled.div`
-  border: 1px solid red;
-  position: absolute;
-  transition: .3s ease-in-out;
+  //border: 1px solid red;
+  height: 100vh; 
+  padding: 1rem;
+  transition: 0.4s 0.6s ease-in-out;
   transform: ${(props) => props.position};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  @media (min-width: 768px) {
+    margin: 0 auto;
+  }
 `;
 const ContentLeft = styled.div`
-border: 1px solid green;
-position: absolute;
-transition: .3s ease-in-out;
+  //border: 1px solid green;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  padding: 1rem;
+  transition: 0.4s 0.6s ease-in-out;
   transform: ${(props) => props.position};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  @media (min-width: 768px) {
+    margin: 0 auto;
+  }
 `;
+
 function AuthPage() {
   const animaContext = useContext(AnimationContext);
-  const { panel, movePanelAuth } = animaContext;
+  const { panel } = animaContext;
   return (
-    <>
-      <Container>
-        <PanelContainer>
-          <FormularioContainer>
+    <Container>
+      <PanelContainer>
+        <ButtonContainer>
+          <ContentRight
+            position={panel ? "translateX(100vw)" : "translateX(0px)"}
+          >
             <Login />
+          </ContentRight>
+
+          <ContentLeft
+            position={!panel ? "translateX(-100vw)" : "translateX(0px)"}
+          >
             <SignIn />
-          </FormularioContainer>
-
-          <ButtonContainer>
-            {/* <Button onClick={() => movePanelAuth()}>Boton</Button> */}
-
-            <ContentRight position={panel ? "translateX(150%)" : "translateX(0px)"}>
-              <h3>¿Nuevo aqui?</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-              <button
-                className="btn transparent"
-                onClick={() => movePanelAuth()}
-                id="sing-up-btn"
-              >
-                Registrarse
-              </button>
-            </ContentRight>
-
-            <ContentLeft position={!panel ? "translateX(-150%)" : "translateX(0px)"}>
-              <h3>¿Ya tienes una cuenta?</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-              <button
-                className="btn transparent"
-                onClick={() => movePanelAuth()}
-                id="sing-up-btn"
-              >
-                Registrarse
-              </button>
-            </ContentLeft>
-          </ButtonContainer>
-        </PanelContainer>
-      </Container>
-
-      {/* <div className={panel ? "container sign_up_mode" : "container"}>
-      
-          <div className="form_container"></div>
-
-        <Login />
-          <SignIn />
-        <div className="panel_container">
-          <div className="panel panel-left">
-             <div className="content">
-              <h3>¿Nuevo aqui?</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-              <button
-                className="btn transparent"
-                // onClick={() => movePanelAuth()}
-                id="sing-up-btn"
-              >
-                Registrarse
-              </button>
-            </div>
-          </div>
-
-          <div className="panel right-panel">
-            
-          </div>
-        </div>
-      </div> */}
-    </>
+          </ContentLeft>
+        </ButtonContainer>
+      </PanelContainer>
+    </Container>
   );
 }
 

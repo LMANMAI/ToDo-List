@@ -6,26 +6,114 @@ import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 
-const FormularioContainer = styled.form`
-  //border: 1px solid blue;
-  width: 95%;
-  height: 40vh;
+const FormularioContainer = styled.div`
+  width: 100%;
+  height: fit-content;
   border-radius: 50px;
-  margin-right: 1rem;
   box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
   padding: 1rem;
-  position: absolute;
   background-color: #ffffff;
-  top: 70px;  
-  left: 12px;
-  transition: .3s ease-in-out;
   transform: ${(props) => props.position};
-  // display: none;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  align-items: center;
+  @media (min-width: 768px) {
+    /* width: 30%; */
+  }
 `;
 
+const Content = styled.div`
+  /* padding-right: 15%;
+  */
+
+  h3 {
+    font-size: 1.3rem;
+  }
+  p {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+  }
+`;
+
+const Titulo = styled.h2`
+  font-size: 2.2rem;
+  color: #444;
+  margin-bottom: 10px;
+`;
+
+const InputField = styled.div`
+  max-width: 380px;
+  width: 100%;
+  height: 55px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  border-radius: 50px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  outline: none;
+  svg {
+    justify-self: center;
+    align-self: center;
+    color: #444;
+    font-size: 1.1rem;
+  }
+  input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+
+    &::focus svg {
+      background-color: #f02d7b;
+    }
+    &::placeholder {
+      font-weight: 500;
+      color: #aaa;
+    }
+  }
+`;
+
+const Button = styled.input`
+  width: 150px;
+  height: 50px;
+  border-radius: 55px;
+  border: none;
+  outline: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  transition: 0.5s;
+  cursor: pointer;
+  background: transparent;
+  background-color: #f02d7b;
+  &:hover {
+    background-color: #cc0f5b;
+  }
+`;
+
+const ButtonSec = styled(Button)`
+  margin: 0;
+  background: none;
+  border: 2px solid #f02d7b;
+  width: 130px;
+  height: 41px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #f02d7b;
+  text-align: center;
+  &:hover {
+    color: white;
+  }
+`;
 const SignIn = (props) => {
   const animaContext = useContext(AnimationContext);
-  const { panel } = animaContext;
+  const { panel, movePanelAuth } = animaContext;
   //contexts
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
@@ -89,57 +177,61 @@ const SignIn = (props) => {
   };
 
   return (
-    <FormularioContainer
-      onSubmit={handleSubmit}
-      position={!panel ? "translateX(-150%)" : "translateX(0px)"}
-    >
-      {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
-      <h2 className="titulo">Obtener una Cuenta</h2>
-      <div className="input_field">
-        <FaUserAlt />
-        <input
-          type="text"
-          name="nombre"
-          value={nombre}
-          onChange={handleChange}
-          placeholder="Nombre de usuario"
-        />
-      </div>
+    <>
+      <FormularioContainer onSubmit={handleSubmit}>
+        {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
+        <Titulo>Obtener una Cuenta</Titulo>
+        <InputField>
+          <FaUserAlt />
+          <input
+            type="text"
+            name="nombre"
+            value={nombre}
+            onChange={handleChange}
+            placeholder="Nombre de usuario"
+          />
+        </InputField>
 
-      <div className="input_field">
-        <FaEnvelope />
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-      </div>
+        <InputField>
+          <FaEnvelope />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+        </InputField>
 
-      <div className="input_field">
-        <FaLock />
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-          placeholder="Contraseña"
-        />
-      </div>
+        <InputField>
+          <FaLock />
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            placeholder="Contraseña"
+          />
+        </InputField>
 
-      <div className="input_field">
-        <FaLock />
-        <input
-          type="password"
-          name="confirmar"
-          value={confirmar}
-          onChange={handleChange}
-          placeholder="Repetir Contraseña"
-        />
-      </div>
-      <input type="submit" className="btn primario" value="Continuar" />
-    </FormularioContainer>
+        <InputField>
+          <FaLock />
+          <input
+            type="password"
+            name="confirmar"
+            value={confirmar}
+            onChange={handleChange}
+            placeholder="Repetir Contraseña"
+          />
+        </InputField>
+        <Button type="submit" value="Continuar" />
+      </FormularioContainer>
+      <Content>
+        <h3>¿Ya tienes una cuenta?</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+        <ButtonSec onClick={() => movePanelAuth()} value=" Registrarse" />
+      </Content>
+    </>
   );
 };
 
