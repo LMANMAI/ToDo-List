@@ -21,10 +21,11 @@
       }
     }
     &_btn {
-      background-color: transparent;
-      border: 2px solid #f02d7b;
+      background-color: #f02d7b;
+      //border: 2px solid #f02d7b;
+      border: none;
       outline: none;
-      padding: 0.5rem;
+      padding: 0.3rem;
       border-radius: 35px;
       color: white;
     }
