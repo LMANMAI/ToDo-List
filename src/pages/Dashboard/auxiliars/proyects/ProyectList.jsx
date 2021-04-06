@@ -17,8 +17,9 @@ const ProyectList = () => {
   }, []);
 
   return (
-    <div className="ProyectList_Container">
-      <button className="ProyectList_Close" onClick={()=> movePanelAuth()}><VscChromeClose/></button>
+    <>
+     <button className="ProyectList_Close" onClick={()=> movePanelAuth()}><VscChromeClose/></button>
+    <div className="ProyectList_Container">     
       {proyectos.length === 0 ? (
         <p className="object_list">Todavia no creaste ningun proyecto!</p>
       ) : (
@@ -29,6 +30,7 @@ const ProyectList = () => {
         </ul>
       )}
     </div>
+    </>
   );
 };
 

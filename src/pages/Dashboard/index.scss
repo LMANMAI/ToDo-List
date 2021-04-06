@@ -2,9 +2,9 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: #d13131;
   display: grid;
   grid-template-rows: 200px 1fr;
+  background-color: #4b72a8;
   @media (min-width: 768px) {
     & {
       //   border: 1px solid red;

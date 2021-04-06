@@ -1,16 +1,24 @@
 .ProyectList {
   //   border: 1px solid red;
   &_Container {
+    width: 95%;
+    margin: 0 auto;
+    //overflow-y: auto;
+    
+    ul {
+      width: 95%;
+     
+    }
     .Proyect {
       button {
         cursor: pointer;
         outline: none;
-        background-color: #f02d7b;
+        background-color: #4b72a8;
         width: 100%;
         border: none;
         height: 80px;
         margin: 5px 0;
-        border-radius: 35px;
+        border-radius: 25px;
         color: white;
       }
     }
@@ -19,29 +27,24 @@
         //   border: 1px solid blue;
         padding: 0.5rem;
         width: 95%;
+        overflow-y: auto;
+        height: 90%;
+        //border: 1px solid red;
+        padding: .5rem;
         ul {
-          // border: 1px solid red;
+          margin: 0 auto;
+          width: 95%;
           display: grid;
           grid-gap: 1rem;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           align-items: center;
+          
           .Proyect {
             display: flex;
             button {
               position: relative;
-              border-radius: 35px 0 35px 35px;
-              &:before {
-                content: "";
-                width: 150px;
-                height: 35px;
-                border-radius: 35px 0 0 0;
-                background-color: #f02d7b;
-                position: absolute;
-                top: -12px;
-                right: 0;
-              }
               width: 100%;
-              height: 120px;
+              height: 220px;
             }
           }
         }
@@ -56,6 +59,7 @@
     height: 50px;
     border-radius: 35px;
     cursor: pointer;
+    margin: .5rem;
     svg {
       color: white;
     }
@@ -111,12 +115,12 @@
     }
   }
 }
-.EndProyects{
+.EndProyects {
   // border: 1px solid blue;
-  padding: 1rem .5rem;
-  &_List{
+  padding: 1rem 0.5rem;
+  &_List {
     min-height: 50vh;
-    &_Item{
+    &_Item {
       background-color: #e93048;
       padding: 1rem;
       border-radius: 35px;
