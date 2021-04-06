@@ -1,10 +1,10 @@
 .DashboardSideBar {
-  background-color: #4b72a8;
+  background-color: #f2f2f2;
   width: 100%;
   display: grid;
   grid-template-rows: 70px 70px;
   padding: 1rem;
-  color: white;
+  color: #4b72a8;
 
   &_datos {
     display: flex;
@@ -28,6 +28,8 @@
       padding: 0.3rem;
       border-radius: 35px;
       color: white;
+      cursor: pointer;
+      
     }
   }
   &_botones {
@@ -44,7 +46,7 @@
       width: 30%;
       border-radius: 35px;
       font-size: 1.5rem;
-      color: white;
+      color: #4b72a8;
       background: transparent;
       border: none; 
       outline: none;
@@ -55,6 +57,7 @@
       }     
       &:focus {
         background: #f02d7b;
+        color: white;
       }
      
     }
@@ -69,6 +72,10 @@
       &_datos {
         flex-direction: column;
         &_btn {
+          transition: all .2s ease-in-out;
+          &:hover{
+            background-color: #cc0f5b;
+          }
         }
       }
       &_botones {
@@ -84,7 +91,7 @@
           border-radius: 35px;
           padding: 0.5rem;
           outline: none;
-          transition: background 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
           svg {
             margin: 0 0.4rem;
           }
@@ -93,6 +100,7 @@
           }
           &:hover {
             background: #314f79;
+            color: white;
           }
           &:active {
             background: #f02d7b;
