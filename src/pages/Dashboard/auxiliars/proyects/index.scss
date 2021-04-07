@@ -1,11 +1,14 @@
 .ProyectList {
   //   border: 1px solid red;
+  //overflow-y: scroll;
   &_Container {
     width: 95%;
-    margin: 0 auto;
-    //overflow-y: auto;
-
+    margin: 0 auto;   
+    justify-content: center;
+   // border: 1px solid red;
+    display: flex;
     ul {
+     // 
       width: 95%;
     }
     .Proyect {

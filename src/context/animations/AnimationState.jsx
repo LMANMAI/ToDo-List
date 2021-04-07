@@ -5,7 +5,8 @@ import {
     PANELAUTH,
     PANELNUEVO,
     PANELPROYECTOS,
-    PANELTERMIANDOS
+    PANELTERMIANDOS,
+    TODO_FALSE
   } from '../../types';
 
 const AnimationState = props => {
@@ -37,6 +38,11 @@ const AnimationState = props => {
       type: PANELTERMIANDOS
   })
   } 
+  const allFalse = ()=>{
+    dispatch({
+        type: TODO_FALSE
+    })
+}
   return (
     <AnimationContext.Provider value={{
         panel: state.panel,
@@ -46,7 +52,8 @@ const AnimationState = props => {
         movePanelAuth,
         movePanelNuevoProyecto,
         movePanelProyectos,
-        movePanelProyectosTermiandos
+        movePanelProyectosTermiandos,
+        allFalse
     }}>
       {props.children}
     </AnimationContext.Provider>

@@ -2,9 +2,23 @@ import React, { useContext } from "react";
 import FormTask from "./FormTask";
 import TaskList from "./TaskList";
 import ProyectList from "../proyects/ProyectList";
-
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
+import styled from "@emotion/styled";
 
+const ContentMain = styled.main`
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+`;
+const Tittle = styled.h2`
+  font-weight: 200;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.7rem;
+  font-size: 19px;
+  color: #2f2f2f;
+`;
 const TaskBody = () => {
   const proyectoContext = useContext(ProyectoContext);
   const {
@@ -16,12 +30,12 @@ const TaskBody = () => {
     terminarProyecto,
   } = proyectoContext;
 
-//   if (!proyectoactivo)
-//     return (
-//       <div className="TaskBody_inactive">
-//         <p>Comienza creando tareas</p>
-//       </div>
-//     );
+  if (!proyectoactivo)
+    return (
+      <div className="TaskBody_inactive">
+        <p>Comienza creando un proyecto</p>
+      </div>
+    );
 
   const handdleProyectState = (proyecto) => {
     if (!proyecto.estado) {
@@ -29,37 +43,31 @@ const TaskBody = () => {
     }
     terminarProyecto(proyecto);
   };
-
   const [proyectoActual] = proyectoactivo;
 
   return (
-    <>
-      <main>
-        {/* {panelproyecto && <ProyectList />} */}
-        <h2>{proyectoActual.nombre}</h2>
-        <FormTask />
-        <div className="contenedor_tareas">
-          <TaskList />
-        </div>
-
-        <div className="button_wraper">
-          <button
-            type="button"
-            className="btn btn_terminar"
-            onClick={() => handdleProyectState(proyectoActual)}
-          >
-            Terminar Proyecto
-          </button>
-          <button
-            type="button"
-            className="btn btn_eliminar"
-            onClick={() => eliminarProyecto(proyectoActual._id)}
-          >
-            Eliminar Proyecto
-          </button>
-        </div>
-      </main>
-    </>
+    <ContentMain>
+      {/* {panelproyecto && <ProyectList />} */}
+      <Tittle>{proyectoActual.nombre}</Tittle>
+      <FormTask />
+      <TaskList />
+      <div className="button_wraper">
+        <button
+          type="button"
+          className="btn btn_terminar"
+          onClick={() => handdleProyectState(proyectoActual)}
+        >
+          Terminar Proyecto
+        </button>
+        <button
+          type="button"
+          className="btn btn_eliminar"
+          onClick={() => eliminarProyecto(proyectoActual._id)}
+        >
+          Eliminar Proyecto
+        </button>
+      </div>
+    </ContentMain>
   );
 };
 

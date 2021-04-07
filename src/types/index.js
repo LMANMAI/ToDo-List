@@ -33,6 +33,8 @@ export const PANELNUEVO = 'PANELNUEVO';
 export const PANELPROYECTOS = 'PANELPROYECTOS';
 export const PANELTERMIANDOS = 'PANELTERMIANDOS';
 
+export const TODO_FALSE = 'TODO_FALSE';
+
 
 
 

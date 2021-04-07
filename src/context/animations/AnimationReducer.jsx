@@ -3,7 +3,8 @@ import {
   PANELAUTH,
   PANELNUEVO,
   PANELPROYECTOS,
-  PANELTERMIANDOS
+  PANELTERMIANDOS,  
+  TODO_FALSE
 } from '../../types';
 export default ( state, action ) => {
     switch (action.type) {
@@ -33,6 +34,13 @@ export default ( state, action ) => {
           panelproyectos: false,
           panelterminados: !state.panelterminados
         }        
+        case TODO_FALSE:
+          return{
+            panel: false,
+            panelnuevoproyecto: false,
+            panelproyectos: false,
+            panelterminados: false
+          }
         default:
             return state;
     }
