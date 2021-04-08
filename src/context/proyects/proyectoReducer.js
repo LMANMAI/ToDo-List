@@ -9,7 +9,8 @@ import {
     ELIMINAR_PROYECTO,
     MOSTRAR_TERMINADOS,
     TERMINAR_PROYECTO,
-    PROYECTO_ERROR
+    PROYECTO_ERROR,
+    PROYECTO_NULL
     } from '../../types';
 // eslint-disable-next-line
 export default (state, action ) =>{
@@ -88,6 +89,10 @@ export default (state, action ) =>{
             return{
                 ...state,
                 mensaje: action.payload
+            }
+        case PROYECTO_NULL:
+            return{
+                proyectoactivo: null
             }
        
         default:

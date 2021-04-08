@@ -1,25 +1,21 @@
 import React, { useContext, useState } from "react";
 import { BsFolder, BsFolderPlus, BsFolderCheck } from "react-icons/bs";
-import NewProyect from "../proyects/NewProyect";
-import EndProyects from "../proyects/EndProyects";
-import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import AuthContext from "../../../../context/auth/authContext";
-import "./index.scss";
 import AnimationContext from '../../../../context/animations/AnimationContext';
+import styled from '@emotion/styled';
+
+const SideBarContainer = styled.div``;
+const SideBarDatos = styled.div``;
+const Brand = styled.h2``;
+const Name = styled.div``;
+const SidebarButtonContainer = styled.div``;
+const Button = styled.button``;
+const EndSesionButton = styled.button``;
+
+
 const SideBar = () => {
   const animationContext = useContext(AnimationContext);
   const { movePanelNuevoProyecto, movePanelProyectos, movePanelProyectosTermiandos} = animationContext;
-  const proyectoContext = useContext(ProyectoContext);
-  const {
-    panel,
-    panelproyecto,
-    panelterminados,
-    badge,
-    badgeT,
-    showPanel,
-    mostrarPanel,
-    mostrarTerminados,
-  } = proyectoContext;
 
   const authContext = useContext(AuthContext);
   const { user, EndSesion } = authContext;

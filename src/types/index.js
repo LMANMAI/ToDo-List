@@ -34,6 +34,7 @@ export const PANELPROYECTOS = 'PANELPROYECTOS';
 export const PANELTERMIANDOS = 'PANELTERMIANDOS';
 
 export const TODO_FALSE = 'TODO_FALSE';
+export const PROYECTO_NULL = 'PROYECTO_NULL';
 
 
 

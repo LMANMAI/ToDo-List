@@ -6,10 +6,13 @@ import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import styled from "@emotion/styled";
 
 const ContentMain = styled.main`
-  height: 100%;
-  padding: 1rem;
+  height: fit-content;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  @media (min-width: 768px) {
+    height: 100%;
+  }
 `;
 const Tittle = styled.h2`
   font-weight: 200;
@@ -18,6 +21,21 @@ const Tittle = styled.h2`
   margin-bottom: 0.7rem;
   font-size: 19px;
   color: #2f2f2f;
+`;
+const ButtonContainer = styled.div`
+  width: fit-content;
+  margin: 5px auto;
+  padding: 0.5rem;
+`;
+const Button = styled.button`
+  color: white;
+  background-color: #f02d7b;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
 `;
 const TaskBody = () => {
   const proyectoContext = useContext(ProyectoContext);
@@ -28,6 +46,7 @@ const TaskBody = () => {
     proyectoactivo,
     eliminarProyecto,
     terminarProyecto,
+    proyectoNull
   } = proyectoContext;
 
   if (!proyectoactivo)
@@ -51,22 +70,24 @@ const TaskBody = () => {
       <Tittle>{proyectoActual.nombre}</Tittle>
       <FormTask />
       <TaskList />
-      <div className="button_wraper">
-        <button
+      <ButtonContainer>
+        <Button
           type="button"
-          className="btn btn_terminar"
           onClick={() => handdleProyectState(proyectoActual)}
         >
           Terminar Proyecto
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          className="btn btn_eliminar"
           onClick={() => eliminarProyecto(proyectoActual._id)}
         >
           Eliminar Proyecto
-        </button>
-      </div>
+        </Button>
+        {/* <Button 
+          type="button"
+          onClick={()=> proyectoNull()}
+        >X</Button> */}
+      </ButtonContainer>
     </ContentMain>
   );
 };

@@ -7,10 +7,18 @@ const FormTaskContainer = styled.div`
   padding: 0.5rem;
   display: flex;
   flex-direction: row;
+  //border: 1px solid red;
+  @media(min-width: 768px){
+      flex-direction: column;
+  }
 `;
 
 const Form = styled.form`
   width: 100%;
+  @media(min-width: 768px){
+    width: fit-content;
+    margin: 0 auto;
+  }
 `;
 const Input = styled.input`
     width: 100%;
@@ -20,6 +28,13 @@ const Input = styled.input`
     border-radius: 35px;
     padding: .5rem;
     padding-left: 1rem;
+    outline: none;    
+    &::placeholder{
+      padding: 1rem;
+    }
+    @media(min-width: 768px){
+    // width: 20%;
+  }
 `;
 const InputSearch = styled.input`
   width: 100%;
@@ -28,6 +43,11 @@ const InputSearch = styled.input`
   border-radius: 35px;
   color: white;
   background-color: #f02d7b;
+  outline: none;
+  cursor: pointer;
+  @media(min-width: 768px){
+    // width: 20%;
+  }
 `;
 const Description = styled.div`
     padding: .2rem;

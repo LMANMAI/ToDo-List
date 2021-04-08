@@ -13,7 +13,8 @@ import {
         ELIMINAR_PROYECTO,
         MOSTRAR_TERMINADOS,
         TERMINAR_PROYECTO,
-        PROYECTO_ERROR
+        PROYECTO_ERROR,
+        PROYECTO_NULL
         } from '../../types';
 import clienteAxios from '../../config/axios';
 
@@ -140,7 +141,11 @@ const ProyectoState = props =>{
         
     }
    
-            
+    const proyectoNull = () =>{
+        dispatch({
+            type: PROYECTO_NULL
+        })
+    }
     return(
         <ProyectoContext.Provider
             value={{
@@ -163,7 +168,8 @@ const ProyectoState = props =>{
                 proyectoActual,
                 eliminarProyecto,
                 mostrarTerminados,
-                terminarProyecto
+                terminarProyecto,
+                proyectoNull
             }}
         >
             {props.children}

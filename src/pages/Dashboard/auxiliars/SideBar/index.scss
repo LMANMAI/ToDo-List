@@ -68,6 +68,7 @@
       // border: 1px solid red;
       // position: relative;
       // z-index: 3;
+      z-index: 1;
       grid-template-rows: 175px 2fr 50px;
       &_datos {
         flex-direction: column;
