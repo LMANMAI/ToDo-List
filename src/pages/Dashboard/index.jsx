@@ -4,9 +4,23 @@ import Container from "./auxiliars/Container";
 import ProyectoContext from "../../context/proyects/proyectoContext";
 import AuthContext from "../../context/auth/authContext";
 import AlertaContext from "../../context/alertas/alertaContext";
-import "./index.scss";
-import FormTask from "./auxiliars/task/FormTask";
 import AnimationContext from "../../context/animations/AnimationContext";
+import styled from "@emotion/styled";
+
+const DashboardContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 200px 1fr;
+  background-color: #f2f2f2;
+  overflow-y: scroll;
+  @media (min-width: 768px) {
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: initial;
+    overflow-y: initial;
+  }
+`;
 
 const DashboardPage = () => {
   const proyectoContext = useContext(ProyectoContext);
@@ -35,13 +49,11 @@ const DashboardPage = () => {
     }
   }, [mensaje]);
   return (
-    <>
-      <div className="Dashboard">
-        {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
-        <SideBar />
-        <Container />
-      </div>
-    </>
+    <DashboardContainer>
+      {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
+      <SideBar />
+      <Container />
+    </DashboardContainer>
   );
 };
 
