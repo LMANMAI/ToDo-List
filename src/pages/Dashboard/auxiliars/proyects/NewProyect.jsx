@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
+import AnimationContext from "../../../../context/animations/AnimationContext";
+
 import styled from "@emotion/styled";
 
 const NewProyectContainer = styled.div`
@@ -10,13 +12,14 @@ const NewProyectContainer = styled.div`
   border-radius: 0 0 35px 35px;
   padding: 0.5rem;
   position: absolute;
+  transform: ${(props)=> props.transform};
+  z-index: 0;
+  transition: all .8s ease-in-out;
   @media (min-width: 768px) {
-    z-index: 0;
-    transition: all 1s ease-in-out;
-    transform: translateX(-50vw);
+    transition: all .6s ease-in-out;
+    transform: ${(props)=> props.transform};
     border-radius: 0 25px 25px 0;
-    //border: 1px solid red;
-    width: 20vw;  
+    width: 20vw;
     min-width: 250px;
     left: 0;
     top: 0;
@@ -59,12 +62,9 @@ const Submit = styled.input`
   width: 80%;
   align-self: center;
 `;
-const NewProyect = () => {
-  const [proyect, createProyect] = useState({
-    nombre: "",
-    desc: "",
-  });
 
+const NewProyect = () => {
+  //Contexts
   const proyectoContext = useContext(ProyectoContext);
   const {
     panel,
@@ -72,6 +72,13 @@ const NewProyect = () => {
     agregarProyecto,
     validarFormulario,
   } = proyectoContext;
+  const animationContext = useContext(AnimationContext);
+  const { panelnuevoproyecto } = animationContext;
+  //states internos
+  const [proyect, createProyect] = useState({
+    nombre: "",
+    desc: "",
+  });
 
   const { nombre, desc } = proyect;
 
@@ -94,12 +101,10 @@ const NewProyect = () => {
       desc: "",
     });
     agregarProyecto(proyect);
-    // //console.log(proyect)
   };
 
   return (
-    // <div className={panel ? "dashboard_panel active" : "dashboard_panel"}>
-    <NewProyectContainer>
+    <NewProyectContainer transform={panelnuevoproyecto ?' translateX(0)' :' translateX(-100vw)'}>
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -119,7 +124,9 @@ const NewProyect = () => {
           className="NewProyect_Form_TextArea"
         />
         {errorformulario ? (
-          <ErrorMessage className="input_errorP">El nombre es necesario!</ErrorMessage>
+          <ErrorMessage className="input_errorP">
+            El nombre es necesario!
+          </ErrorMessage>
         ) : null}
         <Submit type="submit" value="Guardar" className="NewProyect_Btn" />
       </Form>

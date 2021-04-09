@@ -7,13 +7,14 @@ const ProyectObject = styled.li`
   button {
     cursor: pointer;
     outline: none;
-    background-color: #4b72a8;
+    background-color: #5595a5;
     width: 100%;
     border: none;
     height: 80px;
     margin: 5px 0;
     border-radius: 25px;
     color: white;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.14) , 0px 1px 10px 0px rgba(0,0,0,0.12) , 0px 2px 4px -1px rgba(0,0,0,0.2) ;
   }
   @media (min-width: 768px) {
     display: flex;

@@ -11,6 +11,7 @@ const ProyectListContainer = styled.div`
   margin: 0 auto;
   justify-content: center;
   display: flex;
+  z-index: 3;
   @media (min-width: 768px) {
     padding: 0.5rem;
     width: 95%;

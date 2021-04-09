@@ -13,12 +13,10 @@ const DashboardContainer = styled.div`
   overflow: hidden;
   display: grid;
   grid-template-rows: 200px 1fr;
-  background-color: #f2f2f2;
-  overflow-y: scroll;
+  background-color: #f2f2f2;  
   @media (min-width: 768px) {
     grid-template-columns: 250px 1fr;
     grid-template-rows: initial;
-    overflow-y: initial;
   }
 `;
 

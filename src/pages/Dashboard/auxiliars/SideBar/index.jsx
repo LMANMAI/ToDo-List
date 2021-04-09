@@ -46,9 +46,7 @@ const SidebarButtonContainer = styled.div`
   @media (min-width: 768px) {
     transition: all 0.2s ease-in-out;
     flex-direction: column;
-    &:hover {
-      background-color: #cc0f5b;
-    }
+   
   }
 `;
 const Button = styled.button`

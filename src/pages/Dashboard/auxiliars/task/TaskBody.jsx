@@ -52,7 +52,7 @@ const TaskBody = () => {
   if (!proyectoactivo)
     return (
       <div className="TaskBody_inactive">
-        <p>Comienza creando un proyecto</p>
+        {/* <p>Comienza creando un proyecto</p> */}
       </div>
     );
 
