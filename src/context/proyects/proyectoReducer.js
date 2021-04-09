@@ -92,6 +92,7 @@ export default (state, action ) =>{
             }
         case PROYECTO_NULL:
             return{
+                ...state,
                 proyectoactivo: null
             }
        

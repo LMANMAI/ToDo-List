@@ -37,24 +37,21 @@ const Button = styled.button`
   margin: 5px;
   cursor: pointer;
 `;
+const ButtonClose = styled(Button)`
+  border-radius: 35px;
+  width: 50px;
+  height: 50px;
+`;
 const TaskBody = () => {
   const proyectoContext = useContext(ProyectoContext);
   const {
-    panel,
-    panelproyecto,
-    panelterminados,
     proyectoactivo,
     eliminarProyecto,
     terminarProyecto,
-    proyectoNull
+    proyectoNull,
   } = proyectoContext;
 
-  if (!proyectoactivo)
-    return (
-      <div className="TaskBody_inactive">
-        {/* <p>Comienza creando un proyecto</p> */}
-      </div>
-    );
+  if (!proyectoactivo) return null;
 
   const handdleProyectState = (proyecto) => {
     if (!proyecto.estado) {
@@ -67,6 +64,9 @@ const TaskBody = () => {
   return (
     <ContentMain>
       {/* {panelproyecto && <ProyectList />} */}
+      <ButtonClose type="button" onClick={() => proyectoNull()}>
+        X
+      </ButtonClose>
       <Tittle>{proyectoActual.nombre}</Tittle>
       <FormTask />
       <TaskList />
@@ -83,10 +83,6 @@ const TaskBody = () => {
         >
           Eliminar Proyecto
         </Button>
-        {/* <Button 
-          type="button"
-          onClick={()=> proyectoNull()}
-        >X</Button> */}
       </ButtonContainer>
     </ContentMain>
   );

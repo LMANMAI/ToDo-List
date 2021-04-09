@@ -8,6 +8,7 @@ const EndProyectsContainer = styled.div`
   //border: 1px solid red;
   height: 100%;
   //background-color: red;
+  z-index: 1;
 `;
 const List = styled.ul`
   min-height: 50vh;
@@ -42,7 +43,6 @@ const Item = styled.li`
 const EndProyects = () => {
   const proyectoContext = useContext(ProyectoContext);
   const {
-    panelterminados,
     proyectosterminados,
     eliminarProyecto,
   } = proyectoContext;

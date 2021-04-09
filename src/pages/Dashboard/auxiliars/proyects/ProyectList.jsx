@@ -38,17 +38,17 @@ const ProyectListContainer = styled.div`
   }
 `;
 const ButtonClose = styled.button`
- background-color: #f02d7b;
-    border: none;
-    outline: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 35px;
-    cursor: pointer;
-    margin: 0.5rem;
-    svg {
-      color: white;
-    }
+  background-color: #f02d7b;
+  border: none;
+  outline: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 35px;
+  cursor: pointer;
+  margin: 0.5rem;
+  svg {
+    color: white;
+  }
 `;
 const ProyectMessage = styled.p``;
 const LisContainer = styled.ul`
@@ -81,7 +81,9 @@ const ProyectList = () => {
       </ButtonClose>
       <ProyectListContainer>
         {proyectos.length === 0 ? (
-          <ProyectMessage className="object_list">Todavia no creaste ningun proyecto!</ProyectMessage>
+          <ProyectMessage className="object_list">
+            Todavia no creaste ningun proyecto!
+          </ProyectMessage>
         ) : (
           <LisContainer>
             {proyectos.map((proyecto) => (

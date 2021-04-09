@@ -49,12 +49,12 @@ function Container() {
 
   const proyectoContext = useContext(ProyectoContext);
   const { proyectoactivo, proyectoActual } = proyectoContext;
-  // useEffect(() => {
-  //   console.log("hay otro proyecto activo");
-  //   if (proyectoactivo) {
-  //     allFalse();
-  //   }
-  // }, [proyectoactivo, panelnuevoproyecto, panelproyectos, panelterminados]);
+  useEffect(() => {
+    console.log("hay otro proyecto activo");
+    if (proyectoactivo) {
+      allFalse();
+    }
+  }, [proyectoactivo]);
   console.log(proyectoactivo);
   return (
     <ContainerDashboard>
