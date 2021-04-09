@@ -5,7 +5,6 @@ import EndProyects from "../proyects/EndProyects";
 import TaskBody from "../task/TaskBody";
 import AnimationContext from "../../../../context/animations/AnimationContext";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
-//import "./index.scss";
 import styled from "@emotion/styled";
 
 const ContainerDashboard = styled.div`
@@ -14,8 +13,8 @@ const ContainerDashboard = styled.div`
   height: 100%;
   position: relative;
   @media (min-width: 768px) {
-     display: flex;
-    flex-direction: column;   
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-self: center;
   }
@@ -27,7 +26,8 @@ const Box = styled.div`
   width: 98%;
   max-height: 100vh;
   border-radius: 50px 50px 0 0;
-  overflow-y: scroll; 
+  overflow-y: scroll;
+  overflow-x: hidden;
   @media (min-width: 768px) {
     overflow: hidden;
     justify-content: center;
@@ -35,9 +35,10 @@ const Box = styled.div`
     width: 99%;
     height: 98vh;
     border-radius: 35px;
-    padding: 0.3rem;    
+    padding: 0.3rem;
   }
 `;
+
 function Container() {
   const animaContext = useContext(AnimationContext);
   const {
@@ -50,7 +51,7 @@ function Container() {
   const proyectoContext = useContext(ProyectoContext);
   const { proyectoactivo, proyectoActual } = proyectoContext;
   useEffect(() => {
-    console.log("hay otro proyecto activo");
+    // console.log("hay otro proyecto activo");
     if (proyectoactivo) {
       allFalse();
     }
@@ -62,6 +63,7 @@ function Container() {
         <NewProyect />
         {panelproyectos ? <ProyectList /> : <TaskBody />}
         {panelterminados && <EndProyects />}
+   
       </Box>
     </ContainerDashboard>
   );

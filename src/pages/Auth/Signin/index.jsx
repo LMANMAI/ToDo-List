@@ -113,19 +113,17 @@ const ButtonSec = styled(Button)`
 `;
 const SignIn = (props) => {
   const animaContext = useContext(AnimationContext);
-  const { panel, movePanelAuth } = animaContext;
+  const {movePanelAuth } = animaContext;
   //contexts
   const alertaContext = useContext(AlertaContext);
   const { alerta, mostrarAlerta } = alertaContext;
 
   const authContext = useContext(AuthContext);
-  const { mensaje, autenticado, cargandoSpin, registerUser } = authContext;
-  let history = useHistory();
+  const { mensaje, autenticado, registerUser } = authContext;
+  //let history = useHistory();
   useEffect(() => {
     if (autenticado) {
-      setTimeout(() => {
-        history.push("/dashboard");
-      }, 2000);
+      props.history.push("/dashboard")
     }
     if (mensaje) {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
@@ -224,12 +222,12 @@ const SignIn = (props) => {
             placeholder="Repetir Contraseña"
           />
         </InputField>
-        <Button type="submit" value="Continuar" />
+        <Button type="submit" value="Continuar"/>
       </FormularioContainer>
       <Content>
         <h3>¿Ya tienes una cuenta?</h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-        <ButtonSec onClick={() => movePanelAuth()} value=" Registrarse" />
+        <ButtonSec onClick={() => movePanelAuth()} value="Iniciar Sesion" />
       </Content>
     </>
   );
