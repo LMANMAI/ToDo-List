@@ -1,4 +1,4 @@
-Administrador de proyectos con Front en React y estilos en styled components, y Back en NodeJs, Express y MongoDB
+Administrador de proyectos con Front en React, estilos en styled components, y Back en NodeJs y MongoDB
 Primera Version:
 https://infallible-cori-8df632.netlify.app/
 
