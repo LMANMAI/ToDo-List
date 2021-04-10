@@ -56,7 +56,7 @@ const EndProyects = () => {
 
   return (
     <EndProyectsContainer>
-      <List>
+      <List>  
         {proyectosterminados.length === 0 ? (
           <Item>Todavia no terminaste ningun proyecto</Item>
         ) : null}

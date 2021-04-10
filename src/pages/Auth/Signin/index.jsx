@@ -6,7 +6,7 @@ import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 
-const FormularioContainer = styled.div`
+const FormularioContainer = styled.form`
   width: 100%;
   height: fit-content;
   border-radius: 50px;
@@ -22,7 +22,6 @@ const FormularioContainer = styled.div`
     /* width: 30%; */
   }
 `;
-
 const Content = styled.div`
   /* padding-right: 15%;
   */
@@ -35,13 +34,11 @@ const Content = styled.div`
     padding: 0.5rem 0;
   }
 `;
-
 const Titulo = styled.h2`
   font-size: 2.2rem;
   color: #444;
   margin-bottom: 10px;
 `;
-
 const InputField = styled.div`
   max-width: 380px;
   width: 100%;
@@ -77,7 +74,6 @@ const InputField = styled.div`
     }
   }
 `;
-
 const Button = styled.input`
   width: 150px;
   height: 50px;
@@ -96,7 +92,6 @@ const Button = styled.input`
     background-color: #cc0f5b;
   }
 `;
-
 const ButtonSec = styled(Button)`
   margin: 0;
   background: none;
@@ -120,15 +115,18 @@ const SignIn = (props) => {
 
   const authContext = useContext(AuthContext);
   const { mensaje, autenticado, registerUser } = authContext;
-  //let history = useHistory();
+  let history = useHistory();
+
   useEffect(() => {
     if (autenticado) {
-      props.history.push("/dashboard")
+      history.push("/dashboard")
     }
     if (mensaje) {
       mostrarAlerta(mensaje.msg, mensaje.categoria);
     }
   }, [autenticado, mensaje, props.history]);
+
+
   const [usern, setUserN] = useState({
     nombre: "",
     email: "",
@@ -136,14 +134,17 @@ const SignIn = (props) => {
     confirmar: "",
   });
   const { nombre, email, password, confirmar } = usern;
+  //Funciones
   const handleChange = (e) => {
     setUserN({
       ...usern,
       [e.target.name]: e.target.value,
     });
   };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('funciton working')
     if (
       nombre.trim() === "" ||
       email.trim() === "" ||
@@ -172,6 +173,7 @@ const SignIn = (props) => {
       email,
       password,
     });
+   
   };
 
   return (
