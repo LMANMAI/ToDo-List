@@ -12,12 +12,12 @@ const NewProyectContainer = styled.div`
   border-radius: 0 0 35px 35px;
   padding: 0.5rem;
   position: absolute;
-  transform: ${(props)=> props.transform};
+  transform: ${(props) => props.transform};
   z-index: 0;
-  transition: all .8s ease-in-out;
+  transition: all 0.8s ease-in-out;
   @media (min-width: 768px) {
-    transition: all .6s ease-in-out;
-    transform: ${(props)=> props.transform};
+    transition: all 0.6s ease-in-out;
+    transform: ${(props) => props.transform};
     border-radius: 0 25px 25px 0;
     width: 20vw;
     min-width: 250px;
@@ -36,7 +36,7 @@ const Input = styled.input`
   border-radius: 35px;
   outline: none;
   border: none;
-  &:first-child {
+  &:first-of-type {
     background-color: white;
     padding-left: 20px;
     &:focus {
@@ -66,12 +66,8 @@ const Submit = styled.input`
 const NewProyect = () => {
   //Contexts
   const proyectoContext = useContext(ProyectoContext);
-  const {
-    panel,
-    errorformulario,
-    agregarProyecto,
-    validarFormulario,
-  } = proyectoContext;
+  const { panel, errorformulario, agregarProyecto, validarFormulario } =
+    proyectoContext;
   const animationContext = useContext(AnimationContext);
   const { panelnuevoproyecto } = animationContext;
   //states internos
@@ -104,7 +100,9 @@ const NewProyect = () => {
   };
 
   return (
-    <NewProyectContainer transform={panelnuevoproyecto ?' translateX(0)' :' translateX(-100vw)'}>
+    <NewProyectContainer
+      transform={panelnuevoproyecto ? " translateX(0)" : " translateX(-100vw)"}
+    >
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"

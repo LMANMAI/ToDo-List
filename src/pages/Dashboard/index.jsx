@@ -1,27 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import SideBar from "./auxiliars/SideBar";
-import Container from "./auxiliars/Container";
+import { Container, SideBar } from "./auxiliars";
 import ProyectoContext from "../../context/proyects/proyectoContext";
 import AuthContext from "../../context/auth/authContext";
 import AlertaContext from "../../context/alertas/alertaContext";
 import AnimationContext from "../../context/animations/AnimationContext";
-import styled from "@emotion/styled";
-
-const DashboardContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 200px 1fr;
-  background-color: #f2f2f2;  
-  @media (min-width: 768px) {
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: initial;
-  }
-`;
-
+import { DashboardContainer } from "./styles";
 const DashboardPage = () => {
   const proyectoContext = useContext(ProyectoContext);
-  const { proyectoactivo, mensaje, proyectoActual } = proyectoContext;
+  const { mensaje, proyectoActual } = proyectoContext;
 
   const authContext = useContext(AuthContext);
   const { userAuth } = authContext;
@@ -30,11 +16,8 @@ const DashboardPage = () => {
   const { alerta, mostrarAlerta } = alertacontext;
 
   const animationContext = useContext(AnimationContext);
-  const {
-    panelnuevoproyecto,
-    panelproyectos,
-    panelterminados,
-  } = animationContext;
+  const { panelnuevoproyecto, panelproyectos, panelterminados } =
+    animationContext;
 
   useEffect(() => {
     userAuth();
