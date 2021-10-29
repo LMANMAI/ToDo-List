@@ -22,6 +22,7 @@ export const ContentRight = styled.div`
   padding: 1rem;
   transition: 0.4s 0.6s ease-in-out;
   transform: ${(props) => props.position};
+  visibility: ${(props) => props.visivility};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +38,7 @@ export const ContentLeft = styled.div`
   padding: 1rem;
   transition: 0.4s 0.6s ease-in-out;
   transform: ${(props) => props.position};
+  visibility: ${(props) => props.visivility};
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

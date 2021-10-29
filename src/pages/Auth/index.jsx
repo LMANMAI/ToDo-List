@@ -19,12 +19,14 @@ function AuthPage() {
         <ButtonContainer>
           <ContentRight
             position={panel ? "translateX(100vw)" : "translateX(0px)"}
+            visivility={panel ? "hidden" : "visible"}
           >
             <Login />
           </ContentRight>
 
           <ContentLeft
             position={!panel ? "translateX(-100vw)" : "translateX(0px)"}
+            visivility={!panel ? "hidden" : "visible"}
           >
             <SignIn />
           </ContentLeft>
