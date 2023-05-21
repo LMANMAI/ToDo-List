@@ -30,6 +30,8 @@ const TaskState = (props: any) => {
         params: { proyecto },
       });
 
+      console.log(peticion);
+
       dispatch({
         type: TASK_PROYECTO,
         payload: peticion.data,

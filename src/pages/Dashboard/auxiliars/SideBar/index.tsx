@@ -1,74 +1,80 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BsFolder, BsFolderPlus, BsFolderCheck } from "react-icons/bs";
+import { CgMenu } from "react-icons/cg";
 import AuthContext from "../../../../context/auth/authContext";
 import AnimationContext from "../../../../context/animations/AnimationContext";
-import {
-  SideBarContainer,
-  SideBarDatos,
-  Brand,
-  SidebarButtonContainer,
-  Button,
-  EndSesionButton,
-} from "./styles";
-
+import { SideBarContainer } from "./styles";
+import { NavLink } from "react-router-dom";
 const SideBar = () => {
-  const animationContext = useContext(AnimationContext);
   const {
+    panelDashboard,
     movePanelNuevoProyecto,
     movePanelProyectos,
     movePanelProyectosTermiandos,
-  } = animationContext;
+    setPanelDashboard,
+  } = useContext(AnimationContext);
 
-  const authContext = useContext(AuthContext);
-  const { user, EndSesion } = authContext;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+    setPanelDashboard(isOpen);
+  };
+  const { user, EndSesion } = useContext(AuthContext);
 
   const Exit = () => {
     setTimeout(() => {
       EndSesion();
     }, 1000);
   };
+
+  const sideBarMenuItems = [
+    {
+      path: "newproyects",
+      name: "Crear Proyecto",
+      icon: <BsFolderPlus />,
+      function: movePanelNuevoProyecto,
+    },
+    {
+      path: "proyects",
+      name: "Mis proyectos",
+      icon: <BsFolder />,
+      function: movePanelProyectos,
+    },
+    {
+      path: "finishedproyectos",
+      name: "Proyectos Terminados",
+      icon: <BsFolderCheck />,
+      function: movePanelProyectosTermiandos,
+    },
+  ];
   return (
-    <SideBarContainer>
-      <SideBarDatos>
-        <Brand>
-          TASK <p>app</p>
-        </Brand>
-
-        <div>
-          {user ? (
-            <p>
-              Hola! <span>{user.nombre}</span>
-            </p>
-          ) : null}
+    <SideBarContainer width={isOpen}>
+      <div className="top_section">
+        <h2 className="logo">Mern Task</h2>
+        <div className="menu_button bars">
+          <CgMenu
+            onClick={() => {
+              toggle();
+            }}
+          />
         </div>
-      </SideBarDatos>
+      </div>
 
-      <SidebarButtonContainer>
-        <Button
-          onClick={() => movePanelNuevoProyecto()}
-          className="DashboardSideBar_botones_btn"
-        >
-          <BsFolderPlus />
-          <p>Crear Proyecto</p>
-        </Button>
-
-        <Button
-          onClick={() => movePanelProyectos()}
-          className="DashboardSideBar_botones_btn"
-        >
-          <BsFolder />
-          <p> Mis proyectos</p>
-        </Button>
-
-        <Button
-          onClick={() => movePanelProyectosTermiandos()}
-          className="DashboardSideBar_botones_btn"
-        >
-          <BsFolderCheck />
-          <p>Proyectos Terminados</p>
-        </Button>
-      </SidebarButtonContainer>
-      <EndSesionButton onClick={() => Exit()}>Cerrar Sesión</EndSesionButton>
+      <div style={{ marginTop: "40px" }}>
+        {sideBarMenuItems.map((item, index) => (
+          <NavLink
+            key={index}
+            className="button link"
+            to={item.path}
+            // onClick={() => {
+            //   item.function();
+            // }}
+          >
+            <div className="icon">{item.icon}</div>
+            <div className="name link_text">{item.name}</div>
+          </NavLink>
+        ))}
+      </div>
     </SideBarContainer>
   );
 };

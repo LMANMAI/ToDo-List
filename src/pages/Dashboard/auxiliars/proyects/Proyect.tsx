@@ -27,15 +27,13 @@ const ProyectObject = styled.li`
   }
 `;
 const Proyect = (proyecto: any) => {
-  const proyectoContext = useContext(ProyectoContext);
-  const { proyectoActual } = proyectoContext;
-
-  const taskContext = useContext(TaskContext);
-  const { obtenerTareas } = taskContext;
+  const { proyectoActual } = useContext(ProyectoContext);
+  const { obtenerTareas } = useContext(TaskContext);
 
   const handleClick = (proyecto: any) => {
-    proyectoActual(proyecto);
-    obtenerTareas(proyecto._id);
+    console.log(proyecto);
+    proyectoActual(proyecto.proyecto);
+    obtenerTareas(proyecto.proyecto._id);
   };
 
   return (

@@ -54,7 +54,7 @@ const ProyectoState = (props: any) => {
   const obtenerProyectos = async () => {
     try {
       const requestP = await clienteAxios.get("/api/proyect");
-
+      console.log(requestP);
       dispatch({
         type: OBTENER_PROYECTOS,
         payload: requestP.data,

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { NewProyect, ProyectList, EndProyects } from "../proyects";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+
 import { TaskBody } from "../task";
 import { AnimationContext, ProyectoContext } from "../../../../context";
 import { ContainerDashboard, Box } from "./styles";
@@ -17,11 +18,12 @@ function Container() {
   }, [proyectoactivo]);
   return (
     <ContainerDashboard>
-      <Box>
+      {/* <Box>
         <NewProyect />
         {panelproyectos ? <ProyectList /> : <TaskBody />}
         {panelterminados && <EndProyects />}
-      </Box>
+      </Box> */}
+      <Outlet />
     </ContainerDashboard>
   );
 }

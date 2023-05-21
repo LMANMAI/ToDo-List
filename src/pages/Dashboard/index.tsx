@@ -30,7 +30,6 @@ const DashboardPage = () => {
   }, [mensaje]);
   return (
     <DashboardContainer>
-      {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
       <SideBar />
       <Container />
     </DashboardContainer>

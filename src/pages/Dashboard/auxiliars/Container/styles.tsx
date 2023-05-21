@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ContainerDashboard = styled.div`
+export const ContainerDashboard = styled.main`
   display: flex;
   width: 100%;
   height: 100%;

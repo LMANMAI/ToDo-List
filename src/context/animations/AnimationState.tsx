@@ -7,6 +7,7 @@ import {
   PANELPROYECTOS,
   PANELTERMIANDOS,
   TODO_FALSE,
+  PANEL_DASHBOARD,
 } from "../../types";
 
 const AnimationState = (props: any) => {
@@ -15,6 +16,7 @@ const AnimationState = (props: any) => {
     panelnuevoproyecto: false,
     panelproyectos: false,
     panelterminados: false,
+    panelDashboard: false,
   };
   const [state, dispatch] = useReducer(AnimationReducer, initialState);
   //funciones
@@ -43,6 +45,13 @@ const AnimationState = (props: any) => {
       type: TODO_FALSE,
     });
   };
+
+  const setPanelDashboard = (value: boolean) => {
+    dispatch({
+      type: PANEL_DASHBOARD,
+      payload: value,
+    });
+  };
   return (
     <AnimationContext.Provider
       value={{
@@ -55,6 +64,7 @@ const AnimationState = (props: any) => {
         movePanelProyectos,
         movePanelProyectosTermiandos,
         allFalse,
+        setPanelDashboard,
       }}
     >
       {props.children}

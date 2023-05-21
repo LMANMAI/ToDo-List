@@ -28,7 +28,18 @@ function RoutesComponent() {
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<AuthPage />} />
-                  <Route path="/Dashboard" element={<DashboardPage />} />
+                  <Route path="/dashboard/*" element={<DashboardPage />}>
+                    <Route index element={<div>index</div>} />
+                    <Route
+                      path="newproyects"
+                      element={<div>newproyects</div>}
+                    />
+                    <Route path="proyects" element={<div>proyects</div>} />
+                    <Route
+                      path="finishedproyectos"
+                      element={<div>finishedproyectos</div>}
+                    />
+                  </Route>
                 </Routes>
               </BrowserRouter>
             </AnimationState>

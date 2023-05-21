@@ -5,6 +5,7 @@ import {
   PANELPROYECTOS,
   PANELTERMIANDOS,
   TODO_FALSE,
+  PANEL_DASHBOARD,
 } from "../../types";
 export default (state: any, action: any) => {
   switch (action.type) {
@@ -39,6 +40,11 @@ export default (state: any, action: any) => {
         panelnuevoproyecto: false,
         panelproyectos: false,
         panelterminados: false,
+      };
+    case PANEL_DASHBOARD:
+      console.log(action.payload);
+      return {
+        panelDashboard: action.payload,
       };
     default:
       return state;
