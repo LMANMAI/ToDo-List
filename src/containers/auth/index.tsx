@@ -5,9 +5,9 @@ import {
   ButtonContainer,
   ContentRight,
   ContentLeft,
-} from "./styles";
-import Login from "./Login";
-import SignIn from "./Signin";
+} from "../../pages/Auth/styles";
+import Login from "../../pages/Auth/Login";
+import SignIn from "../../pages/Auth/Signin";
 import AnimationContext from "../../context/animations/AnimationContext";
 
 function AuthPage() {

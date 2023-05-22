@@ -7,7 +7,7 @@ export const FormularioContainer = styled.form<IForm>`
   height: fit-content;
   border-radius: 50px;
   background-color: #fff;
-  box-shadow: -20px 20px 60px #bebebe, 20px -20px 60px #ffffff;
+  // box-shadow: -20px 20px 60px #bebebe, 20px -20px 60px #ffffff;
   padding: 1rem;
   z-index: 1;
   margin: 1rem;
@@ -99,5 +99,19 @@ export const ButtonSec = styled(Button)`
   text-align: center;
   &:hover {
     color: white;
+  }
+`;
+
+export const Authwraper = styled.div`
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  .image_form {
+    display: none;
+    width: calc(80vw - 400px);
+  }
+
+  @media (min-width: 768px) {
+    .image_form {
+      display: block;
+    }
   }
 `;

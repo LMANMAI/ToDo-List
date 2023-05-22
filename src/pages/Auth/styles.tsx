@@ -28,7 +28,7 @@ export const ContentRight = styled.div<IContent>`
   transform: ${(props) => props.position};
   visibility: ${(props) => props.visivility};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   @media (min-width: 768px) {
@@ -44,7 +44,7 @@ export const ContentLeft = styled.div<IContent>`
   transform: ${(props) => props.position};
   visibility: ${(props) => props.visivility};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   @media (min-width: 768px) {

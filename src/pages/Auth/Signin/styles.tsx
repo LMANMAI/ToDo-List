@@ -6,7 +6,7 @@ export const FormularioContainer = styled.form<IForm>`
   width: 100%;
   height: fit-content;
   border-radius: 50px;
-  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+
   padding: 1rem;
   background-color: #ffffff;
   transform: ${(props) => props.position};
@@ -94,5 +94,19 @@ export const ButtonSec = styled(Button)`
   text-align: center;
   &:hover {
     color: white;
+  }
+`;
+export const Authwraper = styled.div`
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  .image_form {
+    display: none;
+    width: calc(80vw - 400px);
+    background-color: red;
+  }
+
+  @media (min-width: 768px) {
+    .image_form {
+      display: block;
+    }
   }
 `;

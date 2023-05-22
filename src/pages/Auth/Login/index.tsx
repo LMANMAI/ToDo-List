@@ -7,6 +7,7 @@ import {
   InputField,
   Button,
   ButtonSec,
+  Authwraper,
 } from "./styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import AlertaContext from "../../../context/alertas/alertaContext";
@@ -54,7 +55,7 @@ const Login = (props: any) => {
   }, [mensaje, autenticado, props.history]);
 
   return (
-    <>
+    <Authwraper style={{ display: "flex", padding: "15px" }}>
       <FormularioContainer onSubmit={handleSubmit}>
         <Titulo>Iniciar Sesion</Titulo>
         {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
@@ -80,17 +81,19 @@ const Login = (props: any) => {
           />
         </InputField>
         <Button type="submit" value="Entrar" />
+
+        <Content>
+          <h3>¿Nuevo aqui?</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+          <ButtonSec
+            onClick={() => movePanelAuth()}
+            id="sing-up-btn"
+            value="Registrarse"
+          />
+        </Content>
       </FormularioContainer>
-      <Content>
-        <h3>¿Nuevo aqui?</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-        <ButtonSec
-          onClick={() => movePanelAuth()}
-          id="sing-up-btn"
-          value="Registrarse"
-        />
-      </Content>
-    </>
+      <div className="image_form relative h-1by2 bg-yellow teal-dark pattern-triangles-xl"></div>
+    </Authwraper>
   );
 };
 

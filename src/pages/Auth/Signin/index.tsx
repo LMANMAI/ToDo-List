@@ -8,6 +8,7 @@ import {
   InputField,
   Button,
   ButtonSec,
+  Authwraper,
 } from "./styles";
 import AlertaContext from "../../../context/alertas/alertaContext";
 import AuthContext from "../../../context/auth/authContext";
@@ -80,7 +81,7 @@ const SignIn = (props: any) => {
   };
 
   return (
-    <>
+    <Authwraper style={{ display: "flex", padding: "15px" }}>
       <FormularioContainer onSubmit={handleSubmit}>
         {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
         <Titulo>Obtener una Cuenta</Titulo>
@@ -128,13 +129,14 @@ const SignIn = (props: any) => {
           />
         </InputField>
         <Button type="submit" value="Continuar" />
+        <Content>
+          <h3>¿Ya tienes una cuenta?</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+          <ButtonSec onClick={() => movePanelAuth()} value="Iniciar Sesion" />
+        </Content>
       </FormularioContainer>
-      <Content>
-        <h3>¿Ya tienes una cuenta?</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-        <ButtonSec onClick={() => movePanelAuth()} value="Iniciar Sesion" />
-      </Content>
-    </>
+      <div className="image_form"></div>
+    </Authwraper>
   );
 };
 
