@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 export const ContainerDashboard = styled.main`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
   @media (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-self: center;
   }
 `;
 

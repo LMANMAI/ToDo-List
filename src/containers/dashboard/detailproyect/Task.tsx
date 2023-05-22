@@ -44,11 +44,14 @@ const ButtonState = styled.button`
 
   align-self: center;
 `;
-const ButtonPending = styled(ButtonState)`
-  background-color: transparent;
-  border: 2px solid #4b72a8;
-  color: #4b72a8;
-  font-weight: bold;
+const FormTaskContainer = styled.div`
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  //border: 1px solid red;
+  @media (min-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Task = (tarea: any) => {
@@ -77,25 +80,11 @@ const Task = (tarea: any) => {
   };
 
   return (
-    <>
+    <FormTaskContainer>
       <h3>{proyectoActual.nombre}</h3>
       <FormTask />
       <TaskList />
-      {/* <ButtonContainer>
-        <Button
-          type="button"
-          onClick={() => handdleProyectState(proyectoActual)}
-        >
-          Terminar Proyecto
-        </Button>
-        <Button
-          type="button"
-          onClick={() => eliminarProyecto(proyectoActual._id)}
-        >
-          Eliminar Proyecto
-        </Button>
-      </ButtonContainer> */}
-    </>
+    </FormTaskContainer>
   );
 };
 
