@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import ProyectoContext from "../../../../context/proyects/proyectoContext";
+import ProyectoContext from "../../../context/proyects/proyectoContext";
 //import './index.scss'
 import styled from "@emotion/styled";
 

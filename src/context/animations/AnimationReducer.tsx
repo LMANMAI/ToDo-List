@@ -42,7 +42,6 @@ export default (state: any, action: any) => {
         panelterminados: false,
       };
     case PANEL_DASHBOARD:
-      console.log(action.payload);
       return {
         panelDashboard: action.payload,
       };

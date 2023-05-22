@@ -10,6 +10,7 @@ import {
   AuthState,
   AnimationState,
 } from "../context";
+import { NewProyect, EndProyects, ProyectList, Task } from "../containers";
 
 import tokenAuth from "../config/tokenAuth";
 //Protego el componente
@@ -30,15 +31,10 @@ function RoutesComponent() {
                   <Route path="/" element={<AuthPage />} />
                   <Route path="/dashboard/*" element={<DashboardPage />}>
                     <Route index element={<div>index</div>} />
-                    <Route
-                      path="newproyects"
-                      element={<div>newproyects</div>}
-                    />
-                    <Route path="proyects" element={<div>proyects</div>} />
-                    <Route
-                      path="finishedproyectos"
-                      element={<div>finishedproyectos</div>}
-                    />
+                    <Route path="newproyects" element={<NewProyect />} />
+                    <Route path="proyects" element={<ProyectList />} />
+                    <Route path="proyects/:id" element={<Task />} />
+                    <Route path="finishedproyectos" element={<EndProyects />} />
                   </Route>
                 </Routes>
               </BrowserRouter>

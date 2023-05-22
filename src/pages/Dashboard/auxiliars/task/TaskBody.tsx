@@ -46,8 +46,6 @@ const TaskBody = () => {
   const proyectoContext = useContext(ProyectoContext);
   const { proyectoactivo, eliminarProyecto, terminarProyecto, proyectoNull } =
     proyectoContext;
-
-  console.log(proyectoactivo);
   if (!proyectoactivo) return null;
 
   const handdleProyectState = (proyecto: any) => {

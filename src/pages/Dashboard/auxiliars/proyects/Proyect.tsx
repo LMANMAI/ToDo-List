@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import TaskContext from "../../../../context/task/taskContext";
 import styled from "@emotion/styled";
-
+import { NavLink } from "react-router-dom";
 const ProyectObject = styled.li`
-  button {
+  button,
+  a {
     cursor: pointer;
     outline: none;
     background-color: #5595a5;
@@ -31,18 +32,21 @@ const Proyect = (proyecto: any) => {
   const { obtenerTareas } = useContext(TaskContext);
 
   const handleClick = (proyecto: any) => {
-    console.log(proyecto);
     proyectoActual(proyecto.proyecto);
     obtenerTareas(proyecto.proyecto._id);
   };
 
   return (
     <ProyectObject>
-      <button onClick={() => handleClick(proyecto)} className="Proyect_Btn">
+      <NavLink
+        to={`/dashboard/proyects/${proyecto.proyecto._id}`}
+        onClick={() => handleClick(proyecto)}
+        className="Proyect_Btn"
+      >
         <p className="Proyect_Name">{proyecto.nombre}</p>
         <span className="Proyect_Task">Cantidad de tareas: 15</span>
         <span className="Proyect_Date">Creado el dia: 01/01/21</span>
-      </button>
+      </NavLink>
     </ProyectObject>
   );
 };

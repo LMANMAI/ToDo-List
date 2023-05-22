@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import ProyectoContext from "../../../../context/proyects/proyectoContext";
-import AnimationContext from "../../../../context/animations/AnimationContext";
+import ProyectoContext from "../../../context/proyects/proyectoContext";
+import AnimationContext from "../../../context/animations/AnimationContext";
 
 import styled from "@emotion/styled";
 interface INewProyect {
-  transform: any;
+  transform?: any;
 }
 const NewProyectContainer = styled.div<INewProyect>`
   background-color: #f3f3f3;
@@ -106,9 +106,7 @@ const NewProyect = () => {
   };
 
   return (
-    <NewProyectContainer
-      transform={panelnuevoproyecto ? " translateX(0)" : " translateX(-100vw)"}
-    >
+    <NewProyectContainer>
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
