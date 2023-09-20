@@ -51,3 +51,24 @@ export const ContentLeft = styled.div<IContent>`
     margin: 0 auto;
   }
 `;
+
+export const Authwraper = styled.div`
+  display: flex;
+  padding: 15px;
+  max-width: 1000px;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  .image_form {
+    display: none;
+    width: calc(80vw - 400px);
+    min-height: 580px;
+    background: repeat url("./pattern.png");
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (min-width: 768px) {
+    .image_form {
+      display: block;
+    }
+  }
+`;

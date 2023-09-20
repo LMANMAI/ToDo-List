@@ -1,36 +1,49 @@
-import React, { useReducer } from "react";
-
-//importo el reducer y el context
+import React, { useReducer, useEffect } from "react";
 import AlertaReducer from "./alertaReducer";
 import AlertaContext from "./alertaContext";
-//importo los types
 import { MOSTRAR_ALERTA, OCULTAR_ALERTA } from "../../types";
+import { toast } from "react-toastify";
 
 const AlertaState = (props: any) => {
   const initialState = {
-    //states inicial
     alerta: null,
   };
-  //uso el reducer
   const [state, dispatch] = useReducer(AlertaReducer, initialState);
-
   const mostrarAlerta = (msg: any, categoria: any) => {
     dispatch({
       type: MOSTRAR_ALERTA,
       payload: { msg, categoria },
     });
-    setTimeout(() => {
-      dispatch({
-        type: OCULTAR_ALERTA,
-      });
-    }, 4000);
   };
+
+  const ocultarAlerta = () => {
+    dispatch({
+      type: OCULTAR_ALERTA,
+    });
+  };
+
+  useEffect(() => {
+    if (state.alerta !== null) {
+      toast(state.alerta.msg, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        toastId: "global-toast",
+      });
+    }
+  }, [state.alerta]);
+
   return (
     <AlertaContext.Provider
       value={{
-        //paso las funciones y los states
         alerta: state.alerta,
         mostrarAlerta,
+        ocultarAlerta,
       }}
     >
       {props.children}

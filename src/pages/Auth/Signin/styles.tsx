@@ -29,7 +29,10 @@ export const Titulo = styled.h2`
   color: #444;
   margin-bottom: 10px;
 `;
-export const InputField = styled.div`
+interface IProps {
+  isFocused: boolean;
+}
+export const InputField = styled.div<IProps>`
   max-width: 380px;
   width: 100%;
   height: 55px;
@@ -40,12 +43,15 @@ export const InputField = styled.div`
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   outline: none;
+
   svg {
     justify-self: center;
     align-self: center;
-    color: #444;
+    color: ${({ isFocused }) => (isFocused ? "#0461cf" : "#444")};
     font-size: 1.1rem;
+    transition: color 0.3s ease-in-out;
   }
+
   input {
     background: none;
     outline: none;
@@ -55,12 +61,16 @@ export const InputField = styled.div`
     font-size: 1.1rem;
     color: #333;
 
-    &::focus svg {
-      background-color: #f02d7b;
-    }
     &::placeholder {
       font-weight: 500;
       color: #aaa;
+    }
+
+    &:focus,
+    &:focus-within {
+      ~ svg {
+        color: red;
+      }
     }
   }
 `;
@@ -77,20 +87,20 @@ export const Button = styled.input`
   transition: 0.5s;
   cursor: pointer;
   background: transparent;
-  background-color: #f02d7b;
+  background-color: #0461cf;
   &:hover {
-    background-color: #cc0f5b;
+    background-color: #054fb9;
   }
 `;
 export const ButtonSec = styled(Button)`
   margin: 0;
   background: none;
-  border: 2px solid #f02d7b;
+  border: 2px solid #0461cf;
   width: 130px;
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
-  color: #f02d7b;
+  color: #0461cf;
   text-align: center;
   &:hover {
     color: white;

@@ -7,22 +7,45 @@ import {
   InputField,
   Button,
   ButtonSec,
-  Authwraper,
 } from "./styles";
+import { Authwraper } from "../styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import AlertaContext from "../../../context/alertas/alertaContext";
+import AlertaState from "../../../context/alertas/alertaState";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
+import { toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = (props: any) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused2, setIsFocused2] = useState(false);
+  const idPanel = "login";
+  let history = useNavigate();
+  const handleInputFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsFocused(false);
+  };
+
+  const handleInputFocus2 = () => {
+    setIsFocused2(true);
+  };
+
+  const handleInputBlur2 = () => {
+    setIsFocused2(false);
+  };
+
   const animaContext = useContext(AnimationContext);
   const { panel, movePanelAuth } = animaContext;
-
   const authContext = useContext(AuthContext);
   const { mensaje, autenticado, cargandoSpin, loginUser } = authContext;
 
-  const alertaContext = useContext(AlertaContext);
-  const { alerta, mostrarAlerta } = alertaContext;
+  const { alerta, mostrarAlerta, ocultarAlerta } = useContext(AlertaContext);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -34,16 +57,16 @@ const Login = (props: any) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmitLogin = (e: any) => {
     e.preventDefault();
     //valido que no tenga campos vacios
     if (email.trim() === "" || password.trim() === "") {
       mostrarAlerta("Todos los campos son necesarios", "alerta-error");
+
       return;
     }
     loginUser(user);
   };
-  let history = useNavigate();
 
   useEffect(() => {
     if (autenticado) {
@@ -54,46 +77,81 @@ const Login = (props: any) => {
     }
   }, [mensaje, autenticado, props.history]);
 
+  useEffect(() => {
+    if (alerta !== null) {
+      toast(alerta.msg, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        toastId: idPanel,
+      });
+    }
+  }, [alerta]);
+
   return (
-    <Authwraper style={{ display: "flex", padding: "15px" }}>
-      <FormularioContainer onSubmit={handleSubmit}>
-        <Titulo>Iniciar Sesion</Titulo>
-        {alerta ? <div className={alerta.categoria}>{alerta.msg}</div> : null}
-        <InputField>
-          <FaUserAlt />
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Nombre de usuario o Email"
-          />
-        </InputField>
+    <div>
+      <Authwraper>
+        <FormularioContainer>
+          <div
+            style={{
+              width: "100%",
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Titulo>Iniciar Sesion</Titulo>
 
-        <InputField>
-          <FaLock />
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            placeholder="Contraseña"
-          />
-        </InputField>
-        <Button type="submit" value="Entrar" />
+            <InputField isFocused={isFocused}>
+              <FaUserAlt className={isFocused ? "focused" : ""} />
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                placeholder="Nombre de usuario o Email"
+                onFocus={() => handleInputFocus()}
+                onBlur={handleInputBlur}
+              />
+            </InputField>
 
-        <Content>
-          <h3>¿Nuevo aqui?</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-          <ButtonSec
-            onClick={() => movePanelAuth()}
-            id="sing-up-btn"
-            value="Registrarse"
-          />
-        </Content>
-      </FormularioContainer>
-      <div className="image_form relative h-1by2 bg-yellow teal-dark pattern-triangles-xl"></div>
-    </Authwraper>
+            <InputField isFocused={isFocused2}>
+              <FaLock className={isFocused2 ? "focused" : ""} />
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                onFocus={() => handleInputFocus2()}
+                onBlur={handleInputBlur2}
+                placeholder="Contraseña"
+              />
+            </InputField>
+            <Button
+              type="button"
+              value="Entrar"
+              onClick={(e) => handleSubmitLogin(e)}
+            />
+          </div>
+
+          <Content>
+            <h3>¿Nuevo aqui?</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <ButtonSec
+              onClick={() => movePanelAuth()}
+              id="sing-up-btn"
+              value="Registrarse"
+            />
+          </Content>
+        </FormularioContainer>
+        <div className="image_form"></div>
+      </Authwraper>
+    </div>
   );
 };
 
