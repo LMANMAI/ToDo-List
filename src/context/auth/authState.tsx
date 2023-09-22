@@ -65,6 +65,7 @@ const AuthState = (props: any) => {
         msg: error.response.data.msg,
         categoria: "alerta-error",
       };
+
       dispatch({
         type: LOGIN_ERROR,
         payload: mensaje,

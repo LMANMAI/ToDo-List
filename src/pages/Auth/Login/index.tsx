@@ -15,6 +15,7 @@ import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import loginuser from "../../../services/loginuser";
 
 const Login = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -53,7 +54,7 @@ const Login = (props: any) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmitLogin = (e: any) => {
+  const handleSubmitLogin = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     //valido que no tenga campos vacios
@@ -62,7 +63,9 @@ const Login = (props: any) => {
       setLoading(false);
       return;
     }
-    loginUser(user);
+    const request = await loginuser(user);
+    console.log(request);
+    // loginUser(user);
     setLoading(false);
   };
 
