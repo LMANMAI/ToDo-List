@@ -6,8 +6,8 @@ import { ContainerDashboard, Box } from "./styles";
 import { Outlet } from "react-router-dom";
 
 function Container() {
-  const animaContext = useContext(AnimationContext);
-  const { panelproyectos, panelterminados, allFalse } = animaContext;
+  const uiContext = useContext(AnimationContext);
+  const { panelproyectos, panelterminados, allFalse } = uiContext;
 
   const proyectoContext = useContext(ProyectoContext);
   const { proyectoactivo } = proyectoContext;

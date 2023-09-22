@@ -10,8 +10,6 @@ import {
 } from "./styles";
 import { Authwraper } from "../styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import AlertaContext from "../../../context/alertas/alertaContext";
-import AlertaState from "../../../context/alertas/alertaState";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast } from "react-toastify";
@@ -21,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
-  const idPanel = "login";
+  const [loading, setLoading] = useState<boolean>(false);
   let history = useNavigate();
   const handleInputFocus = () => {
     setIsFocused(true);
@@ -39,12 +37,10 @@ const Login = (props: any) => {
     setIsFocused2(false);
   };
 
-  const animaContext = useContext(AnimationContext);
-  const { panel, movePanelAuth } = animaContext;
+  const uiContext = useContext(AnimationContext);
+  const { movePanelAuth } = uiContext;
   const authContext = useContext(AuthContext);
-  const { mensaje, autenticado, cargandoSpin, loginUser } = authContext;
-
-  const { alerta, mostrarAlerta, ocultarAlerta } = useContext(AlertaContext);
+  const { mensaje, autenticado, loginUser } = authContext;
 
   const [user, setUser] = useState({
     email: "",
@@ -59,39 +55,29 @@ const Login = (props: any) => {
   };
   const handleSubmitLogin = (e: any) => {
     e.preventDefault();
+    setLoading(true);
     //valido que no tenga campos vacios
     if (email.trim() === "" || password.trim() === "") {
-      mostrarAlerta("Todos los campos son necesarios", "alerta-error");
-
+      showNotification2("Todos los campos son necesarios");
+      setLoading(false);
       return;
     }
     loginUser(user);
+    setLoading(false);
   };
 
   useEffect(() => {
     if (autenticado) {
       history("/dashboard");
       if (mensaje) {
-        mostrarAlerta(mensaje.msg, mensaje.categoria);
+        showNotification2(mensaje.msg);
       }
     }
   }, [mensaje, autenticado, props.history]);
 
-  useEffect(() => {
-    if (alerta !== null) {
-      toast(alerta.msg, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        toastId: idPanel,
-      });
-    }
-  }, [alerta]);
+  const showNotification2 = (msg: string) => {
+    toast(msg);
+  };
 
   return (
     <div>
@@ -135,7 +121,10 @@ const Login = (props: any) => {
             <Button
               type="button"
               value="Entrar"
-              onClick={(e) => handleSubmitLogin(e)}
+              disabled={loading}
+              onClick={(e) => {
+                handleSubmitLogin(e);
+              }}
             />
           </div>
 

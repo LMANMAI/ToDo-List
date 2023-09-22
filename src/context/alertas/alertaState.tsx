@@ -22,22 +22,6 @@ const AlertaState = (props: any) => {
     });
   };
 
-  useEffect(() => {
-    if (state.alerta !== null) {
-      toast(state.alerta.msg, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        toastId: "global-toast",
-      });
-    }
-  }, [state.alerta]);
-
   return (
     <AlertaContext.Provider
       value={{

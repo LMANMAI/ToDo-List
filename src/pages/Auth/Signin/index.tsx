@@ -10,13 +10,15 @@ import {
   ButtonSec,
 } from "./styles";
 import { Authwraper } from "../styles";
-import AlertaContext from "../../../context/alertas/alertaContext";
-import AlertaState from "../../../context/alertas/alertaState";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast } from "react-toastify";
 
 const SignIn = (props: any) => {
+  const { movePanelAuth } = useContext(AnimationContext);
+  const { mensaje, autenticado, registerUser } = useContext(AuthContext);
+  let history = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
   const [fields, setFields] = useState([
     { name: "nombre", isFocused: false },
     { name: "email", isFocused: false },
@@ -30,7 +32,6 @@ const SignIn = (props: any) => {
     confirmar: "",
   });
   const { nombre, email, password, confirmar } = usern;
-  const idPanel = "singin";
   //Funciones
   const handleChange = (e: any) => {
     setUserN({
@@ -40,27 +41,27 @@ const SignIn = (props: any) => {
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
+    setLoading(true);
     if (
       nombre.trim() === "" ||
       email.trim() === "" ||
       password.trim() === "" ||
       confirmar.trim() === ""
     ) {
-      mostrarAlerta("Todos los campos son obligatorios", "alerta-error");
+      showNotification1("Todos los campos son obligatorios");
+      setLoading(false);
       return;
     }
     //pasword minimo de 6 caracteres
     if (password.length < 6) {
-      mostrarAlerta(
-        "el password debe ser de al menos 6 caracteres",
-        "alerta-error"
-      );
+      showNotification1("el password debe ser de al menos 6 caracteres");
+      setLoading(false);
       return;
     }
     //los dos passwords iguales
     if (password.trim() !== confirmar.trim()) {
-      mostrarAlerta("Las contraseñas deben ser iguales", "alerta-error");
+      showNotification1("Las contraseñas deben ser iguales");
+      setLoading(false);
       return;
     }
     //pasarlo al action
@@ -69,6 +70,7 @@ const SignIn = (props: any) => {
       email,
       password,
     });
+    setLoading(false);
   };
   const handleInputFocus = (fieldName: string) => {
     setFields((prevFields) =>
@@ -115,40 +117,19 @@ const SignIn = (props: any) => {
     }
   };
 
-  const animaContext = useContext(AnimationContext);
-  const { movePanelAuth } = animaContext;
-  //contexts
-  const alertaContext = useContext(AlertaContext);
-  const { alerta, mostrarAlerta } = alertaContext;
-
-  const authContext = useContext(AuthContext);
-  const { mensaje, autenticado, registerUser } = authContext;
-  let history = useNavigate();
-
   useEffect(() => {
     if (autenticado) {
       history("/dashboard");
     }
     if (mensaje) {
-      mostrarAlerta(mensaje.msg, mensaje.categoria);
+      showNotification1(mensaje.msg);
     }
   }, [autenticado, mensaje, props.history]);
 
-  useEffect(() => {
-    if (alerta !== null) {
-      toast(alerta.msg, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        toastId: idPanel,
-      });
-    }
-  }, [alerta]);
+  const showNotification1 = (msg: string) => {
+    toast(msg);
+  };
+
   return (
     <div>
       <Authwraper>
@@ -173,9 +154,12 @@ const SignIn = (props: any) => {
             </InputField>
           ))}
           <Button
-            type="submit"
+            type="button"
             value="Continuar"
-            onClick={(e) => handleSubmit(e)}
+            disabled={loading}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
           />
           <Content>
             <h3>¿Ya tienes una cuenta?</h3>

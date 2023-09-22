@@ -4,7 +4,7 @@ interface IForm {
 }
 export const FormularioContainer = styled.form<IForm>`
   width: 100%;
-  height: fit-content;
+  min-height: 660px;
   border-radius: 50px;
 
   padding: 1rem;
@@ -90,6 +90,12 @@ export const Button = styled.input`
   background-color: #0461cf;
   &:hover {
     background-color: #054fb9;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
   }
 `;
 export const ButtonSec = styled(Button)`
