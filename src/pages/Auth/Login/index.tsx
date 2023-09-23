@@ -40,8 +40,7 @@ const Login = (props: any) => {
 
   const uiContext = useContext(AnimationContext);
   const { movePanelAuth } = uiContext;
-  const authContext = useContext(AuthContext);
-  const { mensaje, autenticado, loginUser } = authContext;
+  const { mensaje, autenticado, loginUser } = useContext(AuthContext);
 
   const [user, setUser] = useState({
     email: "",

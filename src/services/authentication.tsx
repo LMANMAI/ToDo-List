@@ -8,7 +8,7 @@ const authentication = async () => {
     tokenAuth(token);
   }
   try {
-    const { data, status } = await instance.get("/api/auth");
+    const { data, status } = await instance.get("/auth");
     return { data, status };
   } catch (error: any) {
     const mensaje = {

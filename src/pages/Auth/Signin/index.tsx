@@ -134,33 +134,35 @@ const SignIn = (props: any) => {
     <div>
       <Authwraper>
         <FormularioContainer>
-          <Titulo>Obtener una Cuenta</Titulo>
-          {fields.map((field) => (
-            <InputField key={field.name} isFocused={field.isFocused}>
-              {getFieldIcon(field.name)}
-              <input
-                type={
-                  field.name === "password" || field.name === "confirmar"
-                    ? "password"
-                    : "text"
-                }
-                name={field.name}
-                value={usern[field.name]}
-                onChange={handleChange}
-                placeholder={getFieldPlaceholder(field.name)}
-                onFocus={() => handleInputFocus(field.name)}
-                onBlur={() => handleInputBlur(field.name)}
-              />
-            </InputField>
-          ))}
-          <Button
-            type="button"
-            value="Continuar"
-            disabled={loading}
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-          />
+          <div className="form__container">
+            <Titulo>Obtener una Cuenta</Titulo>
+            {fields.map((field) => (
+              <InputField key={field.name} isFocused={field.isFocused}>
+                {getFieldIcon(field.name)}
+                <input
+                  type={
+                    field.name === "password" || field.name === "confirmar"
+                      ? "password"
+                      : "text"
+                  }
+                  name={field.name}
+                  value={usern[field.name]}
+                  onChange={handleChange}
+                  placeholder={getFieldPlaceholder(field.name)}
+                  onFocus={() => handleInputFocus(field.name)}
+                  onBlur={() => handleInputBlur(field.name)}
+                />
+              </InputField>
+            ))}
+            <Button
+              type="button"
+              value="Continuar"
+              disabled={loading}
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            />
+          </div>
           <Content>
             <h3>¿Ya tienes una cuenta?</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>

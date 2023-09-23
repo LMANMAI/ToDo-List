@@ -6,7 +6,6 @@ export const FormularioContainer = styled.form<IForm>`
   width: 100%;
   min-height: 660px;
   border-radius: 50px;
-
   padding: 1rem;
   background-color: #ffffff;
   transform: ${(props) => props.position};
@@ -14,6 +13,14 @@ export const FormularioContainer = styled.form<IForm>`
   flex-direction: column;
   margin: 1rem;
   align-items: center;
+  justify-content: space-between;
+
+  .form__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  }
 `;
 export const Content = styled.div`
   h3 {
