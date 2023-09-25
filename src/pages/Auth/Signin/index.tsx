@@ -32,6 +32,7 @@ const SignIn = (props: any) => {
     confirmar: "",
   });
   const { nombre, email, password, confirmar } = usern;
+
   //Funciones
   const handleChange = (e: any) => {
     setUserN({
@@ -72,6 +73,7 @@ const SignIn = (props: any) => {
     });
     setLoading(false);
   };
+
   const handleInputFocus = (fieldName: string) => {
     setFields((prevFields) =>
       prevFields.map((field) =>

@@ -5,9 +5,10 @@ const loginuser = async (user: any) => {
   try {
     const { data } = await instance.post("/auth", user);
     const response = await authentication();
-    if (data) {
+    if (response.status === 200) {
       localStorage.setItem("token", data.token);
     }
+
     return response;
   } catch (error: any) {
     const mensaje = {

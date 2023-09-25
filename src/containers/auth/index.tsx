@@ -9,7 +9,6 @@ import {
 import Login from "../../pages/Auth/Login";
 import SignIn from "../../pages/Auth/Signin";
 import AnimationContext from "../../context/animations/AnimationContext";
-import { ToastContainer } from "react-toastify";
 function AuthPage() {
   const uiContext = useContext(AnimationContext);
   const { panel } = uiContext;

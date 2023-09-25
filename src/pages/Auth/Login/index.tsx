@@ -13,14 +13,19 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast } from "react-toastify";
-
+import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import loginuser from "../../../services/loginuser";
-
+import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
+import { RootState } from "../../../redux/store";
 const Login = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const autenticathed = useSelector(
+    (state: RootState) => state.user.autenticathed
+  );
   let history = useNavigate();
   const handleInputFocus = () => {
     setIsFocused(true);
@@ -53,29 +58,42 @@ const Login = (props: any) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmitLogin = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     //valido que no tenga campos vacios
     if (email.trim() === "" || password.trim() === "") {
       showNotification2("Todos los campos son necesarios");
-      setLoading(false);
+      setLoading(true);
       return;
     }
+
     const request = await loginuser(user);
-    console.log(request);
-    // loginUser(user);
+    console.log(request, "request");
+    if (request.status === 200) {
+      setLoading(false);
+      dispatch(setAuthenticated(true));
+      dispatch(
+        setCurrentUser({
+          id: request.data.user.id,
+          name: request.data.user.nombre,
+          email: request.data.user.email,
+        })
+      );
+    }
     setLoading(false);
+    // loginUser(user);
   };
 
   useEffect(() => {
-    if (autenticado) {
+    if (autenticathed) {
       history("/dashboard");
       if (mensaje) {
         showNotification2(mensaje.msg);
       }
     }
-  }, [mensaje, autenticado, props.history]);
+  }, [mensaje, autenticathed, props.history]);
 
   const showNotification2 = (msg: string) => {
     toast(msg);
