@@ -35,7 +35,7 @@ const SideBar = () => {
   const sideBarMenuItems = [
     {
       path: "newproyects",
-      name: "Crear Proyecto",
+      name: "Crear proyecto",
       icon: <BsFolderPlus />,
       function: movePanelNuevoProyecto,
     },
@@ -47,7 +47,7 @@ const SideBar = () => {
     },
     {
       path: "finishedproyectos",
-      name: "Proyectos Terminados",
+      name: "Proyectos terminados",
       icon: <BsFolderCheck />,
       function: movePanelProyectosTermiandos,
     },
@@ -55,7 +55,6 @@ const SideBar = () => {
   return (
     <SideBarContainer width={isOpen}>
       <div className="top_section">
-        <h2 className="logo">Mern Task</h2>
         <div
           className="menu_button bars"
           title={isOpen ? "Cerrar menu" : "Abrir menu"}
@@ -76,7 +75,7 @@ const SideBar = () => {
           <div className="name link_text">Inicio</div>
         </NavLink>
 
-        <div style={{ marginTop: "45px" }}>
+        <div>
           {sideBarMenuItems.map((item, index) => (
             <NavLink
               key={index}

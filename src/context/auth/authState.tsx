@@ -26,73 +26,72 @@ const AuthState = (props: any) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
   //Funciones
   //registro usuario
-  // const registerUser = async (user: any) => {
-  //   try {
-  //     const respuesta = await clienteAxios.post("/users", user);
+  const registerUser = async (user: any) => {
+    try {
+      const respuesta = await clienteAxios.post("/users", user);
 
-  //     dispatch({
-  //       type: REGISTRO_EXITOSO,
-  //       payload: respuesta.data,
-  //     });
-  //     //obtenfo el usuario
-  //     userAuth();
-  //   } catch (error: any) {
-  //     const alerta = {
-  //       msg: error.response,
-  //       categoria: "alerta-error",
-  //     };
-  //     dispatch({
-  //       type: REGISTRO_ERROR,
-  //       payload: alerta,
-  //     });
-  //   }
-  // };
+      dispatch({
+        type: REGISTRO_EXITOSO,
+        payload: respuesta.data,
+      });
+      //obtenfo el usuario
+      userAuth();
+    } catch (error: any) {
+      const alerta = {
+        msg: error.response,
+        categoria: "alerta-error",
+      };
+      dispatch({
+        type: REGISTRO_ERROR,
+        payload: alerta,
+      });
+    }
+  };
   //retorna el usuario que esta autenticado
-  // const userAuth = async () => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     //envio el token por header para verificar auth
-  //     tokenAuth(token);
-  //   }
-  //   try {
-  //     const respuesta = await clienteAxios.get("/api/auth");
-  //     dispatch({
-  //       type: OBTENER_USUARIO,
-  //       payload: respuesta.data.user,
-  //     });
+  const userAuth = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //envio el token por header para verificar auth
+      tokenAuth(token);
+    }
+    try {
+      const respuesta = await clienteAxios.get("/api/auth");
+      dispatch({
+        type: OBTENER_USUARIO,
+        payload: respuesta.data.user,
+      });
+    } catch (error: any) {
+      const mensaje = {
+        msg: error.response.data.msg,
+        categoria: "alerta-error",
+      };
 
-  //   } catch (error: any) {
-  //     const mensaje = {
-  //       msg: error.response.data.msg,
-  //       categoria: "alerta-error",
-  //     };
-
-  //     dispatch({
-  //       type: LOGIN_ERROR,
-  //       payload: mensaje,
-  //     });
-  //   }
-  // };
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: mensaje,
+      });
+    }
+  };
   //login de usuario
-  // const loginUser = async (user: any) => {
-  //   try {
-  //     const consulta = await clienteAxios.post("/api/auth", user);
-  //     dispatch({
-  //       type: LOGIN_EXITOSO,
-  //       payload: consulta.data,
-  //     });
-  //     userAuth();
-  //   } catch (error: any) {
-  //     const mensaje = {
-  //       msg: error.response.data.msg,
-  //       categoria: "alerta-error",
-  //     };
-  //     dispatch({
-  //       type: LOGIN_ERROR,
-  //       payload: mensaje,
-  //     });
-  //   }
-  // };
+  const loginUser = async (user: any) => {
+    try {
+      const consulta = await clienteAxios.post("/api/auth", user);
+      dispatch({
+        type: LOGIN_EXITOSO,
+        payload: consulta.data,
+      });
+      userAuth();
+    } catch (error: any) {
+      const mensaje = {
+        msg: error.response.data.msg,
+        categoria: "alerta-error",
+      };
+      dispatch({
+        type: LOGIN_ERROR,
+        payload: mensaje,
+      });
+    }
+  };
   //cerrar la sesion
   const EndSesion = async () => {
     dispatch({

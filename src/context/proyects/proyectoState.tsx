@@ -53,7 +53,7 @@ const ProyectoState = (props: any) => {
   //obtener los proyectos
   const obtenerProyectos = async () => {
     try {
-      const requestP = await clienteAxios.get("/api/proyect");
+      const requestP = await clienteAxios.get("/proyect");
 
       dispatch({
         type: OBTENER_PROYECTOS,
@@ -73,7 +73,7 @@ const ProyectoState = (props: any) => {
   //Agrega Proyectos
   const agregarProyecto = async (proyect: any) => {
     try {
-      const requestP = await clienteAxios.post("/api/proyect", proyect);
+      const requestP = await clienteAxios.post("/proyect", proyect);
 
       dispatch({
         type: AGREGAR_PROYECTO,
@@ -106,7 +106,7 @@ const ProyectoState = (props: any) => {
   //Eliminar las tareas
   const eliminarProyecto = async (proyectoID: any) => {
     try {
-      await clienteAxios.delete(`/api/proyect/${proyectoID}`);
+      await clienteAxios.delete(`/proyect/${proyectoID}`);
       dispatch({
         type: ELIMINAR_PROYECTO,
         payload: proyectoID,
@@ -125,7 +125,7 @@ const ProyectoState = (props: any) => {
   const terminarProyecto = async (proyecto: any) => {
     try {
       const consulta = await clienteAxios.put(
-        `/api/proyect/${proyecto._id}`,
+        `/proyect/${proyecto._id}`,
         proyecto
       );
 

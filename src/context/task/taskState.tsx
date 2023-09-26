@@ -26,7 +26,7 @@ const TaskState = (props: any) => {
   //obtener las tareas relacionadas con el id del proyecto
   const obtenerTareas = async (proyecto: any) => {
     try {
-      const peticion = await clienteAxios.get("/api/task", {
+      const peticion = await clienteAxios.get("/task", {
         params: { proyecto },
       });
 
@@ -39,7 +39,7 @@ const TaskState = (props: any) => {
   //Agregar nueva tarea
   const agregarTarea = async (tarea: any) => {
     try {
-      const consulta = await clienteAxios.post("/api/task", tarea);
+      const consulta = await clienteAxios.post("/task", tarea);
 
       dispatch({
         type: AGREGAR_TAREA,
@@ -56,7 +56,7 @@ const TaskState = (props: any) => {
   //eliminar tarea
   const eliminarTarea = async (id: any, proyecto: any) => {
     try {
-      await clienteAxios.delete(`/api/task/${id}`, { params: { proyecto } });
+      await clienteAxios.delete(`/task/${id}`, { params: { proyecto } });
       dispatch({
         type: DELETE_TASK,
         payload: id,
@@ -66,10 +66,7 @@ const TaskState = (props: any) => {
   //editar la tarea
   const actualizarTask = async (tarea: any) => {
     try {
-      const requestcambio = await clienteAxios.put(
-        `/api/task/${tarea._id}`,
-        tarea
-      );
+      const requestcambio = await clienteAxios.put(`/task/${tarea._id}`, tarea);
 
       dispatch({
         type: ACTUALIZAR_TASK,

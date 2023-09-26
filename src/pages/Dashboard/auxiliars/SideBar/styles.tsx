@@ -12,7 +12,7 @@ export const SideBarContainer = styled.nav<ISideBar>`
     align-items: center;
     padding: 10px 15px;
     color: #fff;
-    justify-content: space-between;
+    justify-content: ${(props) => (props.width ? "end" : "center")};
     margin-top: 15px;
   }
   .logo {

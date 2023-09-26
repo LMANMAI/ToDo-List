@@ -19,9 +19,7 @@ import loginuser from "../../../services/loginuser";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
 const Login = (props: any) => {
-  const [disabled, setdisabled] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-
   const [isFocused2, setIsFocused2] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -47,7 +45,7 @@ const Login = (props: any) => {
 
   const uiContext = useContext(AnimationContext);
   const { movePanelAuth } = uiContext;
-  const { mensaje, autenticado, loginUser } = useContext(AuthContext);
+  const { mensaje } = useContext(AuthContext);
 
   const [user, setUser] = useState({
     email: "",
@@ -140,7 +138,7 @@ const Login = (props: any) => {
             <Button
               type="button"
               value="Entrar"
-              disabled={disabled}
+              disabled={loading}
               onClick={(e) => {
                 handleSubmitLogin(e);
               }}
