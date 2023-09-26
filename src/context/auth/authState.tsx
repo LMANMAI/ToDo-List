@@ -28,7 +28,7 @@ const AuthState = (props: any) => {
   //registro usuario
   const registerUser = async (user: any) => {
     try {
-      const respuesta = await clienteAxios.post("/api/users", user);
+      const respuesta = await clienteAxios.post("/users", user);
 
       dispatch({
         type: REGISTRO_EXITOSO,
