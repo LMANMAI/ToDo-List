@@ -13,11 +13,20 @@ import { Authwraper } from "../styles";
 import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast } from "react-toastify";
+import registeruser from "../../../services/registeruser";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
+import { RootState } from "../../../redux/store";
 
 const SignIn = (props: any) => {
-  const { movePanelAuth } = useContext(AnimationContext);
-  const { mensaje, autenticado, registerUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
   let history = useNavigate();
+  const autenticathed = useSelector(
+    (state: RootState) => state.user.autenticathed
+  );
+  const { movePanelAuth } = useContext(AnimationContext);
+  const { mensaje } = useContext(AuthContext);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [fields, setFields] = useState([
     { name: "nombre", isFocused: false },
@@ -40,7 +49,7 @@ const SignIn = (props: any) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
     if (
@@ -65,12 +74,18 @@ const SignIn = (props: any) => {
       setLoading(false);
       return;
     }
-    //pasarlo al action
-    registerUser({
-      nombre,
-      email,
-      password,
-    });
+    const request = await registeruser(usern);
+    if (request.status === 200) {
+      setLoading(false);
+      dispatch(setAuthenticated(true));
+      dispatch(
+        setCurrentUser({
+          id: request.response._id,
+          name: request.response.nombre,
+          email: request.response.email,
+        })
+      );
+    }
     setLoading(false);
   };
 
@@ -120,13 +135,13 @@ const SignIn = (props: any) => {
   };
 
   useEffect(() => {
-    if (autenticado) {
+    if (autenticathed) {
       history("/dashboard");
     }
     if (mensaje) {
       showNotification1(mensaje.msg);
     }
-  }, [autenticado, mensaje, props.history]);
+  }, [autenticathed, mensaje, props.history]);
 
   const showNotification1 = (msg: string) => {
     toast(msg);

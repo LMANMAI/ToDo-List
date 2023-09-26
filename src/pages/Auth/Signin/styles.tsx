@@ -50,7 +50,7 @@ export const InputField = styled.div<IProps>`
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   outline: none;
-
+  overflow: hidden;
   svg {
     justify-self: center;
     align-self: center;
