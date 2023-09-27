@@ -10,18 +10,29 @@ import {
 } from "./styles";
 import { Authwraper } from "../styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
 import loginuser from "../../../services/loginuser";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+type ToastType = "success" | "info" | "warning" | "error";
 const Login = (props: any) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [toastId, setToastId] = useState<any | null>(null);
+  const uiContext = useContext(AnimationContext);
+  const { movePanelAuth } = uiContext;
+
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = user;
+
   const dispatch = useDispatch();
   const autenticathed = useSelector(
     (state: RootState) => state.user.autenticathed
@@ -43,15 +54,6 @@ const Login = (props: any) => {
     setIsFocused2(false);
   };
 
-  const uiContext = useContext(AnimationContext);
-  const { movePanelAuth } = uiContext;
-  const { mensaje } = useContext(AuthContext);
-
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = user;
   const handleChange = (e: any) => {
     setUser({
       ...user,
@@ -63,12 +65,25 @@ const Login = (props: any) => {
     e.preventDefault();
     setLoading(true);
     if (email.trim() === "" || password.trim() === "") {
-      showNotification2("Todos los campos son necesarios");
-      setLoading(true);
+      showNotification(
+        "Todos los campos son necesarios",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "warning"
+      );
+      setLoading(false);
       return;
     }
-
     const request = await loginuser(user);
+
     if (request.status === 200) {
       setLoading(false);
       dispatch(setAuthenticated(true));
@@ -79,6 +94,36 @@ const Login = (props: any) => {
           email: request.response.email,
         })
       );
+
+      showNotification(
+        "Ingresando a su cuenta, bienvenido.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "success"
+      );
+    } else {
+      showNotification(
+        request.mensaje?.msg,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "error"
+      );
     }
     setLoading(false);
   };
@@ -86,18 +131,23 @@ const Login = (props: any) => {
   useEffect(() => {
     if (autenticathed) {
       history("/dashboard");
-      if (mensaje) {
-        showNotification2(mensaje.msg);
-      }
     }
-  }, [mensaje, autenticathed, props.history]);
+  }, [autenticathed, props.history]);
 
-  const showNotification2 = (msg: string) => {
-    toast(msg);
+  const showNotification = (msg: string, body: any, type: ToastType) => {
+    const id = toast[type](msg, body);
+    setToastId(id);
   };
 
+  const clearNotification = () => {
+    if (toastId) {
+      toast.dismiss(toastId);
+      setToastId(null);
+    }
+  };
   return (
     <div>
+      <ToastContainer />
       <Authwraper>
         <FormularioContainer>
           <div
@@ -149,7 +199,10 @@ const Login = (props: any) => {
             <h3>¿Nuevo aqui?</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
             <ButtonSec
-              onClick={() => movePanelAuth()}
+              onClick={() => {
+                clearNotification();
+                movePanelAuth();
+              }}
               id="sing-up-btn"
               value="Registrarse"
             />

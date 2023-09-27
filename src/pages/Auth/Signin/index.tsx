@@ -10,13 +10,13 @@ import {
   ButtonSec,
 } from "./styles";
 import { Authwraper } from "../styles";
-import AuthContext from "../../../context/auth/authContext";
 import AnimationContext from "../../../context/animations/AnimationContext";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import registeruser from "../../../services/registeruser";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
+type ToastType = "success" | "info" | "warning" | "error";
 
 const SignIn = (props: any) => {
   const dispatch = useDispatch();
@@ -25,8 +25,7 @@ const SignIn = (props: any) => {
     (state: RootState) => state.user.autenticathed
   );
   const { movePanelAuth } = useContext(AnimationContext);
-  const { mensaje } = useContext(AuthContext);
-
+  const [toastId, setToastId] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [fields, setFields] = useState([
     { name: "nombre", isFocused: false },
@@ -58,19 +57,58 @@ const SignIn = (props: any) => {
       password.trim() === "" ||
       confirmar.trim() === ""
     ) {
-      showNotification1("Todos los campos son obligatorios");
+      showNotification(
+        "Todos los campos son necesarios",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "warning"
+      );
       setLoading(false);
       return;
     }
     //pasword minimo de 6 caracteres
     if (password.length < 6) {
-      showNotification1("el password debe ser de al menos 6 caracteres");
+      showNotification(
+        "Las contraseñas deben tener un minimos de 6 caracteres.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "warning"
+      );
       setLoading(false);
       return;
     }
     //los dos passwords iguales
     if (password.trim() !== confirmar.trim()) {
-      showNotification1("Las contraseñas deben ser iguales");
+      showNotification(
+        "Las contraseñas deben ser iguales.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "warning"
+      );
       setLoading(false);
       return;
     }
@@ -84,6 +122,21 @@ const SignIn = (props: any) => {
           name: request.response.nombre,
           email: request.response.email,
         })
+      );
+    } else {
+      showNotification(
+        request.mensaje?.msg,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "dark",
+        },
+        "error"
       );
     }
     setLoading(false);
@@ -138,17 +191,22 @@ const SignIn = (props: any) => {
     if (autenticathed) {
       history("/dashboard");
     }
-    if (mensaje) {
-      showNotification1(mensaje.msg);
-    }
-  }, [autenticathed, mensaje, props.history]);
+  }, [autenticathed, props.history]);
 
-  const showNotification1 = (msg: string) => {
-    toast(msg);
+  const showNotification = (msg: string, body: any, type: ToastType) => {
+    const id = toast[type](msg, body);
+    setToastId(id);
   };
 
+  const clearNotification = () => {
+    if (toastId) {
+      toast.dismiss(toastId);
+      setToastId(null);
+    }
+  };
   return (
     <div>
+      <ToastContainer />
       <Authwraper>
         <FormularioContainer>
           <div className="form__container">
@@ -183,7 +241,13 @@ const SignIn = (props: any) => {
           <Content>
             <h3>¿Ya tienes una cuenta?</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-            <ButtonSec onClick={() => movePanelAuth()} value="Iniciar Sesion" />
+            <ButtonSec
+              onClick={() => {
+                clearNotification();
+                movePanelAuth();
+              }}
+              value="Iniciar Sesion"
+            />
           </Content>
         </FormularioContainer>
         <div className="image_form"></div>
