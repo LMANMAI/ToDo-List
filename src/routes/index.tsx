@@ -7,7 +7,6 @@ import {
   ProyectoState,
   TaskState,
   AlertaState,
-  AuthState,
   AnimationState,
 } from "../context";
 import { NewProyect, EndProyects, ProyectList, Task } from "../containers";
@@ -45,28 +44,23 @@ function RoutesComponent() {
     <ProyectoState>
       <TaskState>
         <AlertaState>
-          <AuthState>
-            <AnimationState>
-              <BrowserRouter>
-                <Routes>
-                  {token ? (
-                    <Route path="/*" element={<DashboardPage />}>
-                      <Route index element={<div>index</div>} />
-                      <Route path="newproyects" element={<NewProyect />} />
-                      <Route path="proyects" element={<ProyectList />} />
-                      <Route path="proyects/:id" element={<Task />} />
-                      <Route
-                        path="finishedproyectos"
-                        element={<EndProyects />}
-                      />
-                    </Route>
-                  ) : (
-                    <Route path="/" element={<AuthPage />} />
-                  )}
-                </Routes>
-              </BrowserRouter>{" "}
-            </AnimationState>
-          </AuthState>
+          <AnimationState>
+            <BrowserRouter>
+              <Routes>
+                {token ? (
+                  <Route path="/*" element={<DashboardPage />}>
+                    <Route index element={<div>index</div>} />
+                    <Route path="newproyects" element={<NewProyect />} />
+                    <Route path="proyects" element={<ProyectList />} />
+                    <Route path="proyects/:id" element={<Task />} />
+                    <Route path="finishedproyectos" element={<EndProyects />} />
+                  </Route>
+                ) : (
+                  <Route path="/" element={<AuthPage />} />
+                )}
+              </Routes>
+            </BrowserRouter>
+          </AnimationState>
         </AlertaState>
       </TaskState>
     </ProyectoState>
