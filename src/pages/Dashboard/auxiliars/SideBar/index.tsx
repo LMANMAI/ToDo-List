@@ -4,12 +4,16 @@ import {
   BsFolderPlus,
   BsFolderCheck,
   BsHouseDoor,
+  BsDoorClosed,
+  BsPerson,
 } from "react-icons/bs";
 import { CgMenu } from "react-icons/cg";
-import AuthContext from "../../../../context/auth/authContext";
 import AnimationContext from "../../../../context/animations/AnimationContext";
 import { SideBarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
+
 const SideBar = () => {
   const {
     panelDashboard,
@@ -18,17 +22,16 @@ const SideBar = () => {
     movePanelProyectosTermiandos,
     setPanelDashboard,
   } = useContext(AnimationContext);
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = () => {
     setIsOpen(!isOpen);
     setPanelDashboard(isOpen);
   };
-  const { user, EndSesion } = useContext(AuthContext);
-
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const Exit = () => {
     setTimeout(() => {
-      EndSesion();
+      localStorage.removeItem("token");
+      window.location.reload();
     }, 1000);
   };
 
@@ -52,6 +55,7 @@ const SideBar = () => {
       function: movePanelProyectosTermiandos,
     },
   ];
+
   return (
     <SideBarContainer width={isOpen}>
       <div className="top_section">
@@ -82,14 +86,33 @@ const SideBar = () => {
               className="button link"
               to={item.path}
               title={item.name}
-              // onClick={() => {
-              //   item.function();
-              // }}
             >
               <div className="icon">{item.icon}</div>
               <div className="name link_text">{item.name}</div>
             </NavLink>
           ))}
+        </div>
+
+        <div className="bottom__section">
+          <div className="user_info p8 button link" title="Datos del usuario">
+            <div className="icon">
+              <BsPerson />
+            </div>
+            <div className="name link_text">
+              <p>{currentUser?.name}</p>
+              <span>{currentUser?.email}</span>
+            </div>
+          </div>
+          <div
+            className="button p8 link"
+            onClick={() => Exit()}
+            title="Cerrar sesión"
+          >
+            <div className="icon">
+              <BsDoorClosed />
+            </div>
+            <div className="name link_text">Cerrar sesión</div>
+          </div>
         </div>
       </div>
     </SideBarContainer>

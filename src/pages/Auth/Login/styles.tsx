@@ -91,7 +91,7 @@ export const Button = styled.input`
   transition: 0.5s;
   cursor: pointer;
   background: transparent;
-  background-color: #0461cf;
+  background-color: #3e7ec3;
   &:hover {
     background-color: #054fb9;
   }
@@ -105,12 +105,12 @@ export const Button = styled.input`
 export const ButtonSec = styled(Button)`
   margin: 0;
   background: none;
-  border: 2px solid #0461cf;
+  border: 2px solid #3e7ec3;
   width: 130px;
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
-  color: #0461cf;
+  color: #3e7ec3;
   text-align: center;
   &:hover {
     color: white;

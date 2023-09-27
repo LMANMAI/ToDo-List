@@ -55,7 +55,7 @@ const AuthState = (props: any) => {
       tokenAuth(token);
     }
     try {
-      const respuesta = await clienteAxios.get("/api/auth");
+      const respuesta = await clienteAxios.get("/auth");
       dispatch({
         type: OBTENER_USUARIO,
         payload: respuesta.data.user,
@@ -75,7 +75,7 @@ const AuthState = (props: any) => {
   //login de usuario
   const loginUser = async (user: any) => {
     try {
-      const consulta = await clienteAxios.post("/api/auth", user);
+      const consulta = await clienteAxios.post("/auth", user);
       dispatch({
         type: LOGIN_EXITOSO,
         payload: consulta.data,

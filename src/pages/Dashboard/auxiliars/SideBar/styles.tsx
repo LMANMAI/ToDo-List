@@ -5,8 +5,9 @@ interface ISideBar {
 export const SideBarContainer = styled.nav<ISideBar>`
   height: 100vh;
   width: ${(props) => (props.width ? "300px" : "70px")};
-  background: rgb(0, 115, 230);
+  background: #3e7ec3;
   transition: all 350ms ease-in-out;
+  position: relative;
   .top_section {
     display: flex;
     align-items: center;
@@ -48,6 +49,22 @@ export const SideBarContainer = styled.nav<ISideBar>`
   .icon {
     font-size: 30px;
   }
-  .link_text {
+  .bottom__section {
+    position: absolute;
+    bottom: 25px;
+    .p8 {
+      padding: 10px 8px;
+    }
+    padding: 12px;
+    transition: all 350ms ease-in-out;
+    width: ${(props) => (props.width ? "237.02px" : "65.91px")};
+    .user_info {
+      border-radius: 5px;
+      background: #699bd0;
+      overflow: hidden;
+    }
+    .name {
+      font-size: 13px;
+    }
   }
 `;

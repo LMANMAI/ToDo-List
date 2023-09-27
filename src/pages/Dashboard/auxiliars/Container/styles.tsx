@@ -11,6 +11,10 @@ export const ContainerDashboard = styled.main`
     // justify-content: center;
     // align-self: center;
   }
+  div:first-child {
+    width: 100%;
+    padding: 10px 15px;
+  }
 `;
 
 export const Box = styled.div`

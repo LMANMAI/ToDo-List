@@ -109,6 +109,9 @@ const Login = (props: any) => {
         },
         "success"
       );
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } else {
       showNotification(
         request.mensaje?.msg,
@@ -130,7 +133,7 @@ const Login = (props: any) => {
 
   useEffect(() => {
     if (autenticathed) {
-      history("/dashboard");
+      history("/");
     }
   }, [autenticathed, props.history]);
 

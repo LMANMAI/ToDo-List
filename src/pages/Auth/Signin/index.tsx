@@ -189,7 +189,7 @@ const SignIn = (props: any) => {
 
   useEffect(() => {
     if (autenticathed) {
-      history("/dashboard");
+      window.location.reload();
     }
   }, [autenticathed, props.history]);
 

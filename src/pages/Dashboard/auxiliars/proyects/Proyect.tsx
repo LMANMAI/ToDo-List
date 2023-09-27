@@ -39,7 +39,7 @@ const Proyect = (proyecto: any) => {
   return (
     <ProyectObject>
       <NavLink
-        to={`/dashboard/proyects/${proyecto.proyecto._id}`}
+        to={`/proyects/${proyecto.proyecto._id}`}
         onClick={() => handleClick(proyecto)}
         className="Proyect_Btn"
       >
