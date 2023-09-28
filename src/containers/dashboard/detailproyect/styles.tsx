@@ -44,7 +44,7 @@ export const ButtonState = styled.button`
 export const FormTaskContainer = styled.div`
   padding: 0.5rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   .form__task {
     .form__task_header {
       display: flex;
@@ -84,7 +84,7 @@ export const FormTaskContainer = styled.div`
   }
 
   .form__task_btn,
-  formt__task_title {
+  .formt__task_title {
     border-radius: 5px;
   }
   @media (min-width: 768px) {

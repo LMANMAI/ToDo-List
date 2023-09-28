@@ -3,10 +3,9 @@ import TaskContext from "../../../../context/task/taskContext";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import {
   FormTaskContainer,
-  Form,
   Input,
-  InputSearch,
   Description,
+  ButtonContainer,
 } from "./styles";
 const FormTask = () => {
   const taskContext = useContext(TaskContext);
@@ -47,8 +46,7 @@ const FormTask = () => {
     });
   };
   //Submit
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (nombre.trim() === "") {
       validarTarea();
       return;
@@ -56,7 +54,6 @@ const FormTask = () => {
     //estoy agregando una nueva tarea
     if (tareaactual === null) {
       tarea.proyecto = proyectoActual._id;
-
       agregarTarea(tarea);
     } else {
       //de lo contrario estoy actualizando la tarea
@@ -72,29 +69,48 @@ const FormTask = () => {
     <FormTaskContainer>
       {errortarea ? <p>El nombre para guardar la tarea es necesario</p> : null}
       <div className="form_task_container">
-        <Form onSubmit={handleSubmit}>
+        <div className="input__container content">
+          <label htmlFor="nombre" className="form__label">
+            Nombre del proyecto
+          </label>
           <Input
             type="text"
             name="nombre"
             value={nombre}
             onChange={handleChange}
-            placeholder="Agregar una tarea!"
-            className="input_task"
+            placeholder="Agregar una tarea"
+            className="form__input"
           />
-          <InputSearch
-            type="submit"
-            value={tareaactual ? "Guardar cambios" : "Agregar Nueva Tarea"}
+        </div>
+
+        <div className="content">
+          <select name="" id="form__select" className="form__select content">
+            <option value="">Elige el estado de la tarea</option>
+            <option value="">Borrador</option>
+            <option value="">En curso</option>
+            <option value="">Terminado</option>
+          </select>
+        </div>
+        <ButtonContainer className="form__btn_container">
+          <button
             className="btn btn_submit"
-          />
-        </Form>
-        <Description>
-          {proyectoActual.desc ? (
-            <p>{proyectoActual.desc}</p>
-          ) : (
-            <p>No agregaste una descripcion</p>
-          )}
-        </Description>
+            title="Guardar proyecto"
+            onClick={() => handleSubmit()}
+          >
+            {tareaactual ? "Guardar cambios" : "Agregar Nueva Tarea"}
+          </button>
+        </ButtonContainer>
       </div>
+      <Description>
+        {proyectoActual.desc ? (
+          <div className="description">
+            <h4>Descripcion de la tarea</h4>
+            <p>{proyectoActual.desc}</p>
+          </div>
+        ) : (
+          <p>No agregaste una descripcion</p>
+        )}
+      </Description>
     </FormTaskContainer>
   );
 };
