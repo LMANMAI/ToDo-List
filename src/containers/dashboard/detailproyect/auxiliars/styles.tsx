@@ -84,11 +84,11 @@ export const Description = styled.div`
 `;
 
 export const ListadoTareas = styled.div`
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   width: 100%;
-  height: 90%;
   padding: 0.2rem;
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   &::-webkit-scrollbar {
     -webkit-appearance: none;
   }
@@ -106,17 +106,62 @@ export const ListadoTareas = styled.div`
   &::-webkit-scrollbar-track {
     border-radius: 10px;
   }
-  ul {
-    padding: 0.5rem;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: 0.7rem 0.5rem;
-    padding-bottom: 1rem;
-    @media (min-width: 768px) {
-      padding: 1rem;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      grid-gap: 1.4rem;
+
+  .listadotareas__column {
+    width: 85%;
+    border: 1px solid;
+    margin: 0px auto;
+    ul {
+      padding: 0.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px 0px;
+      padding-bottom: 1rem;
     }
   }
+`;
+
+export const Tarea = styled.li`
+  border: 1px solid green;
+  padding: 0.8rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
+  height: fit-content;
+  min-height: 125px;
+  width: fit-content;
+  p {
+    overflow-y: auto;
+    padding: 5px;
+  }
+`;
+export const ButtonStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 5px;
+  }
+`;
+
+export const ButtonState = styled.button`
+  cursor: pointer;
+  outline: none;
+  border: none;
+  margin: 2.5px 0;
+  margin: 0 4px;
+  padding: 8px;
+  border-radius: 25px;
+  color: white;
+  background-color: #4b72a8;
+
+  align-self: center;
+`;
+export const ButtonPending = styled(ButtonState)`
+  background-color: transparent;
+  border: 2px solid #4b72a8;
+  color: #4b72a8;
+  font-weight: bold;
 `;
