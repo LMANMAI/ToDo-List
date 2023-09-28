@@ -5,13 +5,7 @@ export const ContainerDashboard = styled.main`
   width: 100%;
   height: 100vh;
   position: relative;
-  @media (min-width: 768px) {
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-self: center;
-  }
-  div:first-child {
+  & > div {
     width: 100%;
     padding: 10px 15px;
   }

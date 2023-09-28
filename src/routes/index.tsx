@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-//importo los componentes
 import { AuthPage, DashboardPage } from "../pages";
 //importo los context
 import {
@@ -14,7 +13,6 @@ import { useDispatch } from "react-redux";
 import tokenAuth from "../config/tokenAuth";
 import authentication from "../services/authentication";
 import { setCurrentUser } from "../redux/slices/user";
-//Protego el componente
 
 function RoutesComponent() {
   const dispatch = useDispatch();
@@ -29,7 +27,6 @@ function RoutesComponent() {
           email: res.email,
         })
       );
-      console.log(res);
     };
 
     if (token) {

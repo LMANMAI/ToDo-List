@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import FormTask from "./FormTask";
 import TaskList from "./TaskList";
-import ProyectList from "../proyects/ProyectList";
 import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import styled from "@emotion/styled";
 

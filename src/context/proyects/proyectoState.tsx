@@ -72,22 +72,24 @@ const ProyectoState = (props: any) => {
   };
   //Agrega Proyectos
   const agregarProyecto = async (proyect: any) => {
+    console.log(proyect);
     try {
       const requestP = await clienteAxios.post("/proyect", proyect);
-
-      dispatch({
-        type: AGREGAR_PROYECTO,
-        payload: requestP.data.proyect,
-      });
+      console.log(requestP);
+      // dispatch({
+      //   type: AGREGAR_PROYECTO,
+      //   payload: requestP.data.proyect,
+      // });
     } catch (error: any) {
-      const alerta = {
-        msg: error.response.data.msg,
-        categoria: "alerta-error",
-      };
-      dispatch({
-        type: PROYECTO_ERROR,
-        payload: alerta,
-      });
+      console.log(error);
+      // const alerta = {
+      //   msg: error.response.data.msg,
+      //   categoria: "alerta-error",
+      // };
+      // dispatch({
+      //   type: PROYECTO_ERROR,
+      //   payload: alerta,
+      // });
     }
   };
   //Valido el formulario
