@@ -27,6 +27,7 @@ const FormTask = () => {
     proyecto: "",
   });
   const { nombre } = tarea;
+
   useEffect(() => {
     if (tareaactual !== null) {
       setTarea(tareaactual);
@@ -66,13 +67,17 @@ const FormTask = () => {
       proyecto: "",
     });
   };
+
   return (
     <FormTaskContainer>
-      {errortarea ? <p>El nombre para guardar la tarea es necesario</p> : null}
       <div className="form_task_container">
-        <div className="input__container content">
+        <div
+          className={`input__container content ${
+            errortarea ? "error_status" : ""
+          }`}
+        >
           <label htmlFor="nombre" className="form__label">
-            Nombre del proyecto
+            Nombre de la tarea
           </label>
           <Input
             type="text"
@@ -82,6 +87,17 @@ const FormTask = () => {
             placeholder="Agregar una tarea"
             className="form__input"
           />
+          {errortarea ? (
+            <p
+              style={{
+                fontSize: "12px",
+                position: "absolute",
+                color: "#e74c3c",
+              }}
+            >
+              El nombre para guardar la tarea es necesario
+            </p>
+          ) : null}
         </div>
 
         <div className="content">

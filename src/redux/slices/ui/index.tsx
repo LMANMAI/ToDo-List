@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState = {
   bg: false,
   isHighlighted: "",
+  openmenu: false,
 };
 
 const uiSlice = createSlice({
@@ -15,9 +16,12 @@ const uiSlice = createSlice({
     setIsHighlighted: (state, action: PayloadAction<string>) => {
       state.isHighlighted = action.payload;
     },
+    setOpenMenu: (state, action: PayloadAction<boolean>) => {
+      state.openmenu = action.payload;
+    },
   },
 });
 
-export const { setBgUi, setIsHighlighted } = uiSlice.actions;
+export const { setBgUi, setIsHighlighted, setOpenMenu } = uiSlice.actions;
 
 export default uiSlice.reducer;

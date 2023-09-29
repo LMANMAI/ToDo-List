@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 
+interface IFormconfigmenu {
+  openmenu?: boolean;
+}
 export const Tarea = styled.li`
   padding: 0.8rem;
   height: 200px;
@@ -81,6 +84,13 @@ export const FormTaskContainer = styled.div`
         color: white;
       }
     }
+    .picked {
+      background: #27527f;
+      border: 2px solid #27527f;
+      color: white;
+      border-radius: 5px 5px 0px 0px;
+      z-index: 3;
+    }
   }
 
   .form__task_btn,
@@ -89,5 +99,25 @@ export const FormTaskContainer = styled.div`
   }
   @media (min-width: 768px) {
     flex-direction: column;
+  }
+`;
+export const FormConfigMenu = styled.ul<IFormconfigmenu>`
+  position: absolute;
+  right: 0px;
+  min-width: 200px;
+  font-size: 13px;
+  background: #27527f;
+  color: white;
+  transition: all 250ms ease;
+  border-radius: 5px 0 5px 5px;
+  overflow: hidden;
+  padding-top: 5px;
+  display: ${(props) => (props.openmenu ? "block" : "none")};
+  li {
+    padding: 7px 10px;
+    cursor: pointer;
+    &:hover {
+      background: #3e7ec3;
+    }
   }
 `;

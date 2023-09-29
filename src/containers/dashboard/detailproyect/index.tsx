@@ -1,11 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TaskContext from "../../../context/task/taskContext";
 import ProyectoContext from "../../../context/proyects/proyectoContext";
 import { BsChevronLeft, BsGear } from "react-icons/bs";
 import { FormTask, TaskList } from "./auxiliars";
-import { FormTaskContainer } from "./styles";
+import { FormTaskContainer, FormConfigMenu } from "./styles";
+import { RootState } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpenMenu } from "../../../redux/slices/ui";
 
 const Task = (tarea: any) => {
+  const dispatch = useDispatch();
+  const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const taskContext = useContext(TaskContext);
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
     taskContext;
@@ -31,7 +36,13 @@ const Task = (tarea: any) => {
   };
 
   return (
-    <FormTaskContainer>
+    <FormTaskContainer
+      onClick={() => {
+        if (openmenu) {
+          dispatch(setOpenMenu(false));
+        }
+      }}
+    >
       <div className="form__task">
         <div className="form__task_header">
           <button
@@ -43,18 +54,31 @@ const Task = (tarea: any) => {
           >
             <BsChevronLeft />
           </button>
-          <h3 className="formt__task_title">{proyectoActual.nombre}</h3>
-          <button
-            title="Opciones del proyecto."
-            className="form__task_btn options"
-            onClick={() => {
-              alert(
-                "aca deberia poder editar el proyecto mediante un modal y o borrarlo"
-              );
-            }}
-          >
-            <BsGear />
-          </button>
+          <h3 className="formt__task_title">
+            <input
+              type="text"
+              name=""
+              id=""
+              value={proyectoActual.nombre}
+              disabled
+            />
+          </h3>
+          <div style={{ position: "relative" }}>
+            <button
+              title="Opciones del proyecto."
+              className={`form__task_btn options ${openmenu ? "picked" : ""}`}
+              onClick={() => {
+                dispatch(setOpenMenu(!openmenu));
+              }}
+            >
+              <BsGear />
+            </button>
+            <FormConfigMenu openmenu={openmenu}>
+              <li>Cambiar nombre del proyecto</li>
+              <li>Eliminar proyecto</li>
+              <li>Finalizar proyecto</li>
+            </FormConfigMenu>
+          </div>
         </div>
         <FormTask />
       </div>

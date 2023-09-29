@@ -47,12 +47,23 @@ export const FormTaskContainer = styled.div`
       width: inherit;
     }
   }
+
+  .error_status {
+    input {
+      border-color: #e74c3c;
+    }
+    label {
+      color: #e74c3c;
+    }
+  }
 `;
 
 export const Input = styled.input`
   padding: 10px;
   outline: none;
   width: 100%;
+  border-radius: 5px;
+  border: 1px solid;
 `;
 export const ButtonContainer = styled.div`
   button {
@@ -61,10 +72,10 @@ export const ButtonContainer = styled.div`
     outline: none;
     cursor: pointer;
     border-radius: 5px;
-    background-color: #3e7ec3;
+    background-color: #ff7f00;
     color: white;
     &:hover {
-      background-color: #27527f;
+      background-color: #d16800;
     }
   }
 `;
@@ -169,6 +180,7 @@ export const BackgroundUI = styled.div<IBackground>`
   width: 100vw;
   height: 100vh;
   z-index: 1;
+  transition: all 350ms ease-in-out;
   display: ${(props) => (props.bg_position ? "block" : "none")};
 `;
 interface ITask {
@@ -207,6 +219,9 @@ export const Tarea = styled.li<ITask>`
     right: 10px;
     display: none;
     cursor: pointer;
+    border: none;
+    color: white;
+    background: #ff7f00;
   }
 
   &:hover {
@@ -241,7 +256,14 @@ export const Tarea = styled.li<ITask>`
     right: -160px;
     top: -25px;
     list-style: none;
-
+    transition-delay: 750ms;
+    transition: transform 450ms ease;
+    transform: translateX(
+      ${(props) =>
+        props.isHighlighted && props.isHighlighted?.length > 0
+          ? "0px"
+          : "-15px"}
+    );
     li {
       background: rgb(0 0 0 / 35%);
       padding: 5px;
