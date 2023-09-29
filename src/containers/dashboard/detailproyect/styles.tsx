@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 
 export const Tarea = styled.li`
-  // border: 1px solid green;
   padding: 0.8rem;
   height: 200px;
   border-radius: 25px;
@@ -45,6 +44,7 @@ export const FormTaskContainer = styled.div`
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
   .form__task {
     .form__task_header {
       display: flex;

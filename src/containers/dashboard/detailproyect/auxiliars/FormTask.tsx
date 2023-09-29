@@ -55,11 +55,12 @@ const FormTask = () => {
     if (tareaactual === null) {
       tarea.proyecto = proyectoActual._id;
       agregarTarea(tarea);
+      obtenerTareas(proyectoActual._id);
     } else {
       //de lo contrario estoy actualizando la tarea
       actualizarTask(tarea);
     }
-    obtenerTareas(proyectoActual.id);
+    obtenerTareas(proyectoActual._id);
     setTarea({
       nombre: "",
       proyecto: "",

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
-
+interface IBackground {
+  bg_position?: boolean;
+}
 export const FormTaskContainer = styled.div`
   padding: 0.5rem;
   display: flex;
@@ -69,7 +71,6 @@ export const ButtonContainer = styled.div`
 export const Description = styled.div`
   padding: 1rem;
   margin: 0.2rem 0;
-  background-color: #ccc;
   color: #333;
   border-radius: 5px;
   .description {
@@ -84,7 +85,6 @@ export const Description = styled.div`
 `;
 
 export const ListadoTareas = styled.div`
-  border: 1px solid blue;
   width: 100%;
   padding: 0.2rem;
   display: grid;
@@ -109,9 +109,16 @@ export const ListadoTareas = styled.div`
 
   .listadotareas__column {
     width: 85%;
-    border: 1px solid;
     margin: 0px auto;
-    ul {
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    h3 {
+      text-align: center;
+      color: #333;
+      padding: 20px 0px;
+    }
+    .list_container {
       padding: 0.5rem;
       height: 100%;
       display: flex;
@@ -121,24 +128,138 @@ export const ListadoTareas = styled.div`
       padding-bottom: 1rem;
     }
   }
-`;
 
-export const Tarea = styled.li`
-  border: 1px solid green;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .listadotareas__column {
+      ul {
+        flex-direction: row;
+        height: fit-content;
+        gap: 0px 15px;
+        overflow-x: auto;
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+        }
+        &::-webkit-scrollbar:vertical {
+          width: 10px;
+        }
+        &::-webkit-scrollbar:horizontal {
+          height: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #797979;
+          border-radius: 20px;
+          border: 2px solid #f1f2f3;
+        }
+        &::-webkit-scrollbar-track {
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+`;
+export const BackgroundUI = styled.div<IBackground>`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.75);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: ${(props) => (props.bg_position ? "block" : "none")};
+`;
+interface ITask {
+  isHighlighted?: string;
+}
+export const Tarea = styled.li<ITask>`
   padding: 0.8rem;
   border-radius: 5px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
   height: fit-content;
-  min-height: 125px;
   width: fit-content;
+  min-width: 250px;
+  max-width: 250px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  position: relative;
+  transition: all 250ms ease-in-out;
+  textarea {
+    resize: none;
+    width: 100%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: #fff;
+  }
+  &.highlighted {
+    z-index: 2;
+  }
+  button {
+    padding: 5px 7px;
+    position: absolute;
+    right: 10px;
+    display: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .button__options {
+      display: ${(props) =>
+        props.isHighlighted && props.isHighlighted?.length > 0
+          ? "none"
+          : "block"};
+    }
+  }
   p {
     overflow-y: auto;
     padding: 5px;
+    word-wrap: break-word;
+  }
+
+  .button__edit {
+    position: absolute;
+    bottom: -35px;
+    z-index: 3;
+    background-color: white;
+    border: none;
+    left: 0px;
+    width: fit-content;
+    display: block;
+    color: white;
+    background: #ff7f00;
+    border-radius: 5px;
+  }
+  .edit__submenu {
+    position: absolute;
+    right: -160px;
+    top: -25px;
+    list-style: none;
+
+    li {
+      background: rgb(0 0 0 / 35%);
+      padding: 5px;
+      color: #ccc;
+      margin: 2.5px 0px;
+      border-radius: 5px;
+      &:hover {
+        transform: translateX(5px);
+        color: #fff;
+      }
+    }
+  }
+  #textarea {
+    font-family: inherit;
   }
 `;
 export const ButtonStateContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: center;
@@ -156,7 +277,6 @@ export const ButtonState = styled.button`
   border-radius: 25px;
   color: white;
   background-color: #4b72a8;
-
   align-self: center;
 `;
 export const ButtonPending = styled(ButtonState)`
