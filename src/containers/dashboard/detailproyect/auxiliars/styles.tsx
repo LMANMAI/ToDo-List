@@ -109,6 +109,7 @@ export const ListadoTareas = styled.div`
 
   .listadotareas__column {
     width: 85%;
+    height: fit-content;
     margin: 0px auto;
     background-color: #ccc;
     border-radius: 5px;
@@ -188,6 +189,7 @@ export const Tarea = styled.li<ITask>`
   cursor: pointer;
   position: relative;
   transition: all 250ms ease-in-out;
+  border-bottom: 5px solid #ff7f00;
   textarea {
     resize: none;
     width: 100%;
