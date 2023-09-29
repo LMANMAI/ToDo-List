@@ -10,6 +10,8 @@ export const NewProyectContainer = styled.div<INewProyect>`
   height: 100%;
   width: 100%;
   .newproyect__form {
+    padding: 15px 30px;
+
     display: flex;
     gap: 15px;
     justify-content: center;
