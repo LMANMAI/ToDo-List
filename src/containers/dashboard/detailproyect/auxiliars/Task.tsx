@@ -70,6 +70,7 @@ const Task = (tarea: any) => {
           <button
             className="button__edit"
             onClick={() => handleEditTask(tarea.tarea)}
+            title="Guardar cambios"
           >
             Guardar
           </button>
@@ -92,6 +93,7 @@ const Task = (tarea: any) => {
           dispatch(setIsHighlighted(tarea.tarea._id));
           textarea?.select();
         }}
+        title="Editar tarea"
       >
         <BsFillPencilFill />
       </button>

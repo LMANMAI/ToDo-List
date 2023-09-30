@@ -5,7 +5,11 @@ import { ListadoTareas, BackgroundUI } from "./styles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { useDispatch } from "react-redux";
-import { setBgUi, setIsHighlighted } from "../../../../redux/slices/ui";
+import {
+  setBgUi,
+  setIsHighlighted,
+  setEditMode,
+} from "../../../../redux/slices/ui";
 const TaskList = () => {
   const dispatch = useDispatch();
   const taskContext = useContext(TaskContext);
@@ -63,6 +67,7 @@ const TaskList = () => {
         bg_position={bg_position}
         onClick={() => {
           dispatch(setBgUi(false));
+          dispatch(setEditMode(false));
           dispatch(setIsHighlighted(""));
         }}
       />

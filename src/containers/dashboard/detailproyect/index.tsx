@@ -6,11 +6,13 @@ import { FormTask, TaskList } from "./auxiliars";
 import { FormTaskContainer, FormConfigMenu } from "./styles";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenMenu } from "../../../redux/slices/ui";
+import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
 
 const Task = (tarea: any) => {
   const dispatch = useDispatch();
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
+  const bg = useSelector((state: RootState) => state.ui.editmode);
+
   const taskContext = useContext(TaskContext);
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
     taskContext;
@@ -22,7 +24,7 @@ const Task = (tarea: any) => {
   useEffect(() => {
     obtenerTareas(proyectoActual._id);
   }, []);
-  const handleClick = (id: any) => {
+  const handleDelteTask = (id: any) => {
     eliminarTarea(id, proyectoActual._id);
     // obtenerTareas(proyectoActual._id);
   };
@@ -34,7 +36,14 @@ const Task = (tarea: any) => {
     }
     actualizarTask(tarea);
   };
+  const handleChange = (e: any) => {
+    console.log(e);
+  };
 
+  const handleEditMode = () => {
+    dispatch(setBgUi(true));
+    dispatch(setEditMode(true));
+  };
   return (
     <FormTaskContainer
       onClick={() => {
@@ -57,11 +66,23 @@ const Task = (tarea: any) => {
           <h3 className="formt__task_title">
             <input
               type="text"
-              name=""
-              id=""
+              name="nombre"
+              id="input__edit"
               value={proyectoActual.nombre}
-              disabled
+              onChange={(e) => handleChange(e.target.value)}
+              disabled={!bg}
+              className={`form__input ${bg ? "edit__mode" : ""}`}
             />
+            <button
+              className={`edit__mode_button ${bg ? "btn_edit" : ""}`}
+              onClick={() => {
+                dispatch(setBgUi(false));
+                dispatch(setEditMode(false));
+              }}
+              title="Guardar cambios en la edición"
+            >
+              Guardar cambios
+            </button>
           </h3>
           <div style={{ position: "relative" }}>
             <button
@@ -74,8 +95,20 @@ const Task = (tarea: any) => {
               <BsGear />
             </button>
             <FormConfigMenu openmenu={openmenu}>
-              <li>Cambiar nombre del proyecto</li>
-              <li>Eliminar proyecto</li>
+              <li
+                onClick={() => {
+                  handleEditMode();
+                }}
+              >
+                Cambiar nombre del proyecto
+              </li>
+              <li
+                onClick={() => {
+                  handleDelteTask(tarea._id);
+                }}
+              >
+                Eliminar proyecto
+              </li>
               <li>Finalizar proyecto</li>
             </FormConfigMenu>
           </div>

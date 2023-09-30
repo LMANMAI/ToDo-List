@@ -7,6 +7,7 @@ import {
   Description,
   ButtonContainer,
 } from "./styles";
+
 const FormTask = () => {
   const taskContext = useContext(TaskContext);
   const {
@@ -17,7 +18,6 @@ const FormTask = () => {
     obtenerTareas,
     actualizarTask,
   } = taskContext;
-
   const proyectoContext = useContext(ProyectoContext);
   const { proyectoactivo } = proyectoContext;
   const [proyectoActual] = proyectoactivo;
@@ -85,7 +85,6 @@ const FormTask = () => {
             value={nombre}
             onChange={handleChange}
             placeholder="Agregar una tarea"
-            className="form__input"
           />
           {errortarea ? (
             <p

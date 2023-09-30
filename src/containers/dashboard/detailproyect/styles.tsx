@@ -60,6 +60,29 @@ export const FormTaskContainer = styled.div`
       background: #3e7ec3;
       color: white;
       letter-spacing: 1.02px;
+
+      position: relative;
+      .edit__mode_button {
+        display: none;
+        position: absolute;
+        z-index: 3;
+        bottom: -20px;
+        left: 15px;
+        padding: 2px 5px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        background: #ff7f00;
+        color: white;
+        border-radius: 2px;
+        transition: all 250ms ease-in-out;
+        &:hover {
+          background: #d16800;
+        }
+      }
+      .btn_edit {
+        display: block;
+      }
     }
     .form__task_btn {
       outline: none;
@@ -99,6 +122,21 @@ export const FormTaskContainer = styled.div`
   }
   @media (min-width: 768px) {
     flex-direction: column;
+  }
+
+  .form__input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 20px;
+    padding: 0px 10px;
+    position: relative;
+  }
+  .edit__mode {
+    z-index: 3;
+    background: white;
+    color: #333;
   }
 `;
 export const FormConfigMenu = styled.ul<IFormconfigmenu>`

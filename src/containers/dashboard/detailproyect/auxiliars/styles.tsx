@@ -3,7 +3,7 @@ interface IBackground {
   bg_position?: boolean;
 }
 export const FormTaskContainer = styled.div`
-  padding: 0.5rem;
+  padding: 0.5rem 0px;
   display: flex;
   flex-direction: column;
   .form_task_container {
@@ -122,7 +122,7 @@ export const ListadoTareas = styled.div`
     width: 85%;
     height: fit-content;
     margin: 0px auto;
-    background-color: #ccc;
+    border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px 15px;
     h3 {
@@ -188,12 +188,11 @@ interface ITask {
 }
 export const Tarea = styled.li<ITask>`
   padding: 0.8rem;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.24);
   height: fit-content;
-  width: fit-content;
+  width: 100%;
   min-width: 250px;
-  max-width: 250px;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
@@ -201,7 +200,7 @@ export const Tarea = styled.li<ITask>`
   cursor: pointer;
   position: relative;
   transition: all 250ms ease-in-out;
-  border-bottom: 5px solid #ff7f00;
+  border-top: 5px solid #ff7f00;
   textarea {
     resize: none;
     width: 100%;
@@ -225,6 +224,7 @@ export const Tarea = styled.li<ITask>`
   }
 
   &:hover {
+    background: #efefef;
     .button__options {
       display: ${(props) =>
         props.isHighlighted && props.isHighlighted?.length > 0
@@ -278,6 +278,7 @@ export const Tarea = styled.li<ITask>`
   }
   #textarea {
     font-family: inherit;
+    background: transparent;
   }
 `;
 export const ButtonStateContainer = styled.div`

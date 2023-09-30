@@ -4,6 +4,7 @@ const initialState = {
   bg: false,
   isHighlighted: "",
   openmenu: false,
+  editmode: false,
 };
 
 const uiSlice = createSlice({
@@ -19,9 +20,13 @@ const uiSlice = createSlice({
     setOpenMenu: (state, action: PayloadAction<boolean>) => {
       state.openmenu = action.payload;
     },
+    setEditMode: (state, action: PayloadAction<boolean>) => {
+      state.editmode = action.payload;
+    },
   },
 });
 
-export const { setBgUi, setIsHighlighted, setOpenMenu } = uiSlice.actions;
+export const { setBgUi, setIsHighlighted, setOpenMenu, setEditMode } =
+  uiSlice.actions;
 
 export default uiSlice.reducer;
