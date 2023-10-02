@@ -96,7 +96,9 @@ export const Description = styled.div`
 `;
 
 export const ListadoTareas = styled.div`
+  margin: 0px auto;
   width: 100%;
+  max-width: 1000px;
   padding: 0.2rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
