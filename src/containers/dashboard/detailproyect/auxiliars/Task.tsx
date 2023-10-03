@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import TaskContext from "../../../../context/task/taskContext";
-import ProyectoContext from "../../../../context/proyects/proyectoContext";
 import {
   Tarea,
   ButtonStateContainer,
@@ -20,11 +19,11 @@ const Task = (tarea: any) => {
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
     useContext(TaskContext);
 
-  const { proyectoactivo } = useContext(ProyectoContext);
-  //extraigo el proyecto activo para tener la referencia cuando actualice los proyectos
-  const [proyectoActual] = proyectoactivo;
+  const proyectoactivo = useSelector(
+    (state: RootState) => state.proyects.proyectoactivo
+  );
   useEffect(() => {
-    obtenerTareas(proyectoActual._id);
+    obtenerTareas(proyectoactivo._id);
   }, []);
   const [textoTarea, setTextoTarea] = useState(tarea.tarea.nombre);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -38,10 +37,10 @@ const Task = (tarea: any) => {
     actualizarTask(tarea);
   };
   const removeTask = (id: any) => {
-    eliminarTarea(id, proyectoActual._id);
+    eliminarTarea(id, proyectoactivo._id);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
-    obtenerTareas(proyectoActual._id);
+    obtenerTareas(proyectoactivo._id);
   };
   const changeTaskStatus = (tarea: any) => {
     if (tarea.estado) {

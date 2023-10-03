@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 import {
   FormularioContainer,
@@ -10,21 +9,19 @@ import {
   ButtonSec,
 } from "./styles";
 import { Authwraper } from "../styles";
-import AnimationContext from "../../../context/animations/AnimationContext";
 import { toast, ToastContainer } from "react-toastify";
 import registeruser from "../../../services/registeruser";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
+import { movePanelAuth } from "../../../redux/slices/ui";
 type ToastType = "success" | "info" | "warning" | "error";
 
 const SignIn = (props: any) => {
   const dispatch = useDispatch();
-  let history = useNavigate();
   const autenticathed = useSelector(
     (state: RootState) => state.user.autenticathed
   );
-  const { movePanelAuth } = useContext(AnimationContext);
   const [toastId, setToastId] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [fields, setFields] = useState([
@@ -244,7 +241,7 @@ const SignIn = (props: any) => {
             <ButtonSec
               onClick={() => {
                 clearNotification();
-                movePanelAuth();
+                dispatch(movePanelAuth());
               }}
               value="Iniciar Sesion"
             />

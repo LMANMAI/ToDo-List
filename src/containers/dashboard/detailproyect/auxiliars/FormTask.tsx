@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import TaskContext from "../../../../context/task/taskContext";
-import ProyectoContext from "../../../../context/proyects/proyectoContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../redux/store";
 import {
   FormTaskContainer,
   Input,
@@ -18,9 +19,9 @@ const FormTask = () => {
     actualizarTask,
   } = useContext(TaskContext);
 
-  const { proyectoactivo } = useContext(ProyectoContext);
-  const [proyectoActual] = proyectoactivo;
-
+  const proyectoactivo = useSelector(
+    (state: RootState) => state.proyects.proyectoactivo
+  );
   const [tarea, setTarea] = useState({
     nombre: "",
     proyecto: "",
@@ -56,14 +57,14 @@ const FormTask = () => {
     }
     //estoy agregando una nueva tarea
     if (tareaactual === null) {
-      tarea.proyecto = proyectoActual._id;
+      tarea.proyecto = proyectoactivo._id;
       tarea.estado = agregarTarea(tarea);
-      obtenerTareas(proyectoActual._id);
+      obtenerTareas(proyectoactivo._id);
     } else {
       //de lo contrario estoy actualizando la tarea
       actualizarTask(tarea);
     }
-    obtenerTareas(proyectoActual._id);
+    obtenerTareas(proyectoactivo._id);
     setTarea({
       nombre: "",
       proyecto: "",
@@ -121,10 +122,10 @@ const FormTask = () => {
         </ButtonContainer>
       </div>
       <Description>
-        {proyectoActual.desc ? (
+        {proyectoactivo.desc ? (
           <div className="description">
             <h4>Descripcion de la tarea</h4>
-            <p>{proyectoActual.desc}</p>
+            <p>{proyectoactivo.desc}</p>
           </div>
         ) : (
           <p>No agregaste una descripcion</p>

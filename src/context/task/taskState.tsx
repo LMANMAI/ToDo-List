@@ -25,6 +25,7 @@ const TaskState = (props: any) => {
   //Funciones
   //obtener las tareas relacionadas con el id del proyecto
   const obtenerTareas = async (proyecto: any) => {
+    console.log(proyecto);
     try {
       const peticion = await clienteAxios.get("/task", {
         params: { proyecto },

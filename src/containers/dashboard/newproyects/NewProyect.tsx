@@ -1,12 +1,9 @@
-import React, { useContext, useState } from "react";
-import ProyectoContext from "../../../context/proyects/proyectoContext";
+import React, { useState } from "react";
 import { NewProyectContainer, Input, Text } from "./styles";
+import saveProyect from "../../../services/saveProyect";
 
 const NewProyect = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
-  //Context
-  const { agregarProyecto } = useContext(ProyectoContext);
-  //states internos
   const [proyect, createProyect] = useState({
     nombre: "",
     desc: "",
@@ -22,12 +19,16 @@ const NewProyect = () => {
     setDisabled(e.target.nombre === "name" && e.target.value === "");
   };
 
-  const handleSubmit = () => {
+  const handleSaveProyects = async () => {
+    const response = await saveProyect(proyect);
+    console.log(response);
+    if (response.status === 200) {
+      console.log("proyecto agregado correctamentes");
+    }
     createProyect({
       nombre: "",
       desc: "",
     });
-    agregarProyecto(proyect);
   };
 
   return (
@@ -64,7 +65,7 @@ const NewProyect = () => {
           <button
             className="newproyect__btn submit"
             title="Guardar proyecto"
-            onClick={() => handleSubmit()}
+            onClick={() => handleSaveProyects()}
             disabled={disabled}
           >
             Guardar

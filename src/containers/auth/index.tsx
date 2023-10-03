@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Container,
   PanelContainer,
@@ -8,10 +8,12 @@ import {
 } from "../../pages/Auth/styles";
 import Login from "../../pages/Auth/Login";
 import SignIn from "../../pages/Auth/Signin";
-import AnimationContext from "../../context/animations/AnimationContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
 function AuthPage() {
-  const uiContext = useContext(AnimationContext);
-  const { panel } = uiContext;
+  const panel = useSelector((state: RootState) => state.ui.panel);
+
   return (
     <Container>
       <PanelContainer>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   BsFolder,
   BsFolderPlus,
@@ -8,26 +8,26 @@ import {
   BsPerson,
 } from "react-icons/bs";
 import { CgMenu } from "react-icons/cg";
-import AnimationContext from "../../../../context/animations/AnimationContext";
 import { SideBarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
+import {
+  setPanelDashboard,
+  movePanelNuevoProyecto,
+  movePanelProyectos,
+  movePanelProyectosTerminados,
+} from "../../../../redux/slices/ui";
 
 const SideBar = () => {
-  const {
-    panelDashboard,
-    movePanelNuevoProyecto,
-    movePanelProyectos,
-    movePanelProyectosTermiandos,
-    setPanelDashboard,
-  } = useContext(AnimationContext);
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggle = () => {
     setIsOpen(!isOpen);
-    setPanelDashboard(isOpen);
+    dispatch(setPanelDashboard(isOpen));
   };
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
   const Exit = () => {
     setTimeout(() => {
       localStorage.removeItem("token");
@@ -40,19 +40,19 @@ const SideBar = () => {
       path: "newproyects",
       name: "Crear proyecto",
       icon: <BsFolderPlus />,
-      function: movePanelNuevoProyecto,
+      function: dispatch(movePanelNuevoProyecto),
     },
     {
       path: "proyects",
       name: "Mis proyectos",
       icon: <BsFolder />,
-      function: movePanelProyectos,
+      function: dispatch(movePanelProyectos),
     },
     {
       path: "finishedproyectos",
       name: "Proyectos terminados",
       icon: <BsFolderCheck />,
-      function: movePanelProyectosTermiandos,
+      function: dispatch(movePanelProyectosTerminados),
     },
   ];
 

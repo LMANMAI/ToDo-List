@@ -1,22 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProyectListContainer, LisContainer, ProyectObject } from "./styles";
 import { NavLink } from "react-router-dom";
-import ProyectoContext from "../../../context/proyects/proyectoContext";
 import TaskContext from "../../../context/task/taskContext";
-
+import getProyects from "../../../services/getProyects";
+import { useDispatch } from "react-redux";
+import { proyectoActual } from "../../../redux/slices/proyects";
 const Proyect = (proyecto: any) => {
-  const { proyectoActual } = useContext(ProyectoContext);
   const { obtenerTareas } = useContext(TaskContext);
+  const dispatch = useDispatch();
   const handleClick = (proyecto: any) => {
-    proyectoActual(proyecto.proyecto);
-    obtenerTareas(proyecto.proyecto._id);
+    alert("desde aca");
+    console.log(proyecto);
+    dispatch(proyectoActual(proyecto));
+    obtenerTareas(proyecto._id);
   };
 
   return (
     <ProyectObject>
       <NavLink
         to={`/proyects/${proyecto.proyecto._id}`}
-        onClick={() => handleClick(proyecto)}
+        onClick={() => {
+          handleClick(proyecto.proyecto);
+        }}
         className="proyect__item"
       >
         <p className="proyect__name">{proyecto.proyecto.nombre}</p>
@@ -31,20 +36,27 @@ const Proyect = (proyecto: any) => {
 };
 
 const ProyectList = () => {
-  const { proyectos, obtenerProyectos } = useContext(ProyectoContext);
-
+  const [proyects, setProyects] = useState([]);
   //obtener proyectos cuando carga el componente
+
+  const handleGetProyects = async () => {
+    const request = await getProyects();
+    if (request.status === 200) {
+      setProyects(request.data);
+      console.log(request.data);
+    } else setProyects([]);
+  };
   useEffect(() => {
-    obtenerProyectos();
+    handleGetProyects();
   }, []);
 
   return (
     <ProyectListContainer>
-      {proyectos.length === 0 ? (
+      {proyects.length === 0 ? (
         <p className="object_list">Todavia no creaste ningun proyecto!</p>
       ) : (
         <LisContainer>
-          {proyectos.map((proyecto: any) => (
+          {proyects.map((proyecto: any) => (
             <Proyect key={proyecto._id} proyecto={proyecto} />
           ))}
         </LisContainer>

@@ -71,27 +71,27 @@ const ProyectoState = (props: any) => {
     }
   };
   //Agrega Proyectos
-  const agregarProyecto = async (proyect: any) => {
-    console.log(proyect);
-    try {
-      const requestP = await clienteAxios.post("/proyect", proyect);
-      console.log(requestP);
-      // dispatch({
-      //   type: AGREGAR_PROYECTO,
-      //   payload: requestP.data.proyect,
-      // });
-    } catch (error: any) {
-      console.log(error);
-      // const alerta = {
-      //   msg: error.response.data.msg,
-      //   categoria: "alerta-error",
-      // };
-      // dispatch({
-      //   type: PROYECTO_ERROR,
-      //   payload: alerta,
-      // });
-    }
-  };
+  // const agregarProyecto = async (proyect: any) => {
+  //   console.log(proyect);
+  //   try {
+  //     const requestP = await clienteAxios.post("/proyect", proyect);
+  //     console.log(requestP);
+  //     // dispatch({
+  //     //   type: AGREGAR_PROYECTO,
+  //     //   payload: requestP.data.proyect,
+  //     // });
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     // const alerta = {
+  //     //   msg: error.response.data.msg,
+  //     //   categoria: "alerta-error",
+  //     // };
+  //     // dispatch({
+  //     //   type: PROYECTO_ERROR,
+  //     //   payload: alerta,
+  //     // });
+  //   }
+  // };
   //Valido el formulario
   const validarFormulario = () => {
     dispatch({
@@ -105,7 +105,6 @@ const ProyectoState = (props: any) => {
       payload: proyecto,
     });
   };
-
   //Eliminar las tareas
   const eliminarProyecto = async (proyectoID: any) => {
     console.log(proyectoID);
@@ -146,6 +145,7 @@ const ProyectoState = (props: any) => {
       type: PROYECTO_NULL,
     });
   };
+
   return (
     <ProyectoContext.Provider
       value={{
@@ -162,7 +162,6 @@ const ProyectoState = (props: any) => {
         badgeT: state.badgeT,
         mostrarPanel,
         obtenerProyectos,
-        agregarProyecto,
         showPanel,
         validarFormulario,
         proyectoActual,

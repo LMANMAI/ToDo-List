@@ -1,17 +1,17 @@
-import React, { useContext, useEffect } from "react";
-import { AnimationContext, ProyectoContext } from "../../../../context";
+import React, { useEffect } from "react";
 import { ContainerDashboard } from "./styles";
 import { Outlet } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { allFalse } from "../../../../redux/slices/ui";
+import { RootState } from "../../../../redux/store";
 function Container() {
-  const uiContext = useContext(AnimationContext);
-  const { allFalse } = uiContext;
-
-  const proyectoContext = useContext(ProyectoContext);
-  const { proyectoactivo } = proyectoContext;
+  const dispatch = useDispatch();
+  const proyectoactivo = useSelector(
+    (state: RootState) => state.proyects.proyectoactivo
+  );
   useEffect(() => {
     if (proyectoactivo) {
-      allFalse();
+      dispatch(allFalse());
     }
   }, [proyectoactivo]);
   return (

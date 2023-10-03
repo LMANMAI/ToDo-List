@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormularioContainer,
@@ -10,13 +10,13 @@ import {
 } from "./styles";
 import { Authwraper } from "../styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import AnimationContext from "../../../context/animations/AnimationContext";
 import { useDispatch, useSelector } from "react-redux";
 import loginuser from "../../../services/loginuser";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { movePanelAuth } from "../../../redux/slices/ui";
 
 type ToastType = "success" | "info" | "warning" | "error";
 const Login = (props: any) => {
@@ -24,8 +24,6 @@ const Login = (props: any) => {
   const [isFocused2, setIsFocused2] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [toastId, setToastId] = useState<any | null>(null);
-  const uiContext = useContext(AnimationContext);
-  const { movePanelAuth } = uiContext;
 
   const [user, setUser] = useState({
     email: "",
@@ -204,7 +202,7 @@ const Login = (props: any) => {
             <ButtonSec
               onClick={() => {
                 clearNotification();
-                movePanelAuth();
+                dispatch(movePanelAuth());
               }}
               id="sing-up-btn"
               value="Registrarse"

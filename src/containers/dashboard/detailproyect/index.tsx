@@ -13,21 +13,24 @@ const Task = (tarea: any) => {
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
     useContext(TaskContext);
 
-  const { proyectoactivo, terminarProyecto, eliminarProyecto } =
-    useContext(ProyectoContext);
+  const { terminarProyecto, eliminarProyecto } = useContext(ProyectoContext);
   //extraigo el proyecto activo para tener la referencia cuando actualice los proyectos
-  const [proyectoActual] = proyectoactivo;
 
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const bg = useSelector((state: RootState) => state.ui.editmode);
-  const [proyectname, setProyectName] = useState<string>(proyectoActual.nombre);
+  const proyectoactivo = useSelector(
+    (state: RootState) => state.proyects.proyectoactivo
+  );
+  console.log(proyectoactivo);
+  const [proyectname, setProyectName] = useState<string>(proyectoactivo.nombre);
 
   useEffect(() => {
-    obtenerTareas(proyectoActual._id);
+    console.log(proyectoactivo);
+    obtenerTareas(proyectoactivo._id);
   }, []);
   const handleDelteTask = (id: any) => {
-    eliminarProyecto(proyectoActual._id);
-    // obtenerTareas(proyectoActual._id);
+    eliminarProyecto(proyectoactivo._id);
+    // obtenerTareas(proyectoactivo._id);
   };
   const cambiarEstadoTarea = (tarea: any) => {
     if (tarea.estado) {
@@ -80,6 +83,7 @@ const Task = (tarea: any) => {
               onClick={() => {
                 dispatch(setBgUi(false));
                 dispatch(setEditMode(false));
+                terminarProyecto(proyectoactivo);
               }}
               title="Guardar cambios en la edición"
             >
@@ -115,8 +119,7 @@ const Task = (tarea: any) => {
 
               <li
                 onClick={() => {
-                  console.log(proyectoactivo);
-                  terminarProyecto(proyectoactivo[0]);
+                  terminarProyecto(proyectoactivo);
                 }}
               >
                 Finalizar proyecto
