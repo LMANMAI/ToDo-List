@@ -50,8 +50,8 @@ export const SideBarContainer = styled.nav<ISideBar>`
     font-size: 30px;
   }
   .bottom__section {
-    position: absolute;
-    bottom: 25px;
+    position: relative;
+    bottom: -45vh;
     .p8 {
       padding: 10px 8px;
     }

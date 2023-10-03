@@ -105,8 +105,10 @@ const ProyectoState = (props: any) => {
       payload: proyecto,
     });
   };
+
   //Eliminar las tareas
   const eliminarProyecto = async (proyectoID: any) => {
+    console.log(proyectoID);
     try {
       await clienteAxios.delete(`/proyect/${proyectoID}`);
       dispatch({
@@ -125,12 +127,13 @@ const ProyectoState = (props: any) => {
     }
   };
   const terminarProyecto = async (proyecto: any) => {
+    console.log(proyecto);
     try {
       const consulta = await clienteAxios.put(
         `/proyect/${proyecto._id}`,
         proyecto
       );
-
+      console.log(consulta);
       dispatch({
         type: TERMINAR_PROYECTO,
         payload: proyecto,

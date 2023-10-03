@@ -5,6 +5,7 @@ export const ContainerDashboard = styled.main`
   width: 100%;
   height: 100vh;
   position: relative;
+  overflow: hidden;
   & > div {
     width: 100%;
     padding: 10px 15px;

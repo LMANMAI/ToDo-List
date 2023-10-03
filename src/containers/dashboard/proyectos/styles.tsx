@@ -96,4 +96,7 @@ export const ProyectObject = styled.li`
     display: flex;
     flex-direction: column;
   }
+  &:hover {
+    background: none;
+  }
 `;

@@ -40,7 +40,7 @@ const TaskState = (props: any) => {
   const agregarTarea = async (tarea: any) => {
     try {
       const consulta = await clienteAxios.post("/task", tarea);
-
+      console.log(consulta);
       dispatch({
         type: AGREGAR_TAREA,
         payload: tarea,

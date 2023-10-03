@@ -9,7 +9,6 @@ import {
 } from "./styles";
 
 const FormTask = () => {
-  const taskContext = useContext(TaskContext);
   const {
     tareaactual,
     errortarea,
@@ -17,15 +16,17 @@ const FormTask = () => {
     validarTarea,
     obtenerTareas,
     actualizarTask,
-  } = taskContext;
-  const proyectoContext = useContext(ProyectoContext);
-  const { proyectoactivo } = proyectoContext;
+  } = useContext(TaskContext);
+
+  const { proyectoactivo } = useContext(ProyectoContext);
   const [proyectoActual] = proyectoactivo;
 
   const [tarea, setTarea] = useState({
     nombre: "",
     proyecto: "",
+    estado: "borrador",
   });
+
   const { nombre } = tarea;
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const FormTask = () => {
       setTarea({
         nombre: "",
         proyecto: "",
+        estado: "borrador",
       });
     }
   }, [tareaactual]);
@@ -55,7 +57,7 @@ const FormTask = () => {
     //estoy agregando una nueva tarea
     if (tareaactual === null) {
       tarea.proyecto = proyectoActual._id;
-      agregarTarea(tarea);
+      tarea.estado = agregarTarea(tarea);
       obtenerTareas(proyectoActual._id);
     } else {
       //de lo contrario estoy actualizando la tarea
@@ -65,6 +67,7 @@ const FormTask = () => {
     setTarea({
       nombre: "",
       proyecto: "",
+      estado: "borrador",
     });
   };
 
@@ -102,9 +105,9 @@ const FormTask = () => {
         <div className="content">
           <select name="" id="form__select" className="form__select content">
             <option value="">Elige el estado de la tarea</option>
-            <option value="">Borrador</option>
-            <option value="">En curso</option>
-            <option value="">Terminado</option>
+            <option value="borrador">Borrador</option>
+            <option value="curso">En curso</option>
+            <option value="terminado">Terminado</option>
           </select>
         </div>
         <ButtonContainer className="form__btn_container">

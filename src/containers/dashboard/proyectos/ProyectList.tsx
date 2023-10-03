@@ -12,7 +12,6 @@ const Proyect = (proyecto: any) => {
     obtenerTareas(proyecto.proyecto._id);
   };
 
-  console.log(proyecto.proyecto);
   return (
     <ProyectObject>
       <NavLink

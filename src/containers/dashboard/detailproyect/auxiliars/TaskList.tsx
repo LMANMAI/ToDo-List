@@ -32,33 +32,45 @@ const TaskList = () => {
         <>
           <div className="listadotareas__column">
             <h3>Tareas en Borrador</h3>
-            {tareasBorrador.length > 0 && (
+            {tareasBorrador.length > 0 ? (
               <ul className="list_container">
                 {tareasBorrador.map((tarea: any) => (
                   <Task tarea={tarea} key={tarea._id} />
                 ))}
               </ul>
+            ) : (
+              <p className="list__msg">
+                Todavia no se cargaron tareas, comienza creando una
+              </p>
             )}
           </div>
 
           <div className="listadotareas__column">
             <h3>Tareas Pendientes</h3>
-            {tareasPendientes.length > 0 && (
+            {tareasPendientes.length > 0 ? (
               <ul className="list_container">
                 {tareasPendientes.map((tarea: any) => (
                   <Task tarea={tarea} key={tarea._id} />
                 ))}
               </ul>
+            ) : (
+              <p className="list__msg">
+                Todavia no se cargaron tareas, comienza creando una
+              </p>
             )}
           </div>
           <div className="listadotareas__column">
             <h3>Tareas Completas</h3>
-            {tareasCompletas.length > 0 && (
+            {tareasCompletas.length > 0 ? (
               <ul className="list_container">
                 {tareasCompletas.map((tarea: any) => (
                   <Task tarea={tarea} key={tarea._id} />
                 ))}
               </ul>
+            ) : (
+              <p className="list__msg">
+                Todavia no se cargaron tareas, comienza creando una
+              </p>
             )}
           </div>
         </>

@@ -126,7 +126,7 @@ export const ListadoTareas = styled.div`
     margin: 0px auto;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 0px;
     h3 {
       text-align: center;
       color: #333;
@@ -147,6 +147,7 @@ export const ListadoTareas = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
+
     .listadotareas__column {
       ul {
         flex-direction: row;
@@ -173,6 +174,17 @@ export const ListadoTareas = styled.div`
       }
     }
   }
+
+  @media (min-width: 640px) {
+    .listadotareas__column {
+      padding: 10px 15px;
+    }
+  }
+
+  .list__msg {
+    font-size: 13px;
+    text-align: center;
+  }
 `;
 export const BackgroundUI = styled.div<IBackground>`
   position: fixed;
@@ -182,7 +194,8 @@ export const BackgroundUI = styled.div<IBackground>`
   width: 100vw;
   height: 100vh;
   z-index: 1;
-  transition: all 350ms ease-in-out;
+  transition: display 550ms ease-in-out;
+  backdrop-filter: blur(5px);
   display: ${(props) => (props.bg_position ? "block" : "none")};
 `;
 interface ITask {
@@ -255,8 +268,8 @@ export const Tarea = styled.li<ITask>`
   }
   .edit__submenu {
     position: absolute;
-    right: -160px;
-    top: -25px;
+    right: 0px;
+    top: -106px;
     list-style: none;
     transition-delay: 750ms;
     transition: transform 450ms ease;

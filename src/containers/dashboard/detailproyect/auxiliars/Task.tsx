@@ -17,12 +17,10 @@ const Task = (tarea: any) => {
   const isHighlighted = useSelector(
     (state: RootState) => state.ui.isHighlighted
   );
-  const taskContext = useContext(TaskContext);
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
-    taskContext;
+    useContext(TaskContext);
 
-  const proyectContext = useContext(ProyectoContext);
-  const { proyectoactivo } = proyectContext;
+  const { proyectoactivo } = useContext(ProyectoContext);
   //extraigo el proyecto activo para tener la referencia cuando actualice los proyectos
   const [proyectoActual] = proyectoactivo;
   useEffect(() => {
@@ -33,6 +31,8 @@ const Task = (tarea: any) => {
     setTextoTarea(e.target.value);
   };
   const handleEditTask = (tarea: any) => {
+    tarea.nombre = textoTarea;
+    console.log(tarea);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
     actualizarTask(tarea);
@@ -49,6 +49,7 @@ const Task = (tarea: any) => {
     } else {
       tarea.estado = true;
     }
+
     actualizarTask(tarea);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));

@@ -10,22 +10,23 @@ import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
 
 const Task = (tarea: any) => {
   const dispatch = useDispatch();
-  const openmenu = useSelector((state: RootState) => state.ui.openmenu);
-  const bg = useSelector((state: RootState) => state.ui.editmode);
-
-  const taskContext = useContext(TaskContext);
   const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
-    taskContext;
+    useContext(TaskContext);
 
-  const proyectContext = useContext(ProyectoContext);
-  const { proyectoactivo } = proyectContext;
+  const { proyectoactivo, terminarProyecto, eliminarProyecto } =
+    useContext(ProyectoContext);
   //extraigo el proyecto activo para tener la referencia cuando actualice los proyectos
   const [proyectoActual] = proyectoactivo;
+
+  const openmenu = useSelector((state: RootState) => state.ui.openmenu);
+  const bg = useSelector((state: RootState) => state.ui.editmode);
+  const [proyectname, setProyectName] = useState<string>(proyectoActual.nombre);
+
   useEffect(() => {
     obtenerTareas(proyectoActual._id);
   }, []);
   const handleDelteTask = (id: any) => {
-    eliminarTarea(id, proyectoActual._id);
+    eliminarProyecto(proyectoActual._id);
     // obtenerTareas(proyectoActual._id);
   };
   const cambiarEstadoTarea = (tarea: any) => {
@@ -38,6 +39,7 @@ const Task = (tarea: any) => {
   };
   const handleChange = (e: any) => {
     console.log(e);
+    setProyectName(e.target.value);
   };
 
   const handleEditMode = () => {
@@ -68,8 +70,8 @@ const Task = (tarea: any) => {
               type="text"
               name="nombre"
               id="input__edit"
-              value={proyectoActual.nombre}
-              onChange={(e) => handleChange(e.target.value)}
+              value={proyectname}
+              onChange={(e) => handleChange(e)}
               disabled={!bg}
               className={`form__input ${bg ? "edit__mode" : ""}`}
             />
@@ -102,6 +104,7 @@ const Task = (tarea: any) => {
               >
                 Cambiar nombre del proyecto
               </li>
+              <li onClick={() => {}}>Agregar descripción</li>
               <li
                 onClick={() => {
                   handleDelteTask(tarea._id);
@@ -109,7 +112,15 @@ const Task = (tarea: any) => {
               >
                 Eliminar proyecto
               </li>
-              <li>Finalizar proyecto</li>
+
+              <li
+                onClick={() => {
+                  console.log(proyectoactivo);
+                  terminarProyecto(proyectoactivo[0]);
+                }}
+              >
+                Finalizar proyecto
+              </li>
             </FormConfigMenu>
           </div>
         </div>

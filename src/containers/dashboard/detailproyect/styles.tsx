@@ -60,8 +60,8 @@ export const FormTaskContainer = styled.div`
       background: #3e7ec3;
       color: white;
       letter-spacing: 1.02px;
-
       position: relative;
+      width: 210px;
       .edit__mode_button {
         display: none;
         position: absolute;
@@ -80,8 +80,21 @@ export const FormTaskContainer = styled.div`
           background: #d16800;
         }
       }
+      .form__input {
+        width: 210px;
+        max-width: 480px;
+      }
       .btn_edit {
         display: block;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .formt__task_title {
+        width: 100%;
+        .form__input {
+          width: 100%;
+        }
       }
     }
     .form__task_btn {
@@ -142,6 +155,7 @@ export const FormTaskContainer = styled.div`
 export const FormConfigMenu = styled.ul<IFormconfigmenu>`
   position: absolute;
   right: 0px;
+  top: 30px;
   min-width: 200px;
   font-size: 13px;
   background: #27527f;
@@ -150,6 +164,7 @@ export const FormConfigMenu = styled.ul<IFormconfigmenu>`
   border-radius: 5px 0 5px 5px;
   overflow: hidden;
   padding-top: 5px;
+  z-index: 2;
   display: ${(props) => (props.openmenu ? "block" : "none")};
   li {
     padding: 7px 10px;
