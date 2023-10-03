@@ -62,11 +62,7 @@ const proyectoSlice = createSlice({
       state.mensaje = null;
       state.badge = true;
     },
-    validarFormulario: (state) => {
-      state.errorformulario = true;
-    },
     proyectoActual: (state, action: PayloadAction<any>) => {
-      console.log(action);
       state.proyectoactivo = action.payload;
       state.panel = false;
       state.panelproyecto = false;
@@ -108,7 +104,6 @@ export const {
   mostrarTerminados,
   obtenerProyectos,
   agregarProyecto,
-  validarFormulario,
   proyectoActual,
   terminarProyecto,
   eliminarProyecto,

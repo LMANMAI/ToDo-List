@@ -31,7 +31,6 @@ const Task = (tarea: any) => {
   };
   const handleEditTask = (tarea: any) => {
     tarea.nombre = textoTarea;
-    console.log(tarea);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
     actualizarTask(tarea);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NewProyectContainer, Input, Text } from "./styles";
-import saveProyect from "../../../services/saveProyect";
+import { addProyect } from "../../../services";
 
 const NewProyect = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -20,10 +20,8 @@ const NewProyect = () => {
   };
 
   const handleSaveProyects = async () => {
-    const response = await saveProyect(proyect);
-    console.log(response);
+    const response = await addProyect(proyect);
     if (response.status === 200) {
-      console.log("proyecto agregado correctamentes");
     }
     createProyect({
       nombre: "",

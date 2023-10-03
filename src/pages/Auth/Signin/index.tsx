@@ -10,7 +10,7 @@ import {
 } from "./styles";
 import { Authwraper } from "../styles";
 import { toast, ToastContainer } from "react-toastify";
-import registeruser from "../../../services/registeruser";
+import { registeruser } from "../../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";

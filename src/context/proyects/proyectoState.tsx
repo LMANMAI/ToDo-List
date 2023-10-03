@@ -51,25 +51,25 @@ const ProyectoState = (props: any) => {
     });
   };
   //obtener los proyectos
-  const obtenerProyectos = async () => {
-    try {
-      const requestP = await clienteAxios.get("/proyect");
+  // const obtenerProyectos = async () => {
+  //   try {
+  //     const requestP = await clienteAxios.get("/proyect");
 
-      dispatch({
-        type: OBTENER_PROYECTOS,
-        payload: requestP.data,
-      });
-    } catch (error: any) {
-      const alerta = {
-        msg: error.response.data.msg,
-        categoria: "alerta-error",
-      };
-      dispatch({
-        type: PROYECTO_ERROR,
-        payload: alerta,
-      });
-    }
-  };
+  //     dispatch({
+  //       type: OBTENER_PROYECTOS,
+  //       payload: requestP.data,
+  //     });
+  //   } catch (error: any) {
+  //     const alerta = {
+  //       msg: error.response.data.msg,
+  //       categoria: "alerta-error",
+  //     };
+  //     dispatch({
+  //       type: PROYECTO_ERROR,
+  //       payload: alerta,
+  //     });
+  //   }
+  // };
   //Agrega Proyectos
   // const agregarProyecto = async (proyect: any) => {
   //   console.log(proyect);
@@ -99,12 +99,12 @@ const ProyectoState = (props: any) => {
     });
   };
   //Seleccionar y poner un proyecto como activo
-  const proyectoActual = (proyecto: any) => {
-    dispatch({
-      type: PROYECTO_ACTIVO,
-      payload: proyecto,
-    });
-  };
+  // const proyectoActual = (proyecto: any) => {
+  //   dispatch({
+  //     type: PROYECTO_ACTIVO,
+  //     payload: proyecto,
+  //   });
+  // };
   //Eliminar las tareas
   const eliminarProyecto = async (proyectoID: any) => {
     console.log(proyectoID);
@@ -161,10 +161,8 @@ const ProyectoState = (props: any) => {
         badge: state.badge,
         badgeT: state.badgeT,
         mostrarPanel,
-        obtenerProyectos,
         showPanel,
         validarFormulario,
-        proyectoActual,
         eliminarProyecto,
         mostrarTerminados,
         terminarProyecto,

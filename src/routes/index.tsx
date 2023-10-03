@@ -6,7 +6,7 @@ import { ProyectoState, TaskState } from "../context";
 import { NewProyect, EndProyects, ProyectList, Task } from "../containers";
 import { useDispatch } from "react-redux";
 import tokenAuth from "../config/tokenAuth";
-import authentication from "../services/authentication";
+import { authentication } from "../services";
 import { setCurrentUser } from "../redux/slices/user";
 
 function RoutesComponent() {

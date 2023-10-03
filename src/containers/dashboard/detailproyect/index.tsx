@@ -21,11 +21,9 @@ const Task = (tarea: any) => {
   const proyectoactivo = useSelector(
     (state: RootState) => state.proyects.proyectoactivo
   );
-  console.log(proyectoactivo);
   const [proyectname, setProyectName] = useState<string>(proyectoactivo.nombre);
 
   useEffect(() => {
-    console.log(proyectoactivo);
     obtenerTareas(proyectoactivo._id);
   }, []);
   const handleDelteTask = (id: any) => {
@@ -41,7 +39,6 @@ const Task = (tarea: any) => {
     actualizarTask(tarea);
   };
   const handleChange = (e: any) => {
-    console.log(e);
     setProyectName(e.target.value);
   };
 

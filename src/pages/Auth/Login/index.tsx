@@ -11,7 +11,7 @@ import {
 import { Authwraper } from "../styles";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import loginuser from "../../../services/loginuser";
+import { loginuser } from "../../../services";
 import { setAuthenticated, setCurrentUser } from "../../../redux/slices/user";
 import { RootState } from "../../../redux/store";
 import { toast, ToastContainer } from "react-toastify";

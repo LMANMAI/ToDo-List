@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Container, SideBar } from "./auxiliars";
 import ProyectoContext from "../../context/proyects/proyectoContext";
 import { DashboardContainer } from "./styles";
-import authentication from "../../services/authentication";
+import { authentication } from "../../services";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 const DashboardPage = () => {

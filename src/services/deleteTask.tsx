@@ -1,8 +1,8 @@
 import instance from "../config/axios";
 
-const saveProyect = async (proyect: any) => {
+const deleteTask = async (proyect: any) => {
   try {
-    const { data, status } = await instance.post("/proyect", proyect);
+    const { data, status } = await instance.delete("/task", proyect);
     return { data, status };
   } catch (error: any) {
     const mensaje = {
@@ -13,4 +13,4 @@ const saveProyect = async (proyect: any) => {
   }
 };
 
-export default saveProyect;
+export default deleteTask;

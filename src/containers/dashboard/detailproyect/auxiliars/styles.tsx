@@ -184,6 +184,7 @@ export const ListadoTareas = styled.div`
   .list__msg {
     font-size: 13px;
     text-align: center;
+    min-width: 250px;
   }
 `;
 export const BackgroundUI = styled.div<IBackground>`
