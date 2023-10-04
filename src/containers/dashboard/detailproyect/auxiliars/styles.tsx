@@ -194,10 +194,10 @@ export const BackgroundUI = styled.div<IBackground>`
   background: rgba(0, 0, 0, 0.75);
   width: 100vw;
   height: 100vh;
-  z-index: 1;
-  transition: display 550ms ease-in-out;
+  transition: opacity 175ms ease-in-out;
   backdrop-filter: blur(5px);
-  display: ${(props) => (props.bg_position ? "block" : "none")};
+  opacity: ${(props) => (props.bg_position ? "1" : "0")};
+  z-index: ${(props) => (props.bg_position ? "1" : "-1")};
 `;
 interface ITask {
   isHighlighted?: string;

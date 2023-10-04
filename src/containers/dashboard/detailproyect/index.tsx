@@ -7,6 +7,7 @@ import { FormTaskContainer, FormConfigMenu } from "./styles";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
+import { proyectoActual } from "../../../redux/slices/proyects";
 
 const Task = (tarea: any) => {
   const dispatch = useDispatch();
@@ -40,12 +41,18 @@ const Task = (tarea: any) => {
   };
   const handleChange = (e: any) => {
     setProyectName(e.target.value);
+    const updatedProyecto = {
+      ...proyectoactivo,
+      nombre: e.target.value,
+    };
+    dispatch(proyectoActual(updatedProyecto));
   };
 
   const handleEditMode = () => {
     dispatch(setBgUi(true));
     dispatch(setEditMode(true));
   };
+
   return (
     <FormTaskContainer
       onClick={() => {
@@ -80,6 +87,7 @@ const Task = (tarea: any) => {
               onClick={() => {
                 dispatch(setBgUi(false));
                 dispatch(setEditMode(false));
+
                 terminarProyecto(proyectoactivo);
               }}
               title="Guardar cambios en la edición"
