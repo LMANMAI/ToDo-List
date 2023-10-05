@@ -36,6 +36,7 @@ const Task = ({ tarea, onDragStart }: any) => {
     dispatch(setBgUi(false));
     obtenerTareas(proyectoactivo._id);
   };
+
   const changeTaskStatus = (tarea: any) => {
     if (tarea.estado) {
       tarea.estado = false;

@@ -13,9 +13,8 @@ import {
 
 const TaskList = () => {
   const dispatch = useDispatch();
-  const taskContext = useContext(TaskContext);
-  const { tareasproyecto } = taskContext;
   const bg_position = useSelector((state: RootState) => state.ui.bg);
+  const { tareasproyecto, actualizarTask } = useContext(TaskContext);
   const tareasCompletas = tareasproyecto.filter(
     (tarea: any) => tarea.estado === "completa" || tarea.estado === true
   );
@@ -27,7 +26,6 @@ const TaskList = () => {
   );
 
   const handleDragStart = (e: any, taskId: any) => {
-    console.log("task", taskId);
     e.dataTransfer.setData("taskId", taskId);
   };
 
@@ -41,8 +39,6 @@ const TaskList = () => {
     tareasproyecto.filter((tarea: any) => tarea.estado === "completa")
   );
   const handleDrop = (e: any, destino: any) => {
-    console.log(e, "e");
-    console.log("destino", destino);
     e.preventDefault();
 
     const taskId = e.dataTransfer.getData("taskId");
@@ -51,33 +47,39 @@ const TaskList = () => {
     );
 
     if (tareaArrastrada) {
-      // Actualizar el estado de las tareas en función del destino
       if (destino === "borrador") {
         setBorradorTasks([...borradorTasks, tareaArrastrada]);
-        removeFromColumn(taskId, "pendientes");
-        removeFromColumn(taskId, "completas");
-      } else if (destino === "pendientes") {
+        removeFromColumn(taskId, "pendiente");
+        removeFromColumn(taskId, "completa");
+      } else if (destino === "pendiente") {
         setPendientesTasks([...pendientesTasks, tareaArrastrada]);
         removeFromColumn(taskId, "borrador");
-        removeFromColumn(taskId, "completas");
-      } else if (destino === "completas") {
+        removeFromColumn(taskId, "completa");
+      } else if (destino === "completa") {
         setCompletasTasks([...completasTasks, tareaArrastrada]);
         removeFromColumn(taskId, "borrador");
-        removeFromColumn(taskId, "pendientes");
+        removeFromColumn(taskId, "pendiente");
       }
+      console.log(tareaArrastrada);
+      changeTaskStatus(tareaArrastrada, destino);
     }
   };
 
+  const changeTaskStatus = (tarea: any, status: String) => {
+    tarea.estado = status;
+    actualizarTask(tarea);
+  };
   const removeFromColumn = (taskId: any, column: any) => {
     if (column === "borrador") {
       setBorradorTasks(
         borradorTasks.filter((task: any) => task._id !== taskId)
       );
-    } else if (column === "pendientes") {
+      console.log(column, "column");
+    } else if (column === "pendiente") {
       setPendientesTasks(
         pendientesTasks.filter((task: any) => task._id !== taskId)
       );
-    } else if (column === "completas") {
+    } else if (column === "completa") {
       setCompletasTasks(
         completasTasks.filter((task: any) => task._id !== taskId)
       );
@@ -131,7 +133,6 @@ const ColumnaTareas = ({
   onDragOver,
   onDrop,
 }: any) => {
-  console.log(tareas, "tarea");
   return (
     <div
       className="listadotareas__column"
