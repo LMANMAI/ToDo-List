@@ -60,7 +60,7 @@ const TaskList = () => {
         removeFromColumn(taskId, "borrador");
         removeFromColumn(taskId, "pendiente");
       }
-      console.log(tareaArrastrada);
+
       changeTaskStatus(tareaArrastrada, destino);
     }
   };
@@ -74,7 +74,6 @@ const TaskList = () => {
       setBorradorTasks(
         borradorTasks.filter((task: any) => task._id !== taskId)
       );
-      console.log(column, "column");
     } else if (column === "pendiente") {
       setPendientesTasks(
         pendientesTasks.filter((task: any) => task._id !== taskId)

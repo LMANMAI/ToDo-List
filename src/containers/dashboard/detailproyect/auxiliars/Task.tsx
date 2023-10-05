@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import TaskContext from "../../../../context/task/taskContext";
 import { Tarea } from "./styles";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { setBgUi, setIsHighlighted } from "../../../../redux/slices/ui";
 const Task = ({ tarea, onDragStart }: any) => {
   const textarea = document.getElementById("miTextarea") as HTMLTextAreaElement;
   const dispatch = useDispatch();
+  const { id } = useParams();
   const isHighlighted = useSelector(
     (state: RootState) => state.ui.isHighlighted
   );
@@ -17,9 +19,12 @@ const Task = ({ tarea, onDragStart }: any) => {
   const proyectoactivo = useSelector(
     (state: RootState) => state.proyects.proyectoactivo
   );
+
   useEffect(() => {
-    obtenerTareas(proyectoactivo._id);
+    console.log(id);
+    obtenerTareas(id);
   }, []);
+
   const [textoTarea, setTextoTarea] = useState(tarea.nombre);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextoTarea(e.target.value);
