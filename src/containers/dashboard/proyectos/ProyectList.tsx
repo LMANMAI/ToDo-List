@@ -5,6 +5,7 @@ import TaskContext from "../../../context/task/taskContext";
 import { getProyects } from "../../../services";
 import { useDispatch } from "react-redux";
 import { proyectoActual } from "../../../redux/slices/proyects";
+
 const Proyect = (proyecto: any) => {
   const { obtenerTareas } = useContext(TaskContext);
   const dispatch = useDispatch();

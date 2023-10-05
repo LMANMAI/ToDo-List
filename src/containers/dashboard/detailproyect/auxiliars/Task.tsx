@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import TaskContext from "../../../../context/task/taskContext";
-import {
-  Tarea,
-  ButtonStateContainer,
-  ButtonState,
-  ButtonPending,
-} from "./styles";
+import { Tarea } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { setBgUi, setIsHighlighted } from "../../../../redux/slices/ui";
-const Task = (tarea: any) => {
+const Task = ({ tarea, onDragStart }: any) => {
   const textarea = document.getElementById("miTextarea") as HTMLTextAreaElement;
   const dispatch = useDispatch();
   const isHighlighted = useSelector(
@@ -25,7 +20,7 @@ const Task = (tarea: any) => {
   useEffect(() => {
     obtenerTareas(proyectoactivo._id);
   }, []);
-  const [textoTarea, setTextoTarea] = useState(tarea.tarea.nombre);
+  const [textoTarea, setTextoTarea] = useState(tarea.nombre);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextoTarea(e.target.value);
   };
@@ -52,36 +47,36 @@ const Task = (tarea: any) => {
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
   };
-
+  const handleDragStart = (e: any) => {
+    onDragStart(e);
+  };
   return (
     <Tarea
       isHighlighted={isHighlighted}
-      className={isHighlighted === tarea.tarea._id ? "highlighted" : ""}
+      className={isHighlighted === tarea._id ? "highlighted" : ""}
+      draggable="true"
+      onDragStart={handleDragStart}
     >
       <textarea
         id="textarea"
         value={textoTarea}
         onChange={(e) => handleChange(e)}
-        disabled={isHighlighted !== tarea.tarea._id}
+        disabled={isHighlighted !== tarea._id}
       ></textarea>
-      {isHighlighted === tarea.tarea._id ? (
+      {isHighlighted === tarea._id ? (
         <div>
           <button
             className="button__edit"
-            onClick={() => handleEditTask(tarea.tarea)}
+            onClick={() => handleEditTask(tarea)}
             title="Guardar cambios"
           >
             Guardar
           </button>
 
           <ul className="edit__submenu">
-            <li onClick={() => removeTask(tarea.tarea._id)}>Eliminar tarea</li>
-            <li onClick={() => changeTaskStatus(tarea.tarea)}>
-              Finalizar tarea
-            </li>
-            <li onClick={() => changeTaskStatus(tarea.tarea)}>
-              Regresar a borrador
-            </li>
+            <li onClick={() => removeTask(tarea._id)}>Eliminar tarea</li>
+            <li onClick={() => changeTaskStatus(tarea)}>Finalizar tarea</li>
+            <li onClick={() => changeTaskStatus(tarea)}>Regresar a borrador</li>
           </ul>
         </div>
       ) : null}
@@ -89,46 +84,13 @@ const Task = (tarea: any) => {
         className="button__options"
         onClick={() => {
           dispatch(setBgUi(true));
-          dispatch(setIsHighlighted(tarea.tarea._id));
+          dispatch(setIsHighlighted(tarea._id));
           textarea?.select();
         }}
         title="Editar tarea"
       >
         <BsFillPencilFill />
       </button>
-      {/* <ButtonStateContainer>
-        {tarea.tarea.estado ? (
-          <ButtonState
-            onClick={() => cambiarEstadoTarea(tarea.tarea)}
-            type="button"
-            className="btn btn_estado task_completa"
-          >
-            Completa
-          </ButtonState>
-        ) : (
-          <ButtonPending
-            onClick={() => cambiarEstadoTarea(tarea.tarea)}
-            type="button"
-            className="btn btn_estado task_pendiente"
-          >
-            Pendiente
-          </ButtonPending>
-        )}
-        <ButtonState
-          type="button"
-          className="btn btn_eliminar"
-          onClick={() => removeTask(tarea.tarea._id)}
-        >
-          Eliminar
-        </ButtonState>
-        <ButtonState
-          type="button"
-          className="btn btn_editar"
-          onClick={() => tareaActual(tarea.tarea)}
-        >
-          Editar
-        </ButtonState>
-      </ButtonStateContainer> */}
     </Tarea>
   );
 };

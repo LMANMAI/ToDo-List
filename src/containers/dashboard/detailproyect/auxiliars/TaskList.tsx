@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Task from "./Task";
 import TaskContext from "../../../../context/task/taskContext";
 import { ListadoTareas, BackgroundUI } from "./styles";
@@ -10,6 +10,7 @@ import {
   setIsHighlighted,
   setEditMode,
 } from "../../../../redux/slices/ui";
+
 const TaskList = () => {
   const dispatch = useDispatch();
   const taskContext = useContext(TaskContext);
@@ -24,55 +25,91 @@ const TaskList = () => {
   const tareasBorrador = tareasproyecto.filter(
     (tarea: any) => tarea.estado === "borrador"
   );
+
+  const handleDragStart = (e: any, taskId: any) => {
+    console.log("task", taskId);
+    e.dataTransfer.setData("taskId", taskId);
+  };
+
+  const [borradorTasks, setBorradorTasks] = useState(
+    tareasproyecto.filter((tarea: any) => tarea.estado === "borrador")
+  );
+  const [pendientesTasks, setPendientesTasks] = useState(
+    tareasproyecto.filter((tarea: any) => tarea.estado === "pendiente")
+  );
+  const [completasTasks, setCompletasTasks] = useState(
+    tareasproyecto.filter((tarea: any) => tarea.estado === "completa")
+  );
+  const handleDrop = (e: any, destino: any) => {
+    console.log(e, "e");
+    console.log("destino", destino);
+    e.preventDefault();
+
+    const taskId = e.dataTransfer.getData("taskId");
+    const tareaArrastrada = tareasproyecto.find(
+      (tarea: any) => tarea._id === taskId
+    );
+
+    if (tareaArrastrada) {
+      // Actualizar el estado de las tareas en función del destino
+      if (destino === "borrador") {
+        setBorradorTasks([...borradorTasks, tareaArrastrada]);
+        removeFromColumn(taskId, "pendientes");
+        removeFromColumn(taskId, "completas");
+      } else if (destino === "pendientes") {
+        setPendientesTasks([...pendientesTasks, tareaArrastrada]);
+        removeFromColumn(taskId, "borrador");
+        removeFromColumn(taskId, "completas");
+      } else if (destino === "completas") {
+        setCompletasTasks([...completasTasks, tareaArrastrada]);
+        removeFromColumn(taskId, "borrador");
+        removeFromColumn(taskId, "pendientes");
+      }
+    }
+  };
+
+  const removeFromColumn = (taskId: any, column: any) => {
+    if (column === "borrador") {
+      setBorradorTasks(
+        borradorTasks.filter((task: any) => task._id !== taskId)
+      );
+    } else if (column === "pendientes") {
+      setPendientesTasks(
+        pendientesTasks.filter((task: any) => task._id !== taskId)
+      );
+    } else if (column === "completas") {
+      setCompletasTasks(
+        completasTasks.filter((task: any) => task._id !== taskId)
+      );
+    }
+  };
   return (
     <ListadoTareas>
       {tareasproyecto.length === 0 ? (
-        <p className="ntarea">No hay tareas comenza creando una!</p>
+        <p className="ntarea">No hay tareas, comienza creando una!</p>
       ) : (
         <>
-          <div className="listadotareas__column">
-            <h3>Tareas en Borrador</h3>
-            {tareasBorrador.length > 0 ? (
-              <ul className="list_container">
-                {tareasBorrador.map((tarea: any) => (
-                  <Task tarea={tarea} key={tarea._id} />
-                ))}
-              </ul>
-            ) : (
-              <p className="list__msg">
-                Todavia no se cargaron tareas, comienza creando una
-              </p>
-            )}
-          </div>
-
-          <div className="listadotareas__column">
-            <h3>Tareas Pendientes</h3>
-            {tareasPendientes.length > 0 ? (
-              <ul className="list_container">
-                {tareasPendientes.map((tarea: any) => (
-                  <Task tarea={tarea} key={tarea._id} />
-                ))}
-              </ul>
-            ) : (
-              <p className="list__msg">
-                Todavia no se cargaron tareas, comienza creando una
-              </p>
-            )}
-          </div>
-          <div className="listadotareas__column">
-            <h3>Tareas Completas</h3>
-            {tareasCompletas.length > 0 ? (
-              <ul className="list_container">
-                {tareasCompletas.map((tarea: any) => (
-                  <Task tarea={tarea} key={tarea._id} />
-                ))}
-              </ul>
-            ) : (
-              <p className="list__msg">
-                Todavia no se cargaron tareas, comienza creando una
-              </p>
-            )}
-          </div>
+          <ColumnaTareas
+            titulo="Tareas en Borrador"
+            tareas={tareasBorrador}
+            onDragStart={handleDragStart}
+            onDragOver={(e: any) => e.preventDefault()}
+            onDrop={(e: any) => handleDrop(e, "borrador")}
+          />
+          <ColumnaTareas
+            titulo="Tareas Pendientes"
+            tareas={tareasPendientes}
+            onDragStart={handleDragStart}
+            onDragOver={(e: any) => e.preventDefault()}
+            onDrop={(e: any) => handleDrop(e, "pendiente")}
+          />
+          <ColumnaTareas
+            titulo="Tareas Completas"
+            tareas={tareasCompletas}
+            onDragStart={handleDragStart}
+            onDragOver={(e: any) => e.preventDefault()}
+            onDrop={(e: any) => handleDrop(e, "completa")}
+          />
         </>
       )}
       <BackgroundUI
@@ -87,4 +124,37 @@ const TaskList = () => {
   );
 };
 
+const ColumnaTareas = ({
+  titulo,
+  tareas,
+  onDragStart,
+  onDragOver,
+  onDrop,
+}: any) => {
+  console.log(tareas, "tarea");
+  return (
+    <div
+      className="listadotareas__column"
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
+      <h3>{titulo}</h3>
+      {tareas.length > 0 ? (
+        <ul className="list_container">
+          {tareas.map((tarea: any) => (
+            <Task
+              tarea={tarea}
+              key={tarea._id}
+              onDragStart={(e: any) => onDragStart(e, tarea._id)}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="list__msg">
+          Todavía no se cargaron tareas, comienza creando una
+        </p>
+      )}
+    </div>
+  );
+};
 export default TaskList;
