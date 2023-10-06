@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import TaskContext from "../../../context/task/taskContext";
 import ProyectoContext from "../../../context/proyects/proyectoContext";
 import { BsChevronLeft, BsGear } from "react-icons/bs";
 import { FormTask, TaskList } from "./auxiliars";
@@ -8,36 +7,39 @@ import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
 import { proyectoActual } from "../../../redux/slices/proyects";
+import { getTask, getOneProyect } from "../../../services";
+import { useParams } from "react-router-dom";
 
 const Task = (tarea: any) => {
   const dispatch = useDispatch();
-  const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
-    useContext(TaskContext);
-
+  const { id } = useParams();
   const { terminarProyecto, eliminarProyecto } = useContext(ProyectoContext);
-  //extraigo el proyecto activo para tener la referencia cuando actualice los proyectos
 
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const bg = useSelector((state: RootState) => state.ui.editmode);
   const proyectoactivo = useSelector(
     (state: RootState) => state.proyects.proyectoactivo
   );
-  const [proyectname, setProyectName] = useState<string>(proyectoactivo.nombre);
+  const [proyectname, setProyectName] = useState<string>("");
+  const [task, setTasks] = useState<any[]>([]);
 
   useEffect(() => {
-    obtenerTareas(proyectoactivo._id);
-  }, []);
+    getTasks(id);
+  }, [id]);
+
   const handleDelteTask = (id: any) => {
-    eliminarProyecto(proyectoactivo._id);
-    // obtenerTareas(proyectoactivo._id);
+    eliminarProyecto(id);
   };
-  const cambiarEstadoTarea = (tarea: any) => {
-    if (tarea.estado) {
-      tarea.estado = false;
-    } else {
-      tarea.estado = true;
+  const getTasks = async (id: any) => {
+    const resProyect = await getOneProyect(id);
+    const res = await getTask(id);
+    if (resProyect.data) {
+      setProyectName(resProyect.data.nombre);
     }
-    actualizarTask(tarea);
+    if (res.data) {
+      setTasks(res.data);
+    }
+    dispatch(proyectoActual(resProyect.data));
   };
   const handleChange = (e: any) => {
     setProyectName(e.target.value);
@@ -134,7 +136,7 @@ const Task = (tarea: any) => {
         </div>
         <FormTask />
       </div>
-      <TaskList />
+      <TaskList tareasproyecto={task} />
     </FormTaskContainer>
   );
 };

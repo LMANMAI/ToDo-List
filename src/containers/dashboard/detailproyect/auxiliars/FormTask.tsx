@@ -122,10 +122,10 @@ const FormTask = () => {
         </ButtonContainer>
       </div>
       <Description>
-        {proyectoactivo.desc ? (
+        {proyectoactivo && proyectoactivo.desc ? (
           <div className="description">
             <h4>Descripcion de la tarea</h4>
-            <p>{proyectoactivo.desc}</p>
+            <p>{proyectoactivo ? proyectoactivo.desc : " "}</p>
           </div>
         ) : (
           <p>No agregaste una descripcion</p>

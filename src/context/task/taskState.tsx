@@ -79,6 +79,7 @@ const TaskState = (props: any) => {
       payload: tarea,
     });
   };
+
   return (
     <TaskContext.Provider
       value={{

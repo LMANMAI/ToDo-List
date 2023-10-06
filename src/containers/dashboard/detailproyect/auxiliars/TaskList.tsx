@@ -11,10 +11,10 @@ import {
   setEditMode,
 } from "../../../../redux/slices/ui";
 
-const TaskList = () => {
+const TaskList = ({ tareasproyecto }: any) => {
   const dispatch = useDispatch();
   const bg_position = useSelector((state: RootState) => state.ui.bg);
-  const { tareasproyecto, actualizarTask } = useContext(TaskContext);
+  const { actualizarTask } = useContext(TaskContext);
   const tareasCompletas = tareasproyecto.filter(
     (tarea: any) => tarea.estado === "completa" || tarea.estado === true
   );

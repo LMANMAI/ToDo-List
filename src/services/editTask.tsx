@@ -1,8 +1,9 @@
 import instance from "../config/axios";
 
-const EditTask = async (proyect: any) => {
+const EditTask = async (tarea: any) => {
+  console.log(`/task/${tarea._id}`);
   try {
-    const { data, status } = await instance.put("/task", proyect);
+    const { data, status } = await instance.put(`/task/${tarea._id}`, tarea);
     return { data, status };
   } catch (error: any) {
     const mensaje = {

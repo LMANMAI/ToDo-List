@@ -1,55 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
-import TaskContext from "../../../../context/task/taskContext";
 import { Tarea } from "./styles";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { setBgUi, setIsHighlighted } from "../../../../redux/slices/ui";
+import { deleteTask, EditTask, getTask } from "../../../../services";
+
 const Task = ({ tarea, onDragStart }: any) => {
   const textarea = document.getElementById("miTextarea") as HTMLTextAreaElement;
   const dispatch = useDispatch();
-  const { id } = useParams();
   const isHighlighted = useSelector(
     (state: RootState) => state.ui.isHighlighted
   );
-  const { eliminarTarea, obtenerTareas, actualizarTask, tareaActual } =
-    useContext(TaskContext);
 
   const proyectoactivo = useSelector(
     (state: RootState) => state.proyects.proyectoactivo
   );
 
-  useEffect(() => {
-    console.log(id);
-    obtenerTareas(id);
-  }, []);
-
   const [textoTarea, setTextoTarea] = useState(tarea.nombre);
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextoTarea(e.target.value);
   };
-  const handleEditTask = (tarea: any) => {
+  const handleEditTask = async (tarea: any) => {
     tarea.nombre = textoTarea;
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
-    actualizarTask(tarea);
+    await EditTask(tarea);
   };
-  const removeTask = (id: any) => {
-    eliminarTarea(id, proyectoactivo._id);
+  const removeTask = async (id: any) => {
+    const res = await deleteTask(proyectoactivo._id, id);
+    console.log(res);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
-    obtenerTareas(proyectoactivo._id);
+    getTask(proyectoactivo._id);
   };
 
-  const changeTaskStatus = (tarea: any) => {
+  const changeTaskStatus = async (tarea: any) => {
     if (tarea.estado) {
       tarea.estado = false;
     } else {
       tarea.estado = true;
     }
-
-    actualizarTask(tarea);
+    await EditTask(tarea);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
   };

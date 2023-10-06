@@ -1,11 +1,9 @@
 import instance from "../config/axios";
-
-const deleteTask = async (proyect: any, id: string) => {
-  console.log(id);
+import authentication from "./authentication";
+const getOneProyect = async (id: string) => {
+  await authentication();
   try {
-    const { data, status } = await instance.delete(
-      `/task/${id}?proyecto=${proyect}`
-    );
+    const { data, status } = await instance.get(`/proyect/${id}`);
     return { data, status };
   } catch (error: any) {
     const mensaje = {
@@ -16,4 +14,4 @@ const deleteTask = async (proyect: any, id: string) => {
   }
 };
 
-export default deleteTask;
+export default getOneProyect;
