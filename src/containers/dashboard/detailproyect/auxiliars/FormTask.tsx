@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import TaskContext from "../../../../context/task/taskContext";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import {
   FormTaskContainer,
@@ -8,26 +7,22 @@ import {
   Description,
   ButtonContainer,
 } from "./styles";
+import { addTask, getTask } from "../../../../services";
+import { setTareasProyecto } from "../../../../redux/slices/task";
 
 const FormTask = () => {
-  const {
-    tareaactual,
-    errortarea,
-    agregarTarea,
-    validarTarea,
-    obtenerTareas,
-    actualizarTask,
-  } = useContext(TaskContext);
-
-  const proyectoactivo = useSelector(
-    (state: RootState) => state.proyects.proyectoactivo
+  const dispatch = useDispatch();
+  const currentproyect = useSelector(
+    (state: RootState) => state.proyects.currentproyect
   );
+  const tareaactual = useSelector((state: RootState) => state.task.tareaactual);
+
   const [tarea, setTarea] = useState({
     nombre: "",
     proyecto: "",
     estado: "borrador",
   });
-
+  const [errortarea, setErrorTarea] = useState<boolean>(false);
   const { nombre } = tarea;
 
   useEffect(() => {
@@ -42,29 +37,23 @@ const FormTask = () => {
     }
   }, [tareaactual]);
 
-  //Capturar lo que ingresa el usuario
   const handleChange = (e: any) => {
+    setErrorTarea(false);
     setTarea({
       ...tarea,
       [e.target.name]: e.target.value,
     });
   };
-  //Submit
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
     if (nombre.trim() === "") {
-      validarTarea();
+      setErrorTarea(true);
       return;
     }
-    //estoy agregando una nueva tarea
-    if (tareaactual === null) {
-      tarea.proyecto = proyectoactivo._id;
-      tarea.estado = agregarTarea(tarea);
-      obtenerTareas(proyectoactivo._id);
-    } else {
-      //de lo contrario estoy actualizando la tarea
-      actualizarTask(tarea);
-    }
-    obtenerTareas(proyectoactivo._id);
+    tarea.proyecto = currentproyect._id;
+    await addTask(tarea);
+    const res = await getTask(currentproyect._id);
+    dispatch(setTareasProyecto(res.data));
     setTarea({
       nombre: "",
       proyecto: "",
@@ -122,10 +111,10 @@ const FormTask = () => {
         </ButtonContainer>
       </div>
       <Description>
-        {proyectoactivo && proyectoactivo.desc ? (
+        {currentproyect && currentproyect.desc ? (
           <div className="description">
             <h4>Descripcion de la tarea</h4>
-            <p>{proyectoactivo ? proyectoactivo.desc : " "}</p>
+            <p>{currentproyect ? currentproyect.desc : " "}</p>
           </div>
         ) : (
           <p>No agregaste una descripcion</p>

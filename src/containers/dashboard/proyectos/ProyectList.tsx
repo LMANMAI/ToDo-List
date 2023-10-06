@@ -1,17 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProyectListContainer, LisContainer, ProyectObject } from "./styles";
 import { NavLink } from "react-router-dom";
-import TaskContext from "../../../context/task/taskContext";
 import { getProyects } from "../../../services";
-import { useDispatch } from "react-redux";
-import { proyectoActual } from "../../../redux/slices/proyects";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import {
+  setCurrentProyect,
+  setActiveProyects,
+  setFinishedProyects,
+} from "../../../redux/slices/proyects";
 
 const Proyect = (proyecto: any) => {
-  const { obtenerTareas } = useContext(TaskContext);
   const dispatch = useDispatch();
   const handleClick = (proyecto: any) => {
-    dispatch(proyectoActual(proyecto));
-    obtenerTareas(proyecto._id);
+    dispatch(setCurrentProyect(proyecto));
   };
 
   return (
@@ -35,14 +37,26 @@ const Proyect = (proyecto: any) => {
 };
 
 const ProyectList = () => {
-  const [proyects, setProyects] = useState([]);
-  //obtener proyectos cuando carga el componente
-
+  const proyects = useSelector(
+    (state: RootState) => state.proyects.activeproyects
+  );
+  const dispatch = useDispatch();
   const handleGetProyects = async () => {
     const request = await getProyects();
     if (request.status === 200) {
-      setProyects(request.data);
-    } else setProyects([]);
+      console.log(request.data);
+
+      dispatch(
+        setActiveProyects(
+          request.data.filter((item: any) => item.estado === false)
+        )
+      );
+      dispatch(
+        setFinishedProyects(
+          request.data.filter((item: any) => item.estado === true)
+        )
+      );
+    }
   };
   useEffect(() => {
     handleGetProyects();

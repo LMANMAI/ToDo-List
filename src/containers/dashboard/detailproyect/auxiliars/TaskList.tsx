@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Task from "./Task";
-import TaskContext from "../../../../context/task/taskContext";
 import { ListadoTareas, BackgroundUI } from "./styles";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { RootState } from "../../../../redux/store";
 import { useDispatch } from "react-redux";
 import {
@@ -10,11 +10,13 @@ import {
   setIsHighlighted,
   setEditMode,
 } from "../../../../redux/slices/ui";
+import { EditTask, getTask } from "../../../../services";
+import { setTareasProyecto } from "../../../../redux/slices/task";
 
 const TaskList = ({ tareasproyecto }: any) => {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const bg_position = useSelector((state: RootState) => state.ui.bg);
-  const { actualizarTask } = useContext(TaskContext);
   const tareasCompletas = tareasproyecto.filter(
     (tarea: any) => tarea.estado === "completa" || tarea.estado === true
   );
@@ -38,9 +40,9 @@ const TaskList = ({ tareasproyecto }: any) => {
   const [completasTasks, setCompletasTasks] = useState(
     tareasproyecto.filter((tarea: any) => tarea.estado === "completa")
   );
+
   const handleDrop = (e: any, destino: any) => {
     e.preventDefault();
-
     const taskId = e.dataTransfer.getData("taskId");
     const tareaArrastrada = tareasproyecto.find(
       (tarea: any) => tarea._id === taskId
@@ -48,15 +50,24 @@ const TaskList = ({ tareasproyecto }: any) => {
 
     if (tareaArrastrada) {
       if (destino === "borrador") {
-        setBorradorTasks([...borradorTasks, tareaArrastrada]);
+        setBorradorTasks([
+          ...borradorTasks,
+          { ...tareaArrastrada, estado: destino },
+        ]);
         removeFromColumn(taskId, "pendiente");
         removeFromColumn(taskId, "completa");
       } else if (destino === "pendiente") {
-        setPendientesTasks([...pendientesTasks, tareaArrastrada]);
+        setPendientesTasks([
+          ...pendientesTasks,
+          { ...tareaArrastrada, estado: destino },
+        ]);
         removeFromColumn(taskId, "borrador");
         removeFromColumn(taskId, "completa");
       } else if (destino === "completa") {
-        setCompletasTasks([...completasTasks, tareaArrastrada]);
+        setCompletasTasks([
+          ...completasTasks,
+          { ...tareaArrastrada, estado: destino },
+        ]);
         removeFromColumn(taskId, "borrador");
         removeFromColumn(taskId, "pendiente");
       }
@@ -65,10 +76,18 @@ const TaskList = ({ tareasproyecto }: any) => {
     }
   };
 
-  const changeTaskStatus = (tarea: any, status: String) => {
-    tarea.estado = status;
-    actualizarTask(tarea);
+  const changeTaskStatus = async (tarea: any, status: String) => {
+    const updatedTask = { ...tarea };
+    updatedTask.estado = status;
+    removeFromColumn(updatedTask._id, status);
+    await EditTask(updatedTask);
+
+    const res = await getTask(id);
+    if (res.status === 200) {
+      dispatch(setTareasProyecto(res.data));
+    }
   };
+
   const removeFromColumn = (taskId: any, column: any) => {
     if (column === "borrador") {
       setBorradorTasks(

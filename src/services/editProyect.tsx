@@ -2,7 +2,10 @@ import instance from "../config/axios";
 
 const EditProyect = async (proyect: any) => {
   try {
-    const { data, status } = await instance.put("/proyect", proyect);
+    const { data, status } = await instance.put(
+      `/proyect/${proyect._id}`,
+      proyect
+    );
     return { data, status };
   } catch (error: any) {
     const mensaje = {

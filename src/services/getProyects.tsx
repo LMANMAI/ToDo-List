@@ -1,6 +1,8 @@
 import instance from "../config/axios";
+import authentication from "./authentication";
 
 const getProyects = async () => {
+  await authentication();
   try {
     const { data, status } = await instance.get("/proyect");
     return { data, status };

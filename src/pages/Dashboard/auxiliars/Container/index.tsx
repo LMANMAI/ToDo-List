@@ -6,14 +6,14 @@ import { allFalse } from "../../../../redux/slices/ui";
 import { RootState } from "../../../../redux/store";
 function Container() {
   const dispatch = useDispatch();
-  const proyectoactivo = useSelector(
-    (state: RootState) => state.proyects.proyectoactivo
+  const currentproyect = useSelector(
+    (state: RootState) => state.proyects.currentproyect
   );
   useEffect(() => {
-    if (proyectoactivo) {
+    if (currentproyect) {
       dispatch(allFalse());
     }
-  }, [proyectoactivo]);
+  }, [currentproyect]);
   return (
     <ContainerDashboard>
       <Outlet />

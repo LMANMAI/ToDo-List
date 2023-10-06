@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { setBgUi, setIsHighlighted } from "../../../../redux/slices/ui";
 import { deleteTask, EditTask, getTask } from "../../../../services";
+import { setTareasProyecto } from "../../../../redux/slices/task";
 
 const Task = ({ tarea, onDragStart }: any) => {
   const textarea = document.getElementById("miTextarea") as HTMLTextAreaElement;
@@ -13,8 +14,8 @@ const Task = ({ tarea, onDragStart }: any) => {
     (state: RootState) => state.ui.isHighlighted
   );
 
-  const proyectoactivo = useSelector(
-    (state: RootState) => state.proyects.proyectoactivo
+  const currentproyect = useSelector(
+    (state: RootState) => state.proyects.currentproyect
   );
 
   const [textoTarea, setTextoTarea] = useState(tarea.nombre);
@@ -22,25 +23,21 @@ const Task = ({ tarea, onDragStart }: any) => {
     setTextoTarea(e.target.value);
   };
   const handleEditTask = async (tarea: any) => {
-    tarea.nombre = textoTarea;
+    const updatedTask = { ...tarea };
+    updatedTask.nombre = textoTarea;
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
-    await EditTask(tarea);
+    await EditTask(updatedTask);
   };
   const removeTask = async (id: any) => {
-    const res = await deleteTask(proyectoactivo._id, id);
-    console.log(res);
+    await deleteTask(currentproyect._id, id);
+    const restasks = await getTask(currentproyect._id);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));
-    getTask(proyectoactivo._id);
+    dispatch(setTareasProyecto(restasks.data));
   };
 
   const changeTaskStatus = async (tarea: any) => {
-    if (tarea.estado) {
-      tarea.estado = false;
-    } else {
-      tarea.estado = true;
-    }
     await EditTask(tarea);
     dispatch(setIsHighlighted(""));
     dispatch(setBgUi(false));

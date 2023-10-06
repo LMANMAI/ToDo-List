@@ -1,7 +1,7 @@
 import instance from "../config/axios";
+import getTask from "./getTask";
 
 const EditTask = async (tarea: any) => {
-  console.log(`/task/${tarea._id}`);
   try {
     const { data, status } = await instance.put(`/task/${tarea._id}`, tarea);
     return { data, status };
