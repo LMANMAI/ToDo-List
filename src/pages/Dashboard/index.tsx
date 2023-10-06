@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Container, SideBar } from "./auxiliars";
-//import ProyectoContext from "../../context/proyects/proyectoContext";
 import { DashboardContainer } from "./styles";
 import { authentication } from "../../services";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
+import { setCurrentProyect } from "../../redux/slices/proyects";
 const DashboardPage = () => {
-  // const proyectoContext = useContext(ProyectoContext);
-  //const { mensaje, proyectoActual } = proyectoContext;
-
+  const dispatch = useDispatch();
   const panelnuevoproyecto = useSelector(
     (state: RootState) => state.ui.panelnuevoproyecto
   );
@@ -19,18 +17,15 @@ const DashboardPage = () => {
     (state: RootState) => state.ui.panelterminados
   );
 
-  // useEffect(() => {
-  //   const handleAuth = async () => {
-  //     await authentication();
-  //     if (mensaje) {
-  //       // mostrarAlerta(mensaje.msg, mensaje.categoria);
-  //     }
-  //     if (panelnuevoproyecto || panelproyectos || panelterminados) {
-  //       proyectoActual(null);
-  //     }
-  //   };
-  //   handleAuth();
-  // }, [mensaje]);
+  useEffect(() => {
+    const handleAuth = async () => {
+      await authentication();
+    };
+    if (panelnuevoproyecto || panelproyectos || panelterminados) {
+      dispatch(setCurrentProyect(null));
+    }
+    handleAuth();
+  }, []);
   return (
     <DashboardContainer>
       <SideBar />

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsChevronLeft, BsGear } from "react-icons/bs";
 import { FormTask, TaskList } from "./auxiliars";
 import { FormTaskContainer, FormConfigMenu } from "./styles";
@@ -7,17 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
 import { setTareasProyecto } from "../../../redux/slices/task";
 import { setCurrentProyect } from "../../../redux/slices/proyects";
-import { getTask, getOneProyect } from "../../../services";
+import { getTask, getOneProyect, deleteProyect } from "../../../services";
 import { useParams } from "react-router-dom";
 import EditProyect from "../../../services/editProyect";
 
-const Task = (tarea: any) => {
+const Task = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  //const { terminarProyecto, eliminarProyecto } = useContext(ProyectoContext);
-
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const bg = useSelector((state: RootState) => state.ui.editmode);
+  const bg_position = useSelector((state: RootState) => state.ui.bg);
   const currentproyect = useSelector(
     (state: RootState) => state.proyects.currentproyect
   );
@@ -25,14 +24,12 @@ const Task = (tarea: any) => {
     (state: RootState) => state.task.tareasproyecto
   );
   const [proyectname, setProyectName] = useState<string>("");
+  const [msg, setMsg] = useState<string>("");
 
   useEffect(() => {
     getTasks(id);
   }, [id]);
 
-  const handleDelteTask = (id: any) => {
-    //eliminarProyecto(id);
-  };
   const getTasks = async (id: any) => {
     const resProyect = await getOneProyect(id);
     const res = await getTask(id);
@@ -41,7 +38,6 @@ const Task = (tarea: any) => {
     }
     if (res.data) {
       dispatch(setTareasProyecto(res.data));
-      //setTasks();
     }
     dispatch(setCurrentProyect(resProyect.data));
   };
@@ -54,9 +50,9 @@ const Task = (tarea: any) => {
     dispatch(setCurrentProyect(updatedProyecto));
   };
 
-  const handleEditMode = () => {
-    dispatch(setBgUi(true));
-    dispatch(setEditMode(true));
+  const handleModalAnimation = (bgui: boolean, editmode: boolean) => {
+    dispatch(setBgUi(bgui));
+    dispatch(setEditMode(editmode));
   };
 
   const handleEndCurrentProyect = async (currentProyect: any) => {
@@ -66,7 +62,21 @@ const Task = (tarea: any) => {
     if (res.status === 200) {
       window.history.back();
     }
-    console.log(res);
+  };
+
+  const handleDeleteProyect = async (proyecto: any) => {
+    const res = await deleteProyect(proyecto);
+    if (res.status === 200) {
+      window.history.back();
+    }
+  };
+
+  const handleEditProyect = async (currentproyect: any) => {
+    dispatch(setBgUi(false));
+    dispatch(setEditMode(false));
+    const updatedCurrentProyect = { ...currentproyect };
+    updatedCurrentProyect.nombre = proyectname;
+    await EditProyect(updatedCurrentProyect);
   };
   return (
     <FormTaskContainer
@@ -100,10 +110,7 @@ const Task = (tarea: any) => {
             <button
               className={`edit__mode_button ${bg ? "btn_edit" : ""}`}
               onClick={() => {
-                dispatch(setBgUi(false));
-                dispatch(setEditMode(false));
-
-                //  terminarProyecto(currentproyect);
+                handleEditProyect(currentproyect);
               }}
               title="Guardar cambios en la edición"
             >
@@ -123,7 +130,7 @@ const Task = (tarea: any) => {
             <FormConfigMenu openmenu={openmenu}>
               <li
                 onClick={() => {
-                  handleEditMode();
+                  handleModalAnimation(true, true);
                 }}
               >
                 Cambiar nombre del proyecto
@@ -131,7 +138,9 @@ const Task = (tarea: any) => {
               <li onClick={() => {}}>Agregar descripción</li>
               <li
                 onClick={() => {
-                  handleDelteTask(tarea._id);
+                  setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
+                  historial de proyectos?`);
+                  handleModalAnimation(true, true);
                 }}
               >
                 Eliminar proyecto
@@ -150,6 +159,32 @@ const Task = (tarea: any) => {
         <FormTask />
       </div>
       <TaskList tareasproyecto={tareasproyecto} />
+
+      <div
+        className={`modal__finishedproyects ${
+          bg_position ? "hightlight" : "hidden"
+        }`}
+      >
+        <div>
+          <p>{msg}</p>
+          <div className="button__finishedcontainerbuttons">
+            <button
+              className="cancelbutton"
+              title="Cerrar ventana"
+              onClick={() => handleModalAnimation(false, false)}
+            >
+              Cancelar
+            </button>
+            <button
+              className="actionbutton"
+              title="Eliminar proyecto"
+              onClick={() => handleDeleteProyect(currentproyect)}
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
     </FormTaskContainer>
   );
 };

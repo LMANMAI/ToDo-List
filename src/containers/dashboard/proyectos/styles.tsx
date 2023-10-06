@@ -59,6 +59,7 @@ export const LisContainer = styled.ul`
     li {
       display: flex;
       justify-content: center;
+      max-width: 400px;
     }
   }
 `;

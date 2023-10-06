@@ -151,6 +151,63 @@ export const FormTaskContainer = styled.div`
     background: white;
     color: #333;
   }
+
+  .modal__finishedproyects {
+    height: 200px;
+    width: 350px;
+    background-color: #fff;
+    .button__finishedcontainerbuttons {
+      position: relative;
+      bottom: -60px;
+      button {
+        cursor: pointer;
+        margin: 0px 5px;
+        padding: 5px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        transition: all 250ms ease;
+      }
+      .cancelbutton {
+        color: #3e7ec3;
+        background: transparent;
+        border: 0.5px solid;
+        font-weight: bold;
+        &: hover {
+          color: white;
+          background: #27527f;
+        }
+      }
+      .actionbutton {
+        color: white;
+        background: #3e7ec3;
+        &:hover {
+          background: #27527f;
+        }
+      }
+    }
+  }
+  .hightlight {
+    position: absolute;
+    z-index: 2 !important;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 1;
+    display: flex;
+  }
+  .hidden {
+    opacity: 0;
+    display: none;
+  }
 `;
 export const FormConfigMenu = styled.ul<IFormconfigmenu>`
   position: absolute;

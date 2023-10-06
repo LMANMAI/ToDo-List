@@ -198,6 +198,7 @@ export const BackgroundUI = styled.div<IBackground>`
   backdrop-filter: blur(5px);
   opacity: ${(props) => (props.bg_position ? "1" : "0")};
   z-index: ${(props) => (props.bg_position ? "1" : "-1")};
+  display: ${(props) => (props.bg_position ? "block" : "none")};
 `;
 interface ITask {
   isHighlighted?: string;

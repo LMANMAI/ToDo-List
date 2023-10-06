@@ -4,6 +4,63 @@ export const EndProyectsContainer = styled.div`
   padding: 1rem 0.5rem;
   height: 100%;
   z-index: 1;
+  position: relative;
+  .modal__finishedproyects {
+    height: 200px;
+    width: 350px;
+    background-color: #fff;
+    .button__finishedcontainerbuttons {
+      position: relative;
+      bottom: -60px;
+      button {
+        cursor: pointer;
+        margin: 0px 5px;
+        padding: 5px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        transition: all 250ms ease;
+      }
+      .cancelbutton {
+        color: #3e7ec3;
+        background: transparent;
+        border: 0.5px solid;
+        font-weight: bold;
+        &: hover {
+          color: white;
+          background: #27527f;
+        }
+      }
+      .actionbutton {
+        color: white;
+        background: #3e7ec3;
+        &:hover {
+          background: #27527f;
+        }
+      }
+    }
+  }
+  .hightlight {
+    position: absolute;
+    z-index: 2 !important;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 1;
+    display: flex;
+  }
+  .hidden {
+    opacity: 0;
+    display: none;
+  }
 `;
 export const List = styled.ul`
   min-height: 50vh;
@@ -24,6 +81,7 @@ export const Item = styled.li`
   border-radius: 5px;
   color: white;
   height: 150px;
+  position: relative;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.14),
     0px 1px 10px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px -1px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
@@ -42,5 +100,11 @@ export const EliminarButton = styled.button`
   outline: none;
   padding: 5px;
   margin: 5px 0;
-  border-radius: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: white;
+  background: #33333394;
 `;
