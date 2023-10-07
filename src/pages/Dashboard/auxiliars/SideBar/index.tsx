@@ -12,12 +12,7 @@ import { SideBarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import {
-  setPanelDashboard,
-  movePanelNuevoProyecto,
-  movePanelProyectos,
-  movePanelProyectosTerminados,
-} from "../../../../redux/slices/ui";
+import { setPanelDashboard } from "../../../../redux/slices/ui";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -40,19 +35,16 @@ const SideBar = () => {
       path: "newproyects",
       name: "Crear proyecto",
       icon: <BsFolderPlus />,
-      function: dispatch(movePanelNuevoProyecto),
     },
     {
       path: "proyects",
       name: "Mis proyectos",
       icon: <BsFolder />,
-      function: dispatch(movePanelProyectos),
     },
     {
       path: "finishedproyectos",
       name: "Proyectos terminados",
       icon: <BsFolderCheck />,
-      function: dispatch(movePanelProyectosTerminados),
     },
   ];
 

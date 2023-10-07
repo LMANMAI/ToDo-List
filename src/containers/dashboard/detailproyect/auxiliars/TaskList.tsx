@@ -9,6 +9,7 @@ import {
   setBgUi,
   setIsHighlighted,
   setEditMode,
+  setDeleteMode,
 } from "../../../../redux/slices/ui";
 import { EditTask, getTask } from "../../../../services";
 import { setTareasProyecto } from "../../../../redux/slices/task";
@@ -138,6 +139,7 @@ const TaskList = ({ tareasproyecto }: any) => {
           dispatch(setBgUi(false));
           dispatch(setEditMode(false));
           dispatch(setIsHighlighted(""));
+          dispatch(setDeleteMode(false));
         }}
       />
     </ListadoTareas>

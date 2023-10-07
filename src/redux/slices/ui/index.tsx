@@ -6,10 +6,8 @@ const initialState = {
   openmenu: false,
   editmode: false,
   panel: false,
-  panelnuevoproyecto: false,
-  panelproyectos: false,
-  panelterminados: false,
   panelDashboard: false,
+  deletemode: false,
 };
 
 const uiSlice = createSlice({
@@ -30,33 +28,13 @@ const uiSlice = createSlice({
     },
     movePanelAuth: (state) => {
       state.panel = !state.panel;
-      state.panelnuevoproyecto = false;
-      state.panelproyectos = false;
-      state.panelterminados = false;
     },
-    movePanelNuevoProyecto: (state) => {
-      state.panelnuevoproyecto = !state.panelnuevoproyecto;
-      state.panelproyectos = false;
-      state.panelterminados = false;
-    },
-    movePanelProyectos: (state) => {
-      state.panelnuevoproyecto = false;
-      state.panelproyectos = !state.panelproyectos;
-      state.panelterminados = false;
-    },
-    movePanelProyectosTerminados: (state) => {
-      state.panelnuevoproyecto = false;
-      state.panelproyectos = false;
-      state.panelterminados = !state.panelterminados;
-    },
-    allFalse: (state) => {
-      state.panel = false;
-      state.panelnuevoproyecto = false;
-      state.panelproyectos = false;
-      state.panelterminados = false;
-    },
+
     setPanelDashboard: (state, action: PayloadAction<boolean>) => {
       state.panelDashboard = action.payload;
+    },
+    setDeleteMode: (state, action: PayloadAction<boolean>) => {
+      state.deletemode = action.payload;
     },
   },
 });
@@ -67,11 +45,8 @@ export const {
   setOpenMenu,
   setEditMode,
   movePanelAuth,
-  movePanelNuevoProyecto,
-  movePanelProyectos,
-  movePanelProyectosTerminados,
-  allFalse,
   setPanelDashboard,
+  setDeleteMode,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

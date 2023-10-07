@@ -4,7 +4,12 @@ import { FormTask, TaskList } from "./auxiliars";
 import { FormTaskContainer, FormConfigMenu } from "./styles";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenMenu, setBgUi, setEditMode } from "../../../redux/slices/ui";
+import {
+  setOpenMenu,
+  setBgUi,
+  setEditMode,
+  setDeleteMode,
+} from "../../../redux/slices/ui";
 import { setTareasProyecto } from "../../../redux/slices/task";
 import { setCurrentProyect } from "../../../redux/slices/proyects";
 import { getTask, getOneProyect, deleteProyect } from "../../../services";
@@ -17,6 +22,8 @@ const Task = () => {
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const bg = useSelector((state: RootState) => state.ui.editmode);
   const bg_position = useSelector((state: RootState) => state.ui.bg);
+
+  const deletemode = useSelector((state: RootState) => state.ui.deletemode);
   const currentproyect = useSelector(
     (state: RootState) => state.proyects.currentproyect
   );
@@ -50,9 +57,9 @@ const Task = () => {
     dispatch(setCurrentProyect(updatedProyecto));
   };
 
-  const handleModalAnimation = (bgui: boolean, editmode: boolean) => {
+  const handleModalAnimation = (bgui: boolean) => {
     dispatch(setBgUi(bgui));
-    dispatch(setEditMode(editmode));
+    //dispatch(setEditMode(editmode));
   };
 
   const handleEndCurrentProyect = async (currentProyect: any) => {
@@ -130,7 +137,8 @@ const Task = () => {
             <FormConfigMenu openmenu={openmenu}>
               <li
                 onClick={() => {
-                  handleModalAnimation(true, true);
+                  handleModalAnimation(true);
+                  dispatch(setEditMode(true));
                 }}
               >
                 Cambiar nombre del proyecto
@@ -140,7 +148,8 @@ const Task = () => {
                 onClick={() => {
                   setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
                   historial de proyectos?`);
-                  handleModalAnimation(true, true);
+                  handleModalAnimation(true);
+                  dispatch(setDeleteMode(true));
                 }}
               >
                 Eliminar proyecto
@@ -162,7 +171,7 @@ const Task = () => {
 
       <div
         className={`modal__finishedproyects ${
-          bg_position ? "hightlight" : "hidden"
+          deletemode ? "hightlight" : "hidden"
         }`}
       >
         <div>
@@ -171,7 +180,10 @@ const Task = () => {
             <button
               className="cancelbutton"
               title="Cerrar ventana"
-              onClick={() => handleModalAnimation(false, false)}
+              onClick={() => {
+                handleModalAnimation(false);
+                dispatch(setDeleteMode(false));
+              }}
             >
               Cancelar
             </button>
