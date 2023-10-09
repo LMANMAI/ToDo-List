@@ -37,6 +37,7 @@ const Proyect = (proyecto: any) => {
 };
 
 const ProyectList = () => {
+  const [load, setLoad] = useState<boolean>(false);
   const proyects = useSelector(
     (state: RootState) => state.proyects.activeproyects
   );
@@ -44,8 +45,7 @@ const ProyectList = () => {
   const handleGetProyects = async () => {
     const request = await getProyects();
     if (request.status === 200) {
-      console.log(request.data);
-
+      setLoad(false);
       dispatch(
         setActiveProyects(
           request.data.filter((item: any) => item.estado === false)
@@ -59,20 +59,29 @@ const ProyectList = () => {
     }
   };
   useEffect(() => {
+    setLoad(true);
     handleGetProyects();
   }, []);
 
   return (
     <ProyectListContainer>
-      {proyects.length === 0 ? (
-        <p className="object_list">Todavia no creaste ningun proyecto!</p>
-      ) : (
-        <LisContainer>
-          {proyects.map((proyecto: any) => (
-            <Proyect key={proyecto._id} proyecto={proyecto} />
-          ))}
-        </LisContainer>
-      )}
+      <LisContainer>
+        {load ? (
+          <>
+            <div className="skeleton-box"></div>
+            <div className="skeleton-box"></div>
+            <div className="skeleton-box"></div>
+          </>
+        ) : proyects.length === 0 ? (
+          <p className="object_list">Todavia no creaste ningun proyecto!</p>
+        ) : (
+          <>
+            {proyects.map((proyecto: any) => (
+              <Proyect key={proyecto._id} proyecto={proyecto} />
+            ))}
+          </>
+        )}
+      </LisContainer>
     </ProyectListContainer>
   );
 };

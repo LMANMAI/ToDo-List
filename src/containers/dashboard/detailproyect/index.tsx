@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsChevronLeft, BsGear } from "react-icons/bs";
 import { FormTask, TaskList } from "./auxiliars";
-import { FormTaskContainer, FormConfigMenu } from "./styles";
+import { FormTaskContainer, FormConfigMenu, SkeletonContainer } from "./styles";
 import { RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,10 +19,9 @@ import EditProyect from "../../../services/editProyect";
 const Task = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const openmenu = useSelector((state: RootState) => state.ui.openmenu);
   const bg = useSelector((state: RootState) => state.ui.editmode);
-  const bg_position = useSelector((state: RootState) => state.ui.bg);
-
   const deletemode = useSelector((state: RootState) => state.ui.deletemode);
   const currentproyect = useSelector(
     (state: RootState) => state.proyects.currentproyect
@@ -32,11 +31,18 @@ const Task = () => {
   );
   const [proyectname, setProyectName] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
+  const [modalmode, setModalMode] = useState<boolean>(false);
+  const [load, setLoad] = useState<boolean>(false);
 
   useEffect(() => {
     getTasks(id);
   }, [id]);
 
+  useEffect(() => {
+    handleModalAnimation(false);
+    dispatch(setDeleteMode(false));
+    setModalMode(false);
+  }, []);
   const getTasks = async (id: any) => {
     const resProyect = await getOneProyect(id);
     const res = await getTask(id);
@@ -45,6 +51,10 @@ const Task = () => {
     }
     if (res.data) {
       dispatch(setTareasProyecto(res.data));
+    }
+
+    if (res.data && resProyect.data) {
+      setLoad(true);
     }
     dispatch(setCurrentProyect(resProyect.data));
   };
@@ -59,7 +69,6 @@ const Task = () => {
 
   const handleModalAnimation = (bgui: boolean) => {
     dispatch(setBgUi(bgui));
-    //dispatch(setEditMode(editmode));
   };
 
   const handleEndCurrentProyect = async (currentProyect: any) => {
@@ -68,6 +77,7 @@ const Task = () => {
     const res = await EditProyect(updatedCurrentProyect);
     if (res.status === 200) {
       window.history.back();
+      dispatch(setDeleteMode(false));
     }
   };
 
@@ -75,6 +85,7 @@ const Task = () => {
     const res = await deleteProyect(proyecto);
     if (res.status === 200) {
       window.history.back();
+      dispatch(setDeleteMode(false));
     }
   };
 
@@ -86,118 +97,149 @@ const Task = () => {
     await EditProyect(updatedCurrentProyect);
   };
   return (
-    <FormTaskContainer
-      onClick={() => {
-        if (openmenu) {
-          dispatch(setOpenMenu(false));
-        }
-      }}
-    >
-      <div className="form__task">
-        <div className="form__task_header">
-          <button
-            title="Regresar al menu anterior."
-            className="form__task_btn"
-            onClick={() => {
-              window.history.back();
-            }}
-          >
-            <BsChevronLeft />
-          </button>
-          <h3 className="formt__task_title">
-            <input
-              type="text"
-              name="nombre"
-              id="input__edit"
-              value={proyectname}
-              onChange={(e) => handleChange(e)}
-              disabled={!bg}
-              className={`form__input ${bg ? "edit__mode" : ""}`}
-            />
-            <button
-              className={`edit__mode_button ${bg ? "btn_edit" : ""}`}
-              onClick={() => {
-                handleEditProyect(currentproyect);
-              }}
-              title="Guardar cambios en la edición"
-            >
-              Guardar cambios
-            </button>
-          </h3>
-          <div style={{ position: "relative" }}>
-            <button
-              title="Opciones del proyecto."
-              className={`form__task_btn options ${openmenu ? "picked" : ""}`}
-              onClick={() => {
-                dispatch(setOpenMenu(!openmenu));
-              }}
-            >
-              <BsGear />
-            </button>
-            <FormConfigMenu openmenu={openmenu}>
-              <li
+    <>
+      {!load ? (
+        <SkeletonContainer>
+          <div className="skeleton-box header"></div>
+          <div className="skeleton-box form">
+            <div className="skeleton-box"></div>
+            <div className="skeleton-box"></div>
+            <div className="skeleton-box"></div>
+          </div>
+          <div className="skeleton-box "></div>
+          <div className="skeleton-box list"></div>
+        </SkeletonContainer>
+      ) : (
+        <FormTaskContainer
+          onClick={() => {
+            if (openmenu) {
+              dispatch(setOpenMenu(false));
+            }
+          }}
+        >
+          <div className="form__task">
+            <div className="form__task_header">
+              <button
+                title="Regresar al menu anterior."
+                className="form__task_btn"
                 onClick={() => {
-                  handleModalAnimation(true);
-                  dispatch(setEditMode(true));
+                  window.history.back();
                 }}
               >
-                Cambiar nombre del proyecto
-              </li>
-              <li onClick={() => {}}>Agregar descripción</li>
-              <li
-                onClick={() => {
-                  setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
+                <BsChevronLeft />
+              </button>
+              <h3 className="formt__task_title">
+                <input
+                  type="text"
+                  name="nombre"
+                  id="input__edit"
+                  value={proyectname}
+                  onChange={(e) => handleChange(e)}
+                  disabled={!bg}
+                  className={`form__input ${bg ? "edit__mode" : ""}`}
+                />
+                <button
+                  className={`edit__mode_button ${bg ? "btn_edit" : ""}`}
+                  onClick={() => {
+                    handleEditProyect(currentproyect);
+                  }}
+                  title="Guardar cambios en la edición"
+                >
+                  Guardar cambios
+                </button>
+              </h3>
+              <div style={{ position: "relative" }}>
+                <button
+                  title="Opciones del proyecto."
+                  className={`form__task_btn options ${
+                    openmenu ? "picked" : ""
+                  }`}
+                  onClick={() => {
+                    dispatch(setOpenMenu(!openmenu));
+                  }}
+                >
+                  <BsGear />
+                </button>
+                <FormConfigMenu openmenu={openmenu}>
+                  <li
+                    onClick={() => {
+                      handleModalAnimation(true);
+                      dispatch(setEditMode(true));
+                    }}
+                  >
+                    Cambiar nombre del proyecto
+                  </li>
+                  <li onClick={() => {}}>Agregar descripción</li>
+                  <li
+                    onClick={() => {
+                      setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
                   historial de proyectos?`);
-                  handleModalAnimation(true);
-                  dispatch(setDeleteMode(true));
-                }}
-              >
-                Eliminar proyecto
-              </li>
+                      handleModalAnimation(true);
+                      dispatch(setDeleteMode(true));
+                      setModalMode(true);
+                    }}
+                  >
+                    Eliminar proyecto
+                  </li>
 
-              <li
-                onClick={() => {
-                  handleEndCurrentProyect(currentproyect);
-                }}
-              >
-                Finalizar proyecto
-              </li>
-            </FormConfigMenu>
+                  <li
+                    onClick={() => {
+                      setMsg(`¿Esta seguro que desea finalizar el proyecto?`);
+                      handleModalAnimation(true);
+                      dispatch(setDeleteMode(true));
+                      setModalMode(false);
+                    }}
+                  >
+                    Finalizar proyecto
+                  </li>
+                </FormConfigMenu>
+              </div>
+            </div>
+            <FormTask />
           </div>
-        </div>
-        <FormTask />
-      </div>
-      <TaskList tareasproyecto={tareasproyecto} />
+          <TaskList tareasproyecto={tareasproyecto} />
 
-      <div
-        className={`modal__finishedproyects ${
-          deletemode ? "hightlight" : "hidden"
-        }`}
-      >
-        <div>
-          <p>{msg}</p>
-          <div className="button__finishedcontainerbuttons">
-            <button
-              className="cancelbutton"
-              title="Cerrar ventana"
-              onClick={() => {
-                handleModalAnimation(false);
-                dispatch(setDeleteMode(false));
-              }}
-            >
-              Cancelar
-            </button>
-            <button
-              className="actionbutton"
-              title="Eliminar proyecto"
-              onClick={() => handleDeleteProyect(currentproyect)}
-            >
-              Eliminar
-            </button>
+          <div
+            className={`modal__finishedproyects ${
+              deletemode ? "hightlight" : "hidden"
+            }`}
+          >
+            <div>
+              <p>{msg}</p>
+              <div className="button__finishedcontainerbuttons">
+                <button
+                  className="cancelbutton"
+                  title="Cerrar ventana"
+                  onClick={() => {
+                    handleModalAnimation(false);
+                    dispatch(setDeleteMode(false));
+                  }}
+                >
+                  Cancelar
+                </button>
+                {modalmode ? (
+                  <button
+                    className="actionbutton"
+                    title="Eliminar proyecto"
+                    onClick={() => handleDeleteProyect(currentproyect)}
+                  >
+                    Eliminar
+                  </button>
+                ) : (
+                  <button
+                    className="actionbutton"
+                    title="Eliminar proyecto"
+                    onClick={() => handleEndCurrentProyect(currentproyect)}
+                  >
+                    Finalizar
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </FormTaskContainer>
+        </FormTaskContainer>
+      )}
+    </>
   );
 };
 

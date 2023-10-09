@@ -37,6 +37,12 @@ export const EndProyectsContainer = styled.div`
         &:hover {
           background: #27527f;
         }
+        &:disabled {
+          background-color: #ccc;
+          color: #666;
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
       }
     }
   }
@@ -60,6 +66,26 @@ export const EndProyectsContainer = styled.div`
   .hidden {
     opacity: 0;
     display: none;
+  }
+
+  .skeleton-box {
+    width: 100%;
+    height: 150px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    animation: loading 1.5s infinite;
+
+    @keyframes loading {
+      0% {
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0.6;
+      }
+    }
   }
 `;
 export const List = styled.ul`

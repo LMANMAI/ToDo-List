@@ -11,6 +11,7 @@ export const FormTaskContainer = styled.div`
     align-items: center;
     gap: 10px;
     flex-direction: column;
+    max-width: 1000px;
   }
   .input__container {
     position: relative;
@@ -127,6 +128,7 @@ export const ListadoTareas = styled.div`
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 0px;
+    min-height: 35vh;
     h3 {
       text-align: center;
       color: #333;

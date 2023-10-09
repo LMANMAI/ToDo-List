@@ -9,9 +9,16 @@ interface IText {
 export const NewProyectContainer = styled.div<INewProyect>`
   height: 100%;
   width: 100%;
-  .newproyect__form {
-    padding: 15px 30px;
+  .formt__task_title {
+    padding: 10px 15px;
+    margin: 0px 10px;
+    background: #3e7ec3;
+    color: white;
+    letter-spacing: 1.02px;
+  }
 
+  .newproyect__form {
+    padding: 15px;
     display: flex;
     gap: 15px;
     justify-content: center;

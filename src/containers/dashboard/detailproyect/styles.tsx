@@ -231,3 +231,45 @@ export const FormConfigMenu = styled.ul<IFormconfigmenu>`
     }
   }
 `;
+
+export const SkeletonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90vw;
+  padding: 25px;
+  .skeleton-box {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    animation: loading 1.5s infinite;
+  }
+  .header {
+    height: 40px;
+  }
+  .form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    height: 50px;
+    .skeleton-box {
+      height: 40px;
+    }
+  }
+  .list {
+    height: 300px;
+  }
+  @keyframes loading {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+`;

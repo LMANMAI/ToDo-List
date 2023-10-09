@@ -59,8 +59,21 @@ const FormTask = () => {
       proyecto: "",
       estado: "borrador",
     });
+    const selectElement = document.getElementById(
+      "form__select"
+    ) as HTMLSelectElement | null;
+    if (selectElement) {
+      selectElement.value = "";
+    }
   };
 
+  const handleSelectChange = (event: any) => {
+    const nuevoEstado = event.target.value;
+    setTarea({
+      ...tarea,
+      estado: nuevoEstado,
+    });
+  };
   return (
     <FormTaskContainer>
       <div className="form_task_container">
@@ -93,11 +106,16 @@ const FormTask = () => {
         </div>
 
         <div className="content">
-          <select name="" id="form__select" className="form__select content">
+          <select
+            name=""
+            id="form__select"
+            className="form__select content"
+            onChange={handleSelectChange}
+          >
             <option value="">Elige el estado de la tarea</option>
             <option value="borrador">Borrador</option>
-            <option value="curso">En curso</option>
-            <option value="terminado">Terminado</option>
+            <option value="pendiente">En curso</option>
+            <option value="completa">Terminado</option>
           </select>
         </div>
         <ButtonContainer className="form__btn_container">

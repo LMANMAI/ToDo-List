@@ -6,6 +6,26 @@ export const ProyectListContainer = styled.div`
   justify-content: center;
   display: flex;
   z-index: 3;
+  .skeleton-box {
+    min-width: 275px;
+    width: 100%;
+    height: 120px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
   @media (min-width: 768px) {
     padding: 0.5rem;
     width: 95%;

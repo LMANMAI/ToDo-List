@@ -105,11 +105,13 @@ const TaskList = ({ tareasproyecto }: any) => {
     }
   };
   return (
-    <ListadoTareas>
+    <>
       {tareasproyecto.length === 0 ? (
-        <p className="ntarea">No hay tareas, comienza creando una!</p>
+        <div>
+          <p className="ntarea">No hay tareas, comienza creando una!</p>
+        </div>
       ) : (
-        <>
+        <ListadoTareas>
           <ColumnaTareas
             titulo="Tareas en Borrador"
             tareas={tareasBorrador}
@@ -131,7 +133,7 @@ const TaskList = ({ tareasproyecto }: any) => {
             onDragOver={(e: any) => e.preventDefault()}
             onDrop={(e: any) => handleDrop(e, "completa")}
           />
-        </>
+        </ListadoTareas>
       )}
       <BackgroundUI
         bg_position={bg_position}
@@ -142,7 +144,7 @@ const TaskList = ({ tareasproyecto }: any) => {
           dispatch(setDeleteMode(false));
         }}
       />
-    </ListadoTareas>
+    </>
   );
 };
 

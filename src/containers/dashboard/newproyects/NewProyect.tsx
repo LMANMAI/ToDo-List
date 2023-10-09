@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NewProyectContainer, Input, Text } from "./styles";
 import { addProyect } from "../../../services";
+import { toast, ToastContainer } from "react-toastify";
 
 const NewProyect = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -22,15 +23,26 @@ const NewProyect = () => {
   const handleSaveProyects = async () => {
     const response = await addProyect(proyect);
     if (response.status === 200) {
+      toast.success("Proyecto guardado exitosamente", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      createProyect({
+        nombre: "",
+        desc: "",
+      });
+      setDisabled(true);
+    } else {
+      toast.error("Hubo un error al guardar el proyecto", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
     }
-    createProyect({
-      nombre: "",
-      desc: "",
-    });
   };
 
   return (
     <NewProyectContainer>
+      <h3 className="formt__task_title">Agregar un nuevo proyecto</h3>
       <div className="newproyect__form">
         <div className="input__container">
           <label htmlFor="name" className="newproyect__label">
@@ -76,6 +88,7 @@ const NewProyect = () => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </NewProyectContainer>
   );
 };

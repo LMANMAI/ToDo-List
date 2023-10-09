@@ -6,9 +6,44 @@ import { deleteProyect, getProyects } from "../../../services";
 import { setFinishedProyects } from "../../../redux/slices/proyects";
 import { setBgUi, setEditMode } from "../../../redux/slices/ui";
 import { BackgroundUI } from "../detailproyect/auxiliars/styles";
+
+interface IProyectEnd {
+  proyecto: any;
+  handleModalAnimation: Function;
+  setMsg: Function;
+  setcurrentproyect: Function;
+}
+const FinishProyect: React.FC<IProyectEnd> = ({
+  proyecto,
+  handleModalAnimation,
+  setMsg,
+  setcurrentproyect,
+}) => {
+  return (
+    <Item key={proyecto._id} className="proyecto_terminado">
+      <p>{proyecto.nombre}</p>
+      <EliminarButton
+        type="button"
+        className="btn btn_eliminar"
+        onClick={() => {
+          setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
+          historial de proyectos?`);
+          setcurrentproyect(proyecto);
+          handleModalAnimation(true, true);
+        }}
+      >
+        Borrar
+      </EliminarButton>
+    </Item>
+  );
+};
+
 const EndProyects = () => {
   const [currentproyect, setcurrentproyect] = useState<any>();
   const [msg, setMsg] = useState<string>("");
+  const [load, setLoad] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const proyects = useSelector(
     (state: RootState) => state.proyects.finishedpryects
   );
@@ -17,6 +52,7 @@ const EndProyects = () => {
   const handleGetProyects = async () => {
     const request = await getProyects();
     if (request.status === 200) {
+      setLoad(false);
       dispatch(
         setFinishedProyects(
           request.data.filter((item: any) => item.estado === true)
@@ -28,12 +64,13 @@ const EndProyects = () => {
     const res = await deleteProyect(proyecto);
     if (res.status === 200) {
       handleGetProyects();
-
       setMsg(
         "Proyecto eliminado correctamente (esta ventana se cerrara automaticamente)."
       );
+      setDisabled(true);
       setTimeout(() => {
         handleModalAnimation(false, false);
+        setDisabled(false);
       }, 3000);
     }
   };
@@ -42,32 +79,28 @@ const EndProyects = () => {
     dispatch(setEditMode(editmode));
   };
   useEffect(() => {
+    setLoad(true);
     handleGetProyects();
-    console.log(bg_position);
+    handleModalAnimation(false, false);
   }, []);
+
   return (
     <EndProyectsContainer>
       <List>
-        {proyects.length === 0 ? (
+        {load ? (
+          <div className="skeleton-box"></div>
+        ) : proyects.length === 0 ? (
           <Item>Todavia no terminaste ningun proyecto</Item>
-        ) : null}
-        {proyects.map((proyecto: any) => (
-          <Item key={proyecto._id} className="proyecto_terminado">
-            <p>{proyecto.nombre}</p>
-            <EliminarButton
-              type="button"
-              className="btn btn_eliminar"
-              onClick={() => {
-                setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
-                  historial de proyectos?`);
-                setcurrentproyect(proyecto);
-                handleModalAnimation(true, true);
-              }}
-            >
-              Borrar
-            </EliminarButton>
-          </Item>
-        ))}
+        ) : (
+          proyects.map((proyecto: any) => (
+            <FinishProyect
+              proyecto={proyecto}
+              handleModalAnimation={handleModalAnimation}
+              setMsg={setMsg}
+              setcurrentproyect={setcurrentproyect}
+            />
+          ))
+        )}
       </List>
       <BackgroundUI
         bg_position={bg_position}
@@ -95,6 +128,7 @@ const EndProyects = () => {
               className="actionbutton"
               title="Eliminar proyecto"
               onClick={() => handleDeleteProyect(currentproyect)}
+              disabled={disabled}
             >
               Eliminar
             </button>

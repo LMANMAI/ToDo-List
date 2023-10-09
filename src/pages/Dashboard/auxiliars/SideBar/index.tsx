@@ -12,7 +12,11 @@ import { SideBarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { setPanelDashboard } from "../../../../redux/slices/ui";
+import {
+  setBgUi,
+  setDeleteMode,
+  setPanelDashboard,
+} from "../../../../redux/slices/ui";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -97,7 +101,11 @@ const SideBar = () => {
           </div>
           <div
             className="button p8 link"
-            onClick={() => Exit()}
+            //onClick={() => Exit()}
+            onClick={() => {
+              alert("desde aca");
+              dispatch(setDeleteMode(true));
+            }}
             title="Cerrar sesión"
           >
             <div className="icon">
