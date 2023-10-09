@@ -73,7 +73,7 @@ const Login = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "warning"
       );
@@ -103,7 +103,7 @@ const Login = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "success"
       );
@@ -121,7 +121,7 @@ const Login = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "error"
       );

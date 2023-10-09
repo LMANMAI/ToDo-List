@@ -12,11 +12,8 @@ import { SideBarContainer } from "./styles";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import {
-  setBgUi,
-  setDeleteMode,
-  setPanelDashboard,
-} from "../../../../redux/slices/ui";
+import { setPanelDashboard } from "../../../../redux/slices/ui";
+import { toast } from "react-toastify";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -28,26 +25,36 @@ const SideBar = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   const Exit = () => {
+    toast("🚪 Saliendo de la cuenta.", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     setTimeout(() => {
       localStorage.removeItem("token");
-      window.location.reload();
-    }, 1000);
+      window.location.replace("/");
+    }, 3000);
   };
 
   const sideBarMenuItems = [
     {
-      path: "newproyects",
-      name: "Crear proyecto",
+      path: "newpanel",
+      name: "Crear panel",
       icon: <BsFolderPlus />,
     },
     {
-      path: "proyects",
-      name: "Mis proyectos",
+      path: "panel",
+      name: "Mis paneles",
       icon: <BsFolder />,
     },
     {
-      path: "finishedproyectos",
-      name: "Proyectos terminados",
+      path: "finishedpanel",
+      name: "Paneles terminados",
       icon: <BsFolderCheck />,
     },
   ];
@@ -101,11 +108,7 @@ const SideBar = () => {
           </div>
           <div
             className="button p8 link"
-            //onClick={() => Exit()}
-            onClick={() => {
-              alert("desde aca");
-              dispatch(setDeleteMode(true));
-            }}
+            onClick={() => Exit()}
             title="Cerrar sesión"
           >
             <div className="icon">

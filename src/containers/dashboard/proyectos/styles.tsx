@@ -116,6 +116,10 @@ export const ProyectObject = styled.li`
   .proyect__item {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    .proyect__task {
+      font-size: 14px;
+    }
   }
   &:hover {
     background: none;

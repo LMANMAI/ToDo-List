@@ -96,6 +96,8 @@ const Task = () => {
     updatedCurrentProyect.nombre = proyectname;
     await EditProyect(updatedCurrentProyect);
   };
+
+  console.log(currentproyect);
   return (
     <>
       {!load ? (
@@ -169,7 +171,11 @@ const Task = () => {
                   >
                     Cambiar nombre del proyecto
                   </li>
-                  <li onClick={() => {}}>Agregar descripción</li>
+                  {/* <li onClick={() => {}}>
+                    {currentproyect.desc.lentgh > 0
+                      ? "Cambiar descripción"
+                      : "Agregar descripción"}
+                  </li> */}
                   <li
                     onClick={() => {
                       setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del

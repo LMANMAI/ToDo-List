@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ProyectListContainer, LisContainer, ProyectObject } from "./styles";
 import { NavLink } from "react-router-dom";
-import { getProyects } from "../../../services";
+import { getProyects, getTask } from "../../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
@@ -11,25 +11,40 @@ import {
 } from "../../../redux/slices/proyects";
 
 const Proyect = (proyecto: any) => {
+  const [dataqty, setDataQty] = useState<number>(0);
   const dispatch = useDispatch();
   const handleClick = (proyecto: any) => {
     dispatch(setCurrentProyect(proyecto));
   };
-
+  const handleTaskQty = async () => {
+    const res = await getTask(proyecto.proyecto._id);
+    setDataQty(res.data.length);
+  };
+  useEffect(() => {
+    handleTaskQty();
+  }, [proyecto]);
   return (
     <ProyectObject>
       <NavLink
-        to={`/proyects/${proyecto.proyecto._id}`}
+        to={`/panel/${proyecto.proyecto._id}`}
         onClick={() => {
           handleClick(proyecto.proyecto);
         }}
         className="proyect__item"
       >
-        <p className="proyect__name">{proyecto.proyecto.nombre}</p>
-        <span className="proyect__task">Cantidad de tareas: 15</span>
-        <span className="proyect__date">
-          Creado el dia:{" "}
-          {new Date(proyecto.proyecto.creado).toLocaleDateString()}
+        <div>
+          <p className="proyect__name">{proyecto.proyecto.nombre}</p>
+
+          <span className="proyect__date">
+            Creado el dia:{" "}
+            {new Date(proyecto.proyecto.creado).toLocaleDateString()}
+          </span>
+        </div>
+
+        <span className="proyect__task">
+          {dataqty !== 0
+            ? `Cantidad de tareas: ${dataqty}.`
+            : "El panel no cuenta con tareas."}
         </span>
       </NavLink>
     </ProyectObject>

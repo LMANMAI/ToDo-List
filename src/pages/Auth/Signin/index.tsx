@@ -45,8 +45,7 @@ const SignIn = (props: any) => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setLoading(true);
     if (
       nombre.trim() === "" ||
@@ -64,7 +63,7 @@ const SignIn = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "warning"
       );
@@ -83,7 +82,7 @@ const SignIn = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "warning"
       );
@@ -102,7 +101,7 @@ const SignIn = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "warning"
       );
@@ -112,14 +111,16 @@ const SignIn = (props: any) => {
     const request = await registeruser(usern);
     if (request.status === 200) {
       setLoading(false);
-      dispatch(setAuthenticated(true));
-      dispatch(
-        setCurrentUser({
-          id: request.response._id,
-          name: request.response.nombre,
-          email: request.response.email,
-        })
-      );
+      setTimeout(() => {
+        dispatch(setAuthenticated(true));
+        dispatch(
+          setCurrentUser({
+            id: request.response._id,
+            name: request.response.nombre,
+            email: request.response.email,
+          })
+        );
+      }, 2000);
     } else {
       showNotification(
         request.mensaje?.msg,
@@ -131,7 +132,7 @@ const SignIn = (props: any) => {
           pauseOnHover: true,
           draggable: false,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         },
         "error"
       );
@@ -230,8 +231,8 @@ const SignIn = (props: any) => {
               type="button"
               value="Continuar"
               disabled={loading}
-              onClick={(e) => {
-                handleSubmit(e);
+              onClick={() => {
+                handleSubmit();
               }}
             />
           </div>

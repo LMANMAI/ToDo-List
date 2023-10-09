@@ -21,9 +21,10 @@ const NewProyect = () => {
   };
 
   const handleSaveProyects = async () => {
+    console.log(proyect);
     const response = await addProyect(proyect);
     if (response.status === 200) {
-      toast.success("Proyecto guardado exitosamente", {
+      toast.success("Panel guardado exitosamente", {
         position: "bottom-right",
         autoClose: 3000,
       });
@@ -33,7 +34,7 @@ const NewProyect = () => {
       });
       setDisabled(true);
     } else {
-      toast.error("Hubo un error al guardar el proyecto", {
+      toast.error("Hubo un error al guardar el panel", {
         position: "bottom-right",
         autoClose: 3000,
       });
@@ -42,11 +43,11 @@ const NewProyect = () => {
 
   return (
     <NewProyectContainer>
-      <h3 className="formt__task_title">Agregar un nuevo proyecto</h3>
+      <h3 className="formt__task_title">Agregar un nuevo panel</h3>
       <div className="newproyect__form">
         <div className="input__container">
           <label htmlFor="name" className="newproyect__label">
-            Nombre del proyecto
+            Nombre del panel
           </label>
 
           <Input
