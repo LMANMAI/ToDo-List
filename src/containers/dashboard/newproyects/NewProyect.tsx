@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NewProyectContainer, Input, Text } from "./styles";
 import { addProyect } from "../../../services";
 import { toast, ToastContainer } from "react-toastify";
-import OpenAI from "openai";
-
+import { sendMsgToOpenAI } from "../../../openai";
+import axios from "axios";
 const NewProyect = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [proyect, createProyect] = useState({
@@ -41,30 +41,24 @@ const NewProyect = () => {
       });
     }
   };
-  const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_KEY, // defaults to process.env["OPENAI_API_KEY"]
-  });
 
   const obtenerDescripcionConIA = async () => {
     try {
-      // Envia una solicitud a la API de ChatGPT para generar la descripción
-      const chatCompletion = await openai.chat.completions.create({
-        messages: [{ role: "user", content: "Say this is a test" }],
-        model: "gpt-3.5-turbo",
-      });
-
-      console.log(chatCompletion.choices);
-
-      // La respuesta se encuentra en response.choices[0].message.content
-      // const descripcionGenerada = response.choices[0].message.content;
-
-      // Actualiza el estado con la descripción generada
-      // createProyect({
-      //   ...proyect,
-      //   desc: descripcionGenerada,
-      // });
+      const res = await axios.post(
+        "https://api.openai.com/v1/engines/davinci/completions",
+        {
+          promt: "hola",
+          max_tokens: 50,
+          temperature: 0.5,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: process.env.REACT_APP_OPENAI_KEY,
+          },
+        }
+      );
     } catch (error) {
-      console.error("Error al generar la descripción con IA:", error);
       toast.error("Hubo un error al generar la descripción con IA", {
         position: "bottom-right",
         autoClose: 3000,
@@ -115,7 +109,7 @@ const NewProyect = () => {
           <button
             className="newproyect__btn desc"
             title="Generar descripción con IA"
-            disabled={disabled}
+            disabled
             onClick={() => obtenerDescripcionConIA()}
           >
             Generar descripción
