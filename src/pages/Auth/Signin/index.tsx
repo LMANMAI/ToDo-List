@@ -238,7 +238,7 @@ const SignIn = (props: any) => {
           </div>
           <Content>
             <h3>¿Ya tienes una cuenta?</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>Ingresa a tu cuenta y continua trabajando en tus tareas. </p>
             <ButtonSec
               onClick={() => {
                 clearNotification();

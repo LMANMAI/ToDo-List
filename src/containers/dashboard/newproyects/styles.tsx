@@ -59,14 +59,17 @@ export const NewProyectContainer = styled.div<INewProyect>`
       cursor: pointer;
       border-radius: 5px;
       transition: all 250ms ease-in-out;
+
       &:disabled {
         background-color: #ccc;
         color: #999;
         cursor: not-allowed;
+        border: none;
         &:hover {
           background-color: #ccc;
           color: #999;
           cursor: not-allowed;
+          border: none;
         }
       }
     }

@@ -198,7 +198,9 @@ const Login = (props: any) => {
 
           <Content>
             <h3>¿Nuevo aqui?</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p>
+              Crea una cuenta y comienza a planificar tus tareas en los paneles.{" "}
+            </p>
             <ButtonSec
               onClick={() => {
                 clearNotification();
