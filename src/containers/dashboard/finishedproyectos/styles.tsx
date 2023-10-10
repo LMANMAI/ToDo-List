@@ -101,6 +101,28 @@ export const List = styled.ul`
   }
 `;
 
+export const EliminarButton = styled.button`
+  background-color: #f2f2f2;
+  border: none;
+  outline: none;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  background: #33333394;
+
+  &:hover + .menu__endpanel {
+    visibility: visible;
+  }
+  &:hover + .menu__endpanel,
+  li:hover + ul {
+    visibility: visible;
+  }
+`;
 export const Item = styled.li`
   background-color: #757575;
   padding: 1rem;
@@ -119,18 +141,24 @@ export const Item = styled.li`
     box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
       0px 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
-`;
-export const EliminarButton = styled.button`
-  background-color: #f2f2f2;
-  border: none;
-  outline: none;
-  padding: 5px;
-  margin: 5px 0;
-  border-radius: 5px;
-  cursor: pointer;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  color: white;
-  background: #33333394;
+
+  .menu__endpanel {
+    position: absolute;
+    right: -170px;
+    color: #eee;
+    background: rgba(0, 0, 0, 0.75);
+    //padding: 2px 5px;
+    top: 0px;
+    visibility: hidden;
+    &:hover {
+      visibility: visible;
+    }
+    li {
+      padding: 5px;
+      cursor: pointer;
+      &:hover {
+        background: #757575bd;
+      }
+    }
+  }
 `;

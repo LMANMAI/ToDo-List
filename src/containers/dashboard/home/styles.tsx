@@ -39,10 +39,10 @@ export const HomeContainer = styled.section`
     }
   }
 
-  @media (min-width: 680px) {
+  @media (min-width: 768px) {
     .home__content {
       width: 50%;
-      min-width: 600px;
+      min-width: 700px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;

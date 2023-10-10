@@ -9,6 +9,7 @@ const initialState = {
   panelDashboard: false,
   deletemode: false,
   logoutmode: false,
+  editdescmode: false,
 };
 
 const uiSlice = createSlice({
@@ -40,6 +41,9 @@ const uiSlice = createSlice({
     setLogoutStatus: (state, action: PayloadAction<boolean>) => {
       state.deletemode = action.payload;
     },
+    setEditDescMode: (state, action: PayloadAction<boolean>) => {
+      state.editdescmode = action.payload;
+    },
   },
 });
 
@@ -52,6 +56,7 @@ export const {
   setPanelDashboard,
   setDeleteMode,
   setLogoutStatus,
+  setEditDescMode,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

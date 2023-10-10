@@ -6,9 +6,12 @@ import {
   Input,
   Description,
   ButtonContainer,
+  InputDesc,
 } from "./styles";
 import { addTask, getTask } from "../../../../services";
 import { setTareasProyecto } from "../../../../redux/slices/task";
+import EditProyect from "../../../../services/editProyect";
+import { setBgUi, setEditDescMode } from "../../../../redux/slices/ui";
 
 const FormTask = () => {
   const dispatch = useDispatch();
@@ -16,13 +19,14 @@ const FormTask = () => {
     (state: RootState) => state.proyects.currentproyect
   );
   const tareaactual = useSelector((state: RootState) => state.task.tareaactual);
-
+  const editdescmode = useSelector((state: RootState) => state.ui.editdescmode);
   const [tarea, setTarea] = useState({
     nombre: "",
     proyecto: "",
     estado: "borrador",
   });
   const [errortarea, setErrorTarea] = useState<boolean>(false);
+  const [editedDesc, setEditedDesc] = useState<string>("");
   const { nombre } = tarea;
 
   useEffect(() => {
@@ -37,6 +41,11 @@ const FormTask = () => {
     }
   }, [tareaactual]);
 
+  useEffect(() => {
+    if (currentproyect && currentproyect.desc) {
+      setEditedDesc(currentproyect.desc);
+    }
+  }, [currentproyect]);
   const handleChange = (e: any) => {
     setErrorTarea(false);
     setTarea({
@@ -73,6 +82,15 @@ const FormTask = () => {
       ...tarea,
       estado: nuevoEstado,
     });
+  };
+
+  const handleEditProyect = async (currentproyect: any) => {
+    dispatch(setBgUi(false));
+    dispatch(setEditDescMode(false));
+    const updatedCurrentProyect = { ...currentproyect };
+    updatedCurrentProyect.desc = editedDesc;
+    console.log(updatedCurrentProyect);
+    await EditProyect(updatedCurrentProyect);
   };
   return (
     <FormTaskContainer>
@@ -129,13 +147,55 @@ const FormTask = () => {
         </ButtonContainer>
       </div>
       <Description>
-        {currentproyect && currentproyect.desc ? (
+        {currentproyect &&
+        currentproyect?.desc !== null &&
+        currentproyect?.desc ? (
           <div className="description">
             <h4>Descripcion de la tarea</h4>
-            <p>{currentproyect ? currentproyect.desc : " "}</p>
+            <InputDesc
+              editdescmode={editdescmode}
+              type="text"
+              name="desc"
+              value={editedDesc}
+              onChange={(e) => {
+                setEditedDesc(e.target.value);
+              }}
+            />
+            {editdescmode && (
+              <button
+                className="save__desc"
+                onClick={() => {
+                  handleEditProyect(currentproyect);
+                }}
+              >
+                Guardar
+              </button>
+            )}
           </div>
         ) : (
-          <p>No agregaste una descripcion</p>
+          <div className="description">
+            <p>No agregaste una descripcion</p>
+            <InputDesc
+              editdescmode={editdescmode}
+              type="text"
+              name="desc"
+              value={editedDesc}
+              onChange={(e) => {
+                setEditedDesc(e.target.value);
+              }}
+            />
+            {editdescmode && (
+              <button
+                className="save__desc"
+                onClick={() => {
+                  handleEditProyect(currentproyect);
+                  window.location.reload();
+                }}
+              >
+                Guardar
+              </button>
+            )}
+          </div>
         )}
       </Description>
     </FormTaskContainer>

@@ -6,34 +6,55 @@ import { deleteProyect, getProyects } from "../../../services";
 import { setFinishedProyects } from "../../../redux/slices/proyects";
 import { setBgUi, setEditMode } from "../../../redux/slices/ui";
 import { BackgroundUI } from "../detailproyect/auxiliars/styles";
-
+import { CiMenuKebab } from "react-icons/ci";
+import EditProyect from "../../../services/editProyect";
 interface IProyectEnd {
   proyecto: any;
   handleModalAnimation: Function;
   setMsg: Function;
   setcurrentproyect: Function;
+  setShowDeleteButton: Function;
 }
+
 const FinishProyect: React.FC<IProyectEnd> = ({
   proyecto,
   handleModalAnimation,
   setMsg,
   setcurrentproyect,
+  setShowDeleteButton,
 }) => {
   return (
     <Item key={proyecto._id} className="proyecto_terminado">
       <p>{proyecto.nombre}</p>
-      <EliminarButton
-        type="button"
-        className="btn btn_eliminar"
-        onClick={() => {
-          setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del
-          historial de proyectos?`);
-          setcurrentproyect(proyecto);
-          handleModalAnimation(true, true);
-        }}
-      >
-        Borrar
+      <EliminarButton type="button" className="btn btn_eliminar">
+        <CiMenuKebab />
       </EliminarButton>
+
+      <ul className="menu__endpanel">
+        <li
+          onClick={() => {
+            setMsg(`¿Esta seguro que desea eliminar completamente el panel del
+          historial de paneles finalizados?`);
+            setcurrentproyect(proyecto);
+            handleModalAnimation(true, true);
+            setShowDeleteButton(true);
+          }}
+        >
+          Eliminar panel
+        </li>
+        <li
+          onClick={() => {
+            setMsg(
+              `¿Esta seguro que desea regresar el panel a los que estan en curso?`
+            );
+            setcurrentproyect(proyecto);
+            handleModalAnimation(true, true);
+            setShowDeleteButton(false);
+          }}
+        >
+          Regresar a mis paneles
+        </li>
+      </ul>
     </Item>
   );
 };
@@ -43,6 +64,7 @@ const EndProyects = () => {
   const [msg, setMsg] = useState<string>("");
   const [load, setLoad] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(true);
 
   const proyects = useSelector(
     (state: RootState) => state.proyects.finishedpryects
@@ -74,10 +96,21 @@ const EndProyects = () => {
       }, 3000);
     }
   };
+
+  const handleRegresarProyecto = async (currentproyect: any) => {
+    const updatedCurrentProyect = { ...currentproyect };
+    updatedCurrentProyect.estado = false;
+    const res = await EditProyect(updatedCurrentProyect);
+    if (res.status === 200) {
+      window.location.replace("/panel");
+    }
+  };
+
   const handleModalAnimation = (bgui: boolean, editmode: boolean) => {
     dispatch(setBgUi(bgui));
     dispatch(setEditMode(editmode));
   };
+
   useEffect(() => {
     setLoad(true);
     handleGetProyects();
@@ -98,6 +131,7 @@ const EndProyects = () => {
               handleModalAnimation={handleModalAnimation}
               setMsg={setMsg}
               setcurrentproyect={setcurrentproyect}
+              setShowDeleteButton={setShowDeleteButton}
             />
           ))
         )}
@@ -126,11 +160,15 @@ const EndProyects = () => {
             </button>
             <button
               className="actionbutton"
-              title="Eliminar proyecto"
-              onClick={() => handleDeleteProyect(currentproyect)}
+              title={showDeleteButton ? "Eliminar panel" : "Regresar panel"}
+              onClick={() =>
+                showDeleteButton
+                  ? handleDeleteProyect(currentproyect)
+                  : handleRegresarProyecto(currentproyect)
+              }
               disabled={disabled}
             >
-              Eliminar
+              {showDeleteButton ? "Eliminar" : "Regresar"}
             </button>
           </div>
         </div>

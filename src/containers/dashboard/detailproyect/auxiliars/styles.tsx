@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 interface IBackground {
   bg_position?: boolean;
 }
+interface IEditDescMode {
+  editdescmode?: boolean;
+}
 export const FormTaskContainer = styled.div`
   padding: 0.5rem 0px;
   display: flex;
@@ -86,6 +89,7 @@ export const Description = styled.div`
   color: #333;
   border-radius: 5px;
   .description {
+    position: relative;
     h4 {
       margin: 5px 0px;
     }
@@ -94,8 +98,33 @@ export const Description = styled.div`
       padding-left: 15px;
     }
   }
-`;
 
+  .save__desc {
+    position: absolute;
+    z-index: 2;
+    bottom: -29px;
+    left: 0px;
+    padding: 2px 5px;
+    background: #ff7f00;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+`;
+export const InputDesc = styled.input<IEditDescMode>`
+  border: none;
+  outline: none;
+  font-size: 20px;
+  padding: 0px 10px;
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  width: 90%;
+  height: 100%;
+  z-index: ${(props) => (props.editdescmode ? "2" : "1")};
+  background: ${(props) => (props.editdescmode ? "white" : "transparent")};
+`;
 export const ListadoTareas = styled.div`
   margin: 0px auto;
   width: 100%;

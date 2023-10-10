@@ -9,6 +9,7 @@ import {
   setBgUi,
   setEditMode,
   setDeleteMode,
+  setEditDescMode,
 } from "../../../redux/slices/ui";
 import { setTareasProyecto } from "../../../redux/slices/task";
 import { setCurrentProyect } from "../../../redux/slices/proyects";
@@ -76,7 +77,7 @@ const Task = () => {
     updatedCurrentProyect.estado = true;
     const res = await EditProyect(updatedCurrentProyect);
     if (res.status === 200) {
-      window.history.back();
+      window.location.replace("/finishedpanel");
       dispatch(setDeleteMode(false));
     }
   };
@@ -97,7 +98,7 @@ const Task = () => {
     await EditProyect(updatedCurrentProyect);
   };
 
-  console.log(currentproyect);
+  console.log(currentproyect.desc);
   return (
     <>
       {!load ? (
@@ -171,11 +172,16 @@ const Task = () => {
                   >
                     Cambiar nombre del proyecto
                   </li>
-                  {/* <li onClick={() => {}}>
-                    {currentproyect.desc.lentgh > 0
+                  <li
+                    onClick={() => {
+                      dispatch(setEditDescMode(true));
+                      handleModalAnimation(true);
+                    }}
+                  >
+                    {currentproyect.desc != ""
                       ? "Cambiar descripción"
                       : "Agregar descripción"}
-                  </li> */}
+                  </li>
                   <li
                     onClick={() => {
                       setMsg(`¿Esta seguro que desea eliminar completamente el proyecto del

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ProyectoState {
-  currentproyect: any | null;
+  currentproyect: any | {};
   finishedpryects: any | [];
   activeproyects: any | [];
 }
 
 const initialState: ProyectoState = {
-  currentproyect: null,
+  currentproyect: {},
   activeproyects: [],
   finishedpryects: [],
 };
