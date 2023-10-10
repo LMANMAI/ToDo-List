@@ -86,7 +86,9 @@ const SideBar = () => {
           {sideBarMenuItems.map((item, index) => (
             <NavLink
               key={index}
-              className="button link"
+              className={`button link ${
+                item.path === window.location.pathname ? "active" : ""
+              }`}
               to={item.path}
               title={item.name}
             >

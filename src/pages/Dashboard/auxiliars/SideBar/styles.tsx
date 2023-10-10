@@ -41,7 +41,11 @@ export const SideBarContainer = styled.nav<ISideBar>`
       display: ${(props) => (props.width ? "block" : "none")};
     }
   }
-
+  .active {
+    background: white;
+    color: #3e7ec3;
+    border-right: 5px solid #c3833e;
+  }
   .icon,
   .link_text {
     font-size: 16px;
