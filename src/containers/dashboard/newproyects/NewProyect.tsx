@@ -108,7 +108,7 @@ const NewProyect = () => {
           </button>
           <button
             className="newproyect__btn desc"
-            title="Generar descripción con IA"
+            title="Generar descripción con IA(proximamente)"
             disabled
             onClick={() => obtenerDescripcionConIA()}
           >
