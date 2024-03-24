@@ -1,7 +1,6 @@
 import instance from "../config/axios";
 
 const deleteTask = async (proyect: any, id: string) => {
-  console.log(id);
   try {
     const { data, status } = await instance.delete(
       `/task/${id}?proyecto=${proyect}`

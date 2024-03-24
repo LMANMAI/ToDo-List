@@ -27,9 +27,7 @@ const Task = () => {
   const currentproyect = useSelector(
     (state: RootState) => state.proyects.currentproyect
   );
-  const tareasproyecto = useSelector(
-    (state: RootState) => state.task.tareasproyecto
-  );
+
   const [proyectname, setProyectName] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
   const [modalmode, setModalMode] = useState<boolean>(false);
@@ -44,6 +42,7 @@ const Task = () => {
     dispatch(setDeleteMode(false));
     setModalMode(false);
   }, []);
+
   const getTasks = async (id: any) => {
     const resProyect = await getOneProyect(id);
     const res = await getTask(id);
@@ -53,12 +52,12 @@ const Task = () => {
     if (res.data) {
       dispatch(setTareasProyecto(res.data));
     }
-
     if (res.data && resProyect.data) {
       setLoad(true);
     }
     dispatch(setCurrentProyect(resProyect.data));
   };
+
   const handleChange = (e: any) => {
     setProyectName(e.target.value);
     const updatedProyecto = {
@@ -98,7 +97,6 @@ const Task = () => {
     await EditProyect(updatedCurrentProyect);
   };
 
-  console.log(currentproyect.desc);
   return (
     <>
       {!load ? (
@@ -178,7 +176,7 @@ const Task = () => {
                       handleModalAnimation(true);
                     }}
                   >
-                    {currentproyect.desc != ""
+                    {currentproyect.desc !== ""
                       ? "Cambiar descripción"
                       : "Agregar descripción"}
                   </li>
@@ -209,7 +207,7 @@ const Task = () => {
             </div>
             <FormTask />
           </div>
-          <TaskList tareasproyecto={tareasproyecto} />
+          <TaskList />
 
           <div
             className={`modal__finishedproyects ${

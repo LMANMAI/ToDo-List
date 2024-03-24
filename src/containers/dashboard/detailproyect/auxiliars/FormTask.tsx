@@ -89,9 +89,9 @@ const FormTask = () => {
     dispatch(setEditDescMode(false));
     const updatedCurrentProyect = { ...currentproyect };
     updatedCurrentProyect.desc = editedDesc;
-    console.log(updatedCurrentProyect);
     await EditProyect(updatedCurrentProyect);
   };
+
   return (
     <FormTaskContainer>
       <div className="form_task_container">
@@ -109,6 +109,11 @@ const FormTask = () => {
             value={nombre}
             onChange={handleChange}
             placeholder="Agregar una tarea"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSubmit();
+              }
+            }}
           />
           {errortarea ? (
             <p
@@ -141,6 +146,7 @@ const FormTask = () => {
             className="btn btn_submit"
             title="Guardar proyecto"
             onClick={() => handleSubmit()}
+            disabled={!tareaactual && nombre === "" ? true : false}
           >
             {tareaactual ? "Guardar cambios" : "Agregar Nueva Tarea"}
           </button>

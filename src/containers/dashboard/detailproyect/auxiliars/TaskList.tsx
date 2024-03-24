@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Task from "./Task";
 import { ListadoTareas, BackgroundUI } from "./styles";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../../../redux/store";
 import { useDispatch } from "react-redux";
+import { Loading } from "../../../../components";
 import {
   setBgUi,
   setIsHighlighted,
@@ -15,33 +16,22 @@ import {
 import { EditTask, getTask } from "../../../../services";
 import { setTareasProyecto } from "../../../../redux/slices/task";
 
-const TaskList = ({ tareasproyecto }: any) => {
+const TaskList = () => {
+  const [borradorTasks, setBorradorTasks] = useState<any>([]);
+  const [pendientesTasks, setPendientesTasks] = useState<any>([]);
+  const [completasTasks, setCompletasTasks] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const bg_position = useSelector((state: RootState) => state.ui.bg);
-  const tareasCompletas = tareasproyecto.filter(
-    (tarea: any) => tarea.estado === "completa" || tarea.estado === true
-  );
-  const tareasPendientes = tareasproyecto.filter(
-    (tarea: any) => tarea.estado === "pendiente" || tarea.estado === false
-  );
-  const tareasBorrador = tareasproyecto.filter(
-    (tarea: any) => tarea.estado === "borrador"
+  const tareasproyecto = useSelector(
+    (state: RootState) => state.task.tareasproyecto
   );
 
   const handleDragStart = (e: any, taskId: any) => {
     e.dataTransfer.setData("taskId", taskId);
   };
-
-  const [borradorTasks, setBorradorTasks] = useState(
-    tareasproyecto.filter((tarea: any) => tarea.estado === "borrador")
-  );
-  const [pendientesTasks, setPendientesTasks] = useState(
-    tareasproyecto.filter((tarea: any) => tarea.estado === "pendiente")
-  );
-  const [completasTasks, setCompletasTasks] = useState(
-    tareasproyecto.filter((tarea: any) => tarea.estado === "completa")
-  );
 
   const handleDrop = (e: any, destino: any) => {
     e.preventDefault();
@@ -105,9 +95,31 @@ const TaskList = ({ tareasproyecto }: any) => {
       );
     }
   };
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      const borrador = tareasproyecto.filter(
+        (tarea: any) => tarea.estado === "borrador"
+      );
+      const pendientes = tareasproyecto.filter(
+        (tarea: any) => tarea.estado === "pendiente"
+      );
+      const completas = tareasproyecto.filter(
+        (tarea: any) => tarea.estado === "completa"
+      );
+
+      setBorradorTasks(borrador);
+      setPendientesTasks(pendientes);
+      setCompletasTasks(completas);
+      setLoading(false);
+    }, 1000);
+  }, [tareasproyecto]);
+
   return (
     <>
-      {tareasproyecto.length === 0 ? (
+      {loading ? (
+        <Loading label="Trayendo tareas" />
+      ) : tareasproyecto.length === 0 ? (
         <div>
           <p className="ntarea">No hay tareas, comienza creando una!</p>
         </div>
@@ -115,27 +127,28 @@ const TaskList = ({ tareasproyecto }: any) => {
         <ListadoTareas>
           <ColumnaTareas
             titulo="Tareas en Borrador"
-            tareas={tareasBorrador}
+            tareas={borradorTasks}
             onDragStart={handleDragStart}
             onDragOver={(e: any) => e.preventDefault()}
             onDrop={(e: any) => handleDrop(e, "borrador")}
           />
           <ColumnaTareas
             titulo="Tareas Pendientes"
-            tareas={tareasPendientes}
+            tareas={pendientesTasks}
             onDragStart={handleDragStart}
             onDragOver={(e: any) => e.preventDefault()}
             onDrop={(e: any) => handleDrop(e, "pendiente")}
           />
           <ColumnaTareas
             titulo="Tareas Completas"
-            tareas={tareasCompletas}
+            tareas={completasTasks}
             onDragStart={handleDragStart}
             onDragOver={(e: any) => e.preventDefault()}
             onDrop={(e: any) => handleDrop(e, "completa")}
           />
         </ListadoTareas>
       )}
+
       <BackgroundUI
         bg_position={bg_position}
         onClick={() => {

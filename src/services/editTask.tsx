@@ -1,5 +1,4 @@
 import instance from "../config/axios";
-import getTask from "./getTask";
 
 const EditTask = async (tarea: any) => {
   try {
