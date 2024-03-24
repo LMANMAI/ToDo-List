@@ -222,6 +222,11 @@ const SignIn = (props: any) => {
                   value={usern[field.name]}
                   onChange={handleChange}
                   placeholder={getFieldPlaceholder(field.name)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSubmit();
+                    }
+                  }}
                   onFocus={() => handleInputFocus(field.name)}
                   onBlur={() => handleInputBlur(field.name)}
                 />

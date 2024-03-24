@@ -171,6 +171,11 @@ const Login = (props: any) => {
                 placeholder="Nombre de usuario o Email"
                 onFocus={() => handleInputFocus()}
                 onBlur={handleInputBlur}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmitLogin(e);
+                  }
+                }}
               />
             </InputField>
 
@@ -183,6 +188,11 @@ const Login = (props: any) => {
                 onChange={handleChange}
                 onFocus={() => handleInputFocus2()}
                 onBlur={handleInputBlur2}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSubmitLogin(e);
+                  }
+                }}
                 placeholder="Contraseña"
               />
             </InputField>
