@@ -37,14 +37,20 @@ const Task = ({ tarea, onDragStart }: any) => {
     dispatch(setTareasProyecto(restasks.data));
   };
 
-  const changeTaskStatus = async (tarea: any) => {
-    await EditTask(tarea);
+  const changeTaskStatus = async (tarea: any, status: string) => {
+    const updatedTarea = { ...tarea, estado: status };
+
+    await EditTask(updatedTarea);
+    const restasks = await getTask(currentproyect._id);
     dispatch(setIsHighlighted(""));
+    dispatch(setTareasProyecto(restasks.data));
     dispatch(setBgUi(false));
   };
+
   const handleDragStart = (e: any) => {
     onDragStart(e);
   };
+
   return (
     <Tarea
       isHighlighted={isHighlighted}
@@ -70,8 +76,46 @@ const Task = ({ tarea, onDragStart }: any) => {
 
           <ul className="edit__submenu">
             <li onClick={() => removeTask(tarea._id)}>Eliminar tarea</li>
-            <li onClick={() => changeTaskStatus(tarea)}>Finalizar tarea</li>
-            <li onClick={() => changeTaskStatus(tarea)}>Regresar a borrador</li>
+
+            {(() => {
+              switch (tarea.estado) {
+                case "completa":
+                  return (
+                    <>
+                      <li onClick={() => changeTaskStatus(tarea, "borrador")}>
+                        Regresar a borrador
+                      </li>
+                      <li onClick={() => changeTaskStatus(tarea, "pendiente")}>
+                        Regresar a pendientes
+                      </li>
+                    </>
+                  );
+                case "borrador":
+                  return (
+                    <>
+                      <li onClick={() => changeTaskStatus(tarea, "pendiente")}>
+                        Avanzar a pendientes
+                      </li>
+                      <li onClick={() => changeTaskStatus(tarea, "completa")}>
+                        Finalizar tarea
+                      </li>
+                    </>
+                  );
+                case "pendiente":
+                  return (
+                    <>
+                      <li onClick={() => changeTaskStatus(tarea, "borrador")}>
+                        Regresar a borrador
+                      </li>
+                      <li onClick={() => changeTaskStatus(tarea, "completa")}>
+                        Finalizar tarea
+                      </li>
+                    </>
+                  );
+                default:
+                  return null;
+              }
+            })()}
           </ul>
         </div>
       ) : null}

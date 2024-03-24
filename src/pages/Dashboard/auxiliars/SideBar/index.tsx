@@ -79,7 +79,13 @@ const SideBar = () => {
           <div className="icon">
             <BsHouseDoor />
           </div>
-          <div className="name link_text">Inicio</div>
+          <div
+            className={`name link_text ${
+              window.location.pathname === "/" ? "active" : ""
+            }`}
+          >
+            Inicio
+          </div>
         </NavLink>
 
         <div>
@@ -87,7 +93,9 @@ const SideBar = () => {
             <NavLink
               key={index}
               className={`button link ${
-                item.path === window.location.pathname ? "active" : ""
+
+                window.location.pathname === item.path ? "active" : ""
+
               }`}
               to={item.path}
               title={item.name}

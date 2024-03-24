@@ -24,7 +24,6 @@ export const HomeContainer = styled.section`
   }
   .home__item {
     width: 100%;
-    border: 1px solid;
     margin: 10px 0px;
     border: 1px solid #3e7ec3;
     text-align: center;
@@ -33,9 +32,17 @@ export const HomeContainer = styled.section`
     min-height: 70px;
     color: #3e7ec3;
     padding: 10px;
+    transition: all 250ms ease-in-out;
+    &:hover {
+      cursor: pointer;
+      box-shadow: 9px 9px 28px -4px rgba(0, 0, 0, 0.75);
+    }
     ul {
       text-indent: 10px;
       text-align: start;
+      li {
+        padding: 5px 0px;
+      }
     }
   }
 

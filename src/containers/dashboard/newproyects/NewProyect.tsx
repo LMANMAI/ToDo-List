@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { NewProyectContainer, Input, Text } from "./styles";
 import { addProyect } from "../../../services";
 import { toast, ToastContainer } from "react-toastify";
-import { sendMsgToOpenAI } from "../../../openai";
-import axios from "axios";
 const NewProyect = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [proyect, createProyect] = useState({
@@ -22,7 +20,6 @@ const NewProyect = () => {
   };
 
   const handleSaveProyects = async () => {
-    console.log(proyect);
     const response = await addProyect(proyect);
     if (response.status === 200) {
       toast.success("Panel guardado exitosamente", {
@@ -36,30 +33,6 @@ const NewProyect = () => {
       setDisabled(true);
     } else {
       toast.error("Hubo un error al guardar el panel", {
-        position: "bottom-right",
-        autoClose: 3000,
-      });
-    }
-  };
-
-  const obtenerDescripcionConIA = async () => {
-    try {
-      const res = await axios.post(
-        "https://api.openai.com/v1/engines/davinci/completions",
-        {
-          promt: "hola",
-          max_tokens: 50,
-          temperature: 0.5,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: process.env.REACT_APP_OPENAI_KEY,
-          },
-        }
-      );
-    } catch (error) {
-      toast.error("Hubo un error al generar la descripción con IA", {
         position: "bottom-right",
         autoClose: 3000,
       });
@@ -80,6 +53,11 @@ const NewProyect = () => {
             name="nombre"
             value={nombre}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSaveProyects();
+              }
+            }}
             className="newproyect__input"
           />
         </div>
@@ -110,7 +88,6 @@ const NewProyect = () => {
             className="newproyect__btn desc"
             title="Generar descripción con IA(proximamente)"
             disabled
-            onClick={() => obtenerDescripcionConIA()}
           >
             Generar descripción
           </button>

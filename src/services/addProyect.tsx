@@ -1,7 +1,6 @@
 import instance from "../config/axios";
 
 const addProyect = async (proyect: any) => {
-  console.log(proyect);
   try {
     const { data, status } = await instance.post("/proyect", proyect);
     return { data, status };

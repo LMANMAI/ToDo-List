@@ -35,10 +35,18 @@ export const SideBarContainer = styled.nav<ISideBar>`
     outline: none;
     background: transparent;
     cursor: pointer;
+    transition: all 150ms ease;
     .name {
       transition: display 460ms ease-in-out;
       transition-delay: 365ms;
       display: ${(props) => (props.width ? "block" : "none")};
+    }
+    &:hover,
+    &.active {
+      background: #27527f;
+    }
+    &.active {
+      border-right: 3px solid #c3833e;
     }
   }
   .active {
@@ -51,7 +59,7 @@ export const SideBarContainer = styled.nav<ISideBar>`
     font-size: 16px;
   }
   .icon {
-    font-size: 30px;
+    font-size: 25px;
   }
   .bottom__section {
     position: relative;
