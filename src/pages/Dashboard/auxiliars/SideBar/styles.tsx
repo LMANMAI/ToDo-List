@@ -49,7 +49,11 @@ export const SideBarContainer = styled.nav<ISideBar>`
       border-right: 3px solid #c3833e;
     }
   }
-
+  .active {
+    background: white;
+    color: #3e7ec3;
+    border-right: 5px solid #c3833e;
+  }
   .icon,
   .link_text {
     font-size: 16px;

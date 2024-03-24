@@ -93,7 +93,9 @@ const SideBar = () => {
             <NavLink
               key={index}
               className={`button link ${
+
                 window.location.pathname === item.path ? "active" : ""
+
               }`}
               to={item.path}
               title={item.name}
